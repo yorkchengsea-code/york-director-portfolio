@@ -8,8 +8,6 @@
       heroEyebrow: 'DIRECTOR PORTFOLIO',
       worksTitle: '精選作品',
       worksSub: '從遊戲廣告到消費品牌，跨市場影像製作',
-      worksBrandTitle: '品牌廣告',
-      worksGameTitle: '遊戲廣告',
       featuredFlag: '精選',
       comingSoonLabel: '即將上線',
       comingSoonSub: '影片版本尚未公開，歡迎來信索取',
@@ -19,7 +17,7 @@
       statCases: '件案子',
       statDeliverables: '支交付物',
       brandsTitle: '合作品牌',
-      talentTitle: '合作藝人 Featured Talent',
+      endorsersTitle: '合作代言人',
       contactEyebrow: 'CONTACT',
       contactTitle: '聯絡合作',
       footerRights: '版權所有',
@@ -33,8 +31,6 @@
       heroEyebrow: 'DIRECTOR PORTFOLIO',
       worksTitle: 'Selected Works',
       worksSub: 'From game advertising to consumer brands, across markets',
-      worksBrandTitle: 'Brand Films',
-      worksGameTitle: 'Game Films',
       featuredFlag: 'Featured',
       comingSoonLabel: 'Coming Soon',
       comingSoonSub: 'Video not yet public — available on request',
@@ -44,7 +40,7 @@
       statCases: 'Projects',
       statDeliverables: 'Deliverables',
       brandsTitle: 'Brand Collaborations',
-      talentTitle: 'Featured Talent',
+      endorsersTitle: 'Endorsers',
       contactEyebrow: 'CONTACT',
       contactTitle: 'Get in Touch',
       footerRights: 'All Rights Reserved.',
@@ -168,137 +164,116 @@
   }
 
   /* ---------------- Works ---------------- */
-  function buildWorkCard(w){
-    var card = document.createElement('article');
-    card.className = 'card' + (w.featured ? ' featured' : '');
+  function renderWorks(){
+    var data = state.data;
+    var grid = document.getElementById('works-grid');
+    grid.innerHTML = '';
 
-    var media = document.createElement('div');
-    media.className = 'card-media';
-    if(w.youtube_id){
-      media.appendChild(buildLiteYt(w.youtube_id, pick(w,'title')));
-    } else {
-      media.appendChild(buildComingSoon());
-    }
-    card.appendChild(media);
-
-    var body = document.createElement('div');
-    body.className = 'card-body';
-
-    var metaRow = document.createElement('div');
-    metaRow.className = 'card-meta-row';
-    var clientTypeText = pick(w, 'client_type') || w.client_type;
-    metaRow.innerHTML =
-      (w.featured ? '<span class="featured-flag">' + escapeHtml(t('featuredFlag')) + '</span>' : '') +
-      '<span class="card-year">' + escapeHtml(w.year || '') + '</span>' +
-      (clientTypeText ? '<span class="card-type">' + escapeHtml(clientTypeText) + '</span>' : '');
-    body.appendChild(metaRow);
-
-    var title = document.createElement('h3');
-    title.className = 'card-title';
-    title.textContent = pick(w,'title');
-    body.appendChild(title);
-
-    var client = document.createElement('p');
-    client.className = 'card-client';
-    client.textContent = pick(w, 'client') || w.client || '';
-    body.appendChild(client);
-
-    var desc = document.createElement('p');
-    desc.className = 'card-desc';
-    desc.textContent = pick(w,'desc');
-    body.appendChild(desc);
-
-    var viewsDisplay = pick(w, 'views_display');
-    var noteText = pick(w, 'views_note') || w.views_note;
-    if(w.views != null || noteText || viewsDisplay){
-      var viewsWrap = document.createElement('div');
-      viewsWrap.className = 'card-views';
-      if(viewsDisplay){
-        var vb2 = document.createElement('span');
-        vb2.className = 'views-badge';
-        vb2.textContent = viewsDisplay;
-        viewsWrap.appendChild(vb2);
-      } else if(w.views != null){
-        var vb = document.createElement('span');
-        vb.className = 'views-badge';
-        vb.textContent = formatViews(w.views);
-        viewsWrap.appendChild(vb);
-      }
-      if(noteText){
-        if(w.views == null && !viewsDisplay){
-          var noteLabel = document.createElement('span');
-          noteLabel.className = 'card-year';
-          noteLabel.textContent = t('noteLabel');
-          viewsWrap.appendChild(noteLabel);
-        }
-        var info = document.createElement('button');
-        info.type = 'button';
-        info.className = 'info-dot';
-        info.textContent = 'i';
-        info.setAttribute('aria-expanded', 'false');
-        info.setAttribute('aria-label', t('infoTooltip'));
-        info.style.marginLeft = '6px';
-        viewsWrap.appendChild(info);
-
-        var pop = document.createElement('div');
-        pop.className = 'info-popover';
-        pop.hidden = true;
-        pop.textContent = noteText;
-
-        info.addEventListener('click', function(btn, panel){
-          return function(e){
-            e.stopPropagation();
-            var willOpen = panel.hidden;
-            closeAllPopovers();
-            if(willOpen){
-              panel.hidden = false;
-              btn.setAttribute('aria-expanded', 'true');
-            }
-          };
-        }(info, pop));
-
-        body.appendChild(viewsWrap);
-        body.appendChild(pop);
-        viewsWrap = null;
-      }
-      if(viewsWrap) body.appendChild(viewsWrap);
-    }
-
-    card.appendChild(body);
-    return card;
-  }
-
-  function sortWorks(list){
-    return list.slice().sort(function(a,b){
+    var works = data.works.slice().sort(function(a,b){
       var af = a.featured ? 1 : 0, bf = b.featured ? 1 : 0;
       if(af !== bf) return bf - af;
       return (b.year || 0) - (a.year || 0);
     });
-  }
 
-  function renderWorks(){
-    var data = state.data;
-    var all = data.works || [];
-    var brandWorks = sortWorks(all.filter(function(w){ return w.group === 'brand'; }));
-    var gameWorks = sortWorks(all.filter(function(w){ return w.group === 'game'; }));
+    works.forEach(function(w){
+      var card = document.createElement('article');
+      card.className = 'card' + (w.featured ? ' featured' : '');
 
-    var brandGrid = document.getElementById('works-grid-brand');
-    brandGrid.innerHTML = '';
-    brandWorks.forEach(function(w){ brandGrid.appendChild(buildWorkCard(w)); });
+      var media = document.createElement('div');
+      media.className = 'card-media';
+      if(w.youtube_id){
+        media.appendChild(buildLiteYt(w.youtube_id, pick(w,'title')));
+      } else {
+        media.appendChild(buildComingSoon());
+      }
+      card.appendChild(media);
 
-    var gameGrid = document.getElementById('works-grid-game');
-    gameGrid.innerHTML = '';
-    gameWorks.forEach(function(w){ gameGrid.appendChild(buildWorkCard(w)); });
+      var body = document.createElement('div');
+      body.className = 'card-body';
 
-    var brandCountEl = document.getElementById('works-brand-count');
-    if(brandCountEl) brandCountEl.textContent = brandWorks.length;
-    var gameCountEl = document.getElementById('works-game-count');
-    if(gameCountEl) gameCountEl.textContent = gameWorks.length;
+      var metaRow = document.createElement('div');
+      metaRow.className = 'card-meta-row';
+      var clientTypeText = pick(w, 'client_type') || w.client_type;
+      metaRow.innerHTML =
+        (w.featured ? '<span class="featured-flag">' + escapeHtml(t('featuredFlag')) + '</span>' : '') +
+        '<span class="card-year">' + escapeHtml(w.year || '') + '</span>' +
+        (clientTypeText ? '<span class="card-type">' + escapeHtml(clientTypeText) + '</span>' : '');
+      body.appendChild(metaRow);
 
-    var brandGroupEl = document.getElementById('works-group-brand');
-    if(brandGroupEl) brandGroupEl.style.display = brandWorks.length ? '' : 'none';
-    var gameGroupEl = document.getElementById('works-group-game');
-    if(gameGroupEl) gameGroupEl.style.display = gameWorks.length ? '' : 'none';
+      var title = document.createElement('h3');
+      title.className = 'card-title';
+      title.textContent = pick(w,'title');
+      body.appendChild(title);
+
+      var client = document.createElement('p');
+      client.className = 'card-client';
+      client.textContent = pick(w, 'client') || w.client || '';
+      body.appendChild(client);
+
+      var desc = document.createElement('p');
+      desc.className = 'card-desc';
+      desc.textContent = pick(w,'desc');
+      body.appendChild(desc);
+
+      var viewsDisplay = pick(w, 'views_display');
+      var noteText = pick(w, 'views_note') || w.views_note;
+      if(w.views != null || noteText || viewsDisplay){
+        var viewsWrap = document.createElement('div');
+        viewsWrap.className = 'card-views';
+        if(viewsDisplay){
+          var vb2 = document.createElement('span');
+          vb2.className = 'views-badge';
+          vb2.textContent = viewsDisplay;
+          viewsWrap.appendChild(vb2);
+        } else if(w.views != null){
+          var vb = document.createElement('span');
+          vb.className = 'views-badge';
+          vb.textContent = formatViews(w.views);
+          viewsWrap.appendChild(vb);
+        }
+        if(noteText){
+          if(w.views == null && !viewsDisplay){
+            var noteLabel = document.createElement('span');
+            noteLabel.className = 'card-year';
+            noteLabel.textContent = t('noteLabel');
+            viewsWrap.appendChild(noteLabel);
+          }
+          var info = document.createElement('button');
+          info.type = 'button';
+          info.className = 'info-dot';
+          info.textContent = 'i';
+          info.setAttribute('aria-expanded', 'false');
+          info.setAttribute('aria-label', t('infoTooltip'));
+          info.style.marginLeft = '6px';
+          viewsWrap.appendChild(info);
+
+          var pop = document.createElement('div');
+          pop.className = 'info-popover';
+          pop.hidden = true;
+          pop.textContent = noteText;
+
+          info.addEventListener('click', function(btn, panel){
+            return function(e){
+              e.stopPropagation();
+              var willOpen = panel.hidden;
+              closeAllPopovers();
+              if(willOpen){
+                panel.hidden = false;
+                btn.setAttribute('aria-expanded', 'true');
+              }
+            };
+          }(info, pop));
+
+          body.appendChild(viewsWrap);
+          body.appendChild(pop);
+          viewsWrap = null;
+        }
+        if(viewsWrap) body.appendChild(viewsWrap);
+      }
+
+      card.appendChild(body);
+      grid.appendChild(card);
+    });
   }
 
   /* ---------------- About ---------------- */
@@ -334,25 +309,21 @@
       brandChips.appendChild(chip);
     });
 
-    // Talent wall: always shown bilingually (中英對照), regardless of active language toggle
-    var talentZh = data.endorsers || [];
-    var talentEn = data.endorsers_en || [];
-    var talentBlock = document.getElementById('talent-block');
-    var talentWall = document.getElementById('talent-wall');
-    talentWall.innerHTML = '';
-    if(talentZh.length){
-      talentBlock.style.display = '';
-      talentZh.forEach(function(nameZh, i){
-        var nameEn = talentEn[i] || '';
-        var card = document.createElement('div');
-        card.className = 'talent-card';
-        card.innerHTML =
-          '<span class="talent-zh">' + escapeHtml(nameZh) + '</span>' +
-          (nameEn ? '<span class="talent-en">' + escapeHtml(nameEn) + '</span>' : '');
-        talentWall.appendChild(card);
+    var endorsersList = (state.lang === 'en' && data.endorsers_en && data.endorsers_en.length === (data.endorsers || []).length)
+      ? data.endorsers_en : (data.endorsers || []);
+    var endorsersBlock = document.getElementById('endorsers-block');
+    var endorserChips = document.getElementById('endorser-chips');
+    endorserChips.innerHTML = '';
+    if(endorsersList && endorsersList.length){
+      endorsersBlock.style.display = '';
+      endorsersList.forEach(function(e){
+        var chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.textContent = e;
+        endorserChips.appendChild(chip);
       });
     } else {
-      talentBlock.style.display = 'none';
+      endorsersBlock.style.display = 'none';
     }
   }
 

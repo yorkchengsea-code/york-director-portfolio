@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>鄭又勛 York Cheng ｜ 遊戲廣告 × 商業影像導演</title>
-<meta name="description" content="鄭又勛（York Cheng）遊戲廣告與商業影像導演作品集。9 年執導 88+ 案、1000+ 支交付物,客戶涵蓋 Schick、王品、GODIVA、Google Play、茶裏王等品牌，以及斗羅大陸、天龍八部2、新仙俠：起源、失落的方舟等遊戲 IP。">
-<meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMic+PHJlY3Qgd2lkdGg9JzMyJyBoZWlnaHQ9JzMyJyByeD0nNicgZmlsbD0nI2E4ODYzZicvPjx0ZXh0IHg9JzE2JyB5PScyMicgZm9udC1mYW1pbHk9J0FyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTQnIGZvbnQtd2VpZ2h0PSc3MDAnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGZpbGw9JyNmZmZmZmYnPllDPC90ZXh0Pjwvc3ZnPg==">
+<meta name="description" content="鄭又勛（York Cheng）遊戲廣告與商業影像導演作品集。9 年執導 88+ 案、1000+ 支交付物,客戶涵蓋 Schick、王品、GODIVA、Google Play、斗羅大陸、失落的方舟等。">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMic+PHJlY3Qgd2lkdGg9JzMyJyBoZWlnaHQ9JzMyJyByeD0nNicgZmlsbD0nI2NhYTE1ZCcvPjx0ZXh0IHg9JzE2JyB5PScyMicgZm9udC1mYW1pbHk9J0FyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYnIGZvbnQtc2l6ZT0nMTQnIGZvbnQtd2VpZ2h0PSc3MDAnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGZpbGw9JyMwYTBhMGMnPllDPC90ZXh0Pjwvc3ZnPg==">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://yorkchengsea-code.github.io/york-director-portfolio/">
+<meta property="og:url" content="https://yorkchengsea-code.github.io/york-director-portfolio/style-dark/">
 <meta property="og:title" content="鄭又勛 York Cheng ｜ 遊戲廣告 × 商業影像導演">
 <meta property="og:description" content="9 年執導 88+ 案、1000+ 支交付物,鏡頭深耕台灣與東南亞市場。">
 <meta property="og:image" content="https://yorkchengsea-code.github.io/york-director-portfolio/assets/portrait.jpg">
@@ -21,7 +21,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@500;700;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -66,22 +66,7 @@
       <h2 data-i18n-text="worksTitle">精選作品</h2>
       <p class="section-sub" data-i18n-text="worksSub">從遊戲廣告到消費品牌，跨市場影像製作</p>
     </div>
-
-    <div class="works-group" id="works-group-brand">
-      <div class="works-group-head">
-        <h3 data-i18n-text="worksBrandTitle">品牌廣告</h3>
-        <span class="works-group-count" id="works-brand-count"></span>
-      </div>
-      <div class="works-grid" id="works-grid-brand"></div>
-    </div>
-
-    <div class="works-group" id="works-group-game">
-      <div class="works-group-head">
-        <h3 data-i18n-text="worksGameTitle">遊戲廣告</h3>
-        <span class="works-group-count" id="works-game-count"></span>
-      </div>
-      <div class="works-grid" id="works-grid-game"></div>
-    </div>
+    <div class="works-grid" id="works-grid"></div>
   </section>
 
   <!-- ABOUT -->
@@ -102,9 +87,9 @@
           <div class="brand-chips" id="brand-chips"></div>
         </div>
 
-        <div class="talent-block" id="talent-block">
-          <p class="block-label" data-i18n-text="talentTitle">合作藝人 Featured Talent</p>
-          <div class="talent-wall" id="talent-wall"></div>
+        <div class="endorsers-block" id="endorsers-block">
+          <p class="block-label" data-i18n-text="endorsersTitle">合作代言人</p>
+          <div class="endorser-chips" id="endorser-chips"></div>
         </div>
       </div>
     </div>
