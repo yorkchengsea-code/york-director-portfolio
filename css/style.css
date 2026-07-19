@@ -68,6 +68,13 @@ button{ font-family:inherit; }
   color:var(--text);
   text-transform:uppercase;
 }
+.logo-en{
+  font-weight:500;
+  font-size:12px;
+  letter-spacing:0.18em;
+  color:var(--text-soft, #8a8a8a);
+  margin-left:2px;
+}
 .main-nav{ display:flex; align-items:center; gap:36px; }
 .main-nav a{
   font-size:13px;
