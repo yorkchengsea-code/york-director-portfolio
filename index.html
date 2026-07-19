@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鄭又勛 York Cheng ｜ 遊戲廣告 × 商業影像導演</title>
+<meta name="description" content="鄭又勛（York Cheng）遊戲廣告與商業影像導演作品集。9 年執導 88+ 案、1000+ 支交付物,客戶涵蓋 Schick、王品、GODIVA、Google Play、斗羅大陸、失落的方舟等。">
+<meta name="theme-color" content="#0a0a0c">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="鄭又勛 York Cheng ｜ 遊戲廣告 × 商業影像導演">
+<meta property="og:description" content="9 年執導 88+ 案、1000+ 支交付物,鏡頭深耕台灣與東南亞市場。">
+<meta property="og:image" content="assets/portrait.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <a href="#hero" class="logo" data-i18n-text="brandName">曜境影像</a>
+    <nav class="main-nav">
+      <a href="#works" data-i18n-text="navWorks">作品</a>
+      <a href="#about" data-i18n-text="navAbout">關於</a>
+      <a href="#contact" data-i18n-text="navContact">聯絡</a>
+      <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+        <span class="lang-opt" data-lang="zh">中</span>
+        <span class="lang-sep">/</span>
+        <span class="lang-opt" data-lang="en">EN</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-glow"></div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow" data-i18n-text="heroEyebrow">DIRECTOR PORTFOLIO</p>
+      <h1 class="hero-name">
+        <span class="hero-name-zh" id="hero-name-zh">鄭又勛</span>
+        <span class="hero-name-en" id="hero-name-en">York Cheng</span>
+      </h1>
+      <p class="hero-tagline" id="hero-tagline"></p>
+      <div class="hero-video-wrap" id="hero-video-wrap"></div>
+      <div class="hero-badge" id="hero-badge"></div>
+    </div>
+    <a href="#works" class="scroll-cue" aria-label="scroll down"><span></span></a>
+  </section>
+
+  <!-- WORKS -->
+  <section class="works" id="works">
+    <div class="section-head">
+      <h2 data-i18n-text="worksTitle">精選作品</h2>
+      <p class="section-sub" data-i18n-text="worksSub">從遊戲廣告到消費品牌,跨市場影像製作</p>
+    </div>
+    <div class="works-grid" id="works-grid"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="about-portrait">
+        <img src="assets/portrait.jpg" alt="鄭又勛 York Cheng" width="932" height="1200" loading="lazy">
+      </div>
+      <div class="about-content">
+        <p class="section-eyebrow" data-i18n-text="aboutEyebrow">ABOUT</p>
+        <h2 data-i18n-text="aboutTitle">關於導演</h2>
+        <p class="bio" id="about-bio"></p>
+
+        <div class="stats-row" id="stats-row"></div>
+
+        <div class="brands-block">
+          <p class="block-label" data-i18n-text="brandsTitle">合作品牌</p>
+          <div class="brand-chips" id="brand-chips"></div>
+        </div>
+
+        <div class="endorsers-block" id="endorsers-block">
+          <p class="block-label" data-i18n-text="endorsersTitle">合作代言人</p>
+          <div class="endorser-chips" id="endorser-chips"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <p class="section-eyebrow" data-i18n-text="contactEyebrow">CONTACT</p>
+      <h2 data-i18n-text="contactTitle">聯絡合作</h2>
+      <p class="contact-company" id="contact-company"></p>
+      <a class="contact-email" id="contact-email" href="#"></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; <span id="footer-year"></span> <span id="footer-company"></span>. <span data-i18n-text="footerRights">All Rights Reserved.</span></p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
