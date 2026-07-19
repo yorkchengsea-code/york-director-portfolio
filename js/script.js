@@ -3,7 +3,7 @@
 
   var STRINGS = {
     zh: {
-      brandName: '曜境影像',
+      brandName: '鄭又勛',
       navWorks: '作品', navAbout: '關於', navContact: '聯絡',
       heroEyebrow: 'DIRECTOR PORTFOLIO',
       worksTitle: '精選作品',
@@ -19,6 +19,8 @@
       statCases: '件案子',
       statDeliverables: '支交付物',
       brandsTitle: '合作品牌',
+      brandsConsumerTitle: '消費／科技品牌',
+      brandsGamesTitle: '遊戲 IP',
       talentTitle: '合作藝人 Featured Talent',
       contactEyebrow: 'CONTACT',
       contactTitle: '聯絡合作',
@@ -29,7 +31,7 @@
       conceptToggleLabel: '創作概念'
     },
     en: {
-      brandName: 'Yao Jing Image',
+      brandName: 'York Cheng',
       navWorks: 'Works', navAbout: 'About', navContact: 'Contact',
       heroEyebrow: 'DIRECTOR PORTFOLIO',
       worksTitle: 'Selected Works',
@@ -45,6 +47,8 @@
       statCases: 'Projects',
       statDeliverables: 'Deliverables',
       brandsTitle: 'Brand Collaborations',
+      brandsConsumerTitle: 'Consumer / Tech Brands',
+      brandsGamesTitle: 'Game IPs',
       talentTitle: 'Featured Talent',
       contactEyebrow: 'CONTACT',
       contactTitle: 'Get in Touch',
@@ -211,17 +215,43 @@
     var card = document.createElement('article');
     card.className = 'card' + (w.featured ? ' featured' : '');
 
+    var videos = (w.videos && w.videos.length) ? w.videos : (w.youtube_id ? [{ youtube_id: w.youtube_id }] : []);
+
     var media = document.createElement('div');
     media.className = 'card-media';
-    if(w.youtube_id){
-      media.appendChild(buildLiteYt(w.youtube_id, pick(w,'title')));
-    } else {
-      media.appendChild(buildComingSoon());
+
+    function renderMedia(idx){
+      media.innerHTML = '';
+      if(videos.length){
+        media.appendChild(buildLiteYt(videos[idx].youtube_id, pick(w,'title')));
+      } else {
+        media.appendChild(buildComingSoon());
+      }
     }
+    renderMedia(0);
     card.appendChild(media);
 
     var body = document.createElement('div');
     body.className = 'card-body';
+
+    if(videos.length > 1){
+      var tabs = document.createElement('div');
+      tabs.className = 'video-tabs';
+      var tabBtns = [];
+      videos.forEach(function(v, idx){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'video-tab' + (idx === 0 ? ' active' : '');
+        btn.textContent = pick(v, 'label') || String(idx + 1);
+        btn.addEventListener('click', function(){
+          renderMedia(idx);
+          tabBtns.forEach(function(b, i){ b.classList.toggle('active', i === idx); });
+        });
+        tabBtns.push(btn);
+        tabs.appendChild(btn);
+      });
+      body.appendChild(tabs);
+    }
 
     var metaRow = document.createElement('div');
     metaRow.className = 'card-meta-row';
@@ -364,16 +394,21 @@
       statsRow.appendChild(el);
     });
 
-    var brandsList = (state.lang === 'en' && data.brands_en && data.brands_en.length === (data.brands || []).length)
-      ? data.brands_en : (data.brands || []);
-    var brandChips = document.getElementById('brand-chips');
-    brandChips.innerHTML = '';
-    brandsList.forEach(function(b){
-      var chip = document.createElement('span');
-      chip.className = 'chip';
-      chip.textContent = b;
-      brandChips.appendChild(chip);
-    });
+    function renderBrandGroup(elId, zhList, enList){
+      var list = (state.lang === 'en' && enList && enList.length === (zhList || []).length)
+        ? enList : (zhList || []);
+      var el = document.getElementById(elId);
+      if(!el) return;
+      el.innerHTML = '';
+      list.forEach(function(b){
+        var chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.textContent = b;
+        el.appendChild(chip);
+      });
+    }
+    renderBrandGroup('brand-chips-consumer', data.brands_consumer, data.brands_consumer_en);
+    renderBrandGroup('brand-chips-games', data.brands_games, data.brands_games_en);
 
     // Talent wall: always shown bilingually (中英對照), regardless of active language toggle
     var talentZh = data.endorsers || [];
