@@ -7,10 +7,10 @@
       navWorks: '作品', navAbout: '關於', navContact: '聯絡',
       heroEyebrow: 'DIRECTOR PORTFOLIO',
       worksTitle: '精選作品',
-      worksSub: '從遊戲廣告到消費品牌,跨市場影像製作',
+      worksSub: '從遊戲廣告到消費品牌，跨市場影像製作',
       featuredFlag: '精選',
       comingSoonLabel: '即將上線',
-      comingSoonSub: '影片版本尚未公開,歡迎來信索取',
+      comingSoonSub: '影片版本尚未公開，歡迎來信索取',
       aboutEyebrow: 'ABOUT',
       aboutTitle: '關於導演',
       statYears: '年經驗',
@@ -88,6 +88,15 @@
       return n.toLocaleString('en-US') + ' views';
     }
   }
+
+  function closeAllPopovers(){
+    document.querySelectorAll('.info-popover').forEach(function(p){ p.hidden = true; });
+    document.querySelectorAll('.info-dot[aria-expanded="true"]').forEach(function(b){ b.setAttribute('aria-expanded', 'false'); });
+  }
+  document.addEventListener('click', closeAllPopovers);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeAllPopovers();
+  });
 
   var PLAY_SVG = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
 
@@ -184,10 +193,11 @@
 
       var metaRow = document.createElement('div');
       metaRow.className = 'card-meta-row';
+      var clientTypeText = pick(w, 'client_type') || w.client_type;
       metaRow.innerHTML =
         (w.featured ? '<span class="featured-flag">' + escapeHtml(t('featuredFlag')) + '</span>' : '') +
         '<span class="card-year">' + escapeHtml(w.year || '') + '</span>' +
-        (w.client_type ? '<span class="card-type">' + escapeHtml(w.client_type) + '</span>' : '');
+        (clientTypeText ? '<span class="card-type">' + escapeHtml(clientTypeText) + '</span>' : '');
       body.appendChild(metaRow);
 
       var title = document.createElement('h3');
@@ -197,7 +207,7 @@
 
       var client = document.createElement('p');
       client.className = 'card-client';
-      client.textContent = w.client || '';
+      client.textContent = pick(w, 'client') || w.client || '';
       body.appendChild(client);
 
       var desc = document.createElement('p');
@@ -205,30 +215,60 @@
       desc.textContent = pick(w,'desc');
       body.appendChild(desc);
 
-      if(w.views != null || w.views_note){
+      var viewsDisplay = pick(w, 'views_display');
+      var noteText = pick(w, 'views_note') || w.views_note;
+      if(w.views != null || noteText || viewsDisplay){
         var viewsWrap = document.createElement('div');
         viewsWrap.className = 'card-views';
-        if(w.views != null){
+        if(viewsDisplay){
+          var vb2 = document.createElement('span');
+          vb2.className = 'views-badge';
+          vb2.textContent = viewsDisplay;
+          viewsWrap.appendChild(vb2);
+        } else if(w.views != null){
           var vb = document.createElement('span');
           vb.className = 'views-badge';
           vb.textContent = formatViews(w.views);
           viewsWrap.appendChild(vb);
         }
-        if(w.views_note){
-          if(w.views == null){
+        if(noteText){
+          if(w.views == null && !viewsDisplay){
             var noteLabel = document.createElement('span');
             noteLabel.className = 'card-year';
             noteLabel.textContent = t('noteLabel');
             viewsWrap.appendChild(noteLabel);
           }
-          var info = document.createElement('span');
+          var info = document.createElement('button');
+          info.type = 'button';
           info.className = 'info-dot';
           info.textContent = 'i';
-          info.title = w.views_note;
+          info.setAttribute('aria-expanded', 'false');
+          info.setAttribute('aria-label', t('infoTooltip'));
           info.style.marginLeft = '6px';
           viewsWrap.appendChild(info);
+
+          var pop = document.createElement('div');
+          pop.className = 'info-popover';
+          pop.hidden = true;
+          pop.textContent = noteText;
+
+          info.addEventListener('click', function(btn, panel){
+            return function(e){
+              e.stopPropagation();
+              var willOpen = panel.hidden;
+              closeAllPopovers();
+              if(willOpen){
+                panel.hidden = false;
+                btn.setAttribute('aria-expanded', 'true');
+              }
+            };
+          }(info, pop));
+
+          body.appendChild(viewsWrap);
+          body.appendChild(pop);
+          viewsWrap = null;
         }
-        body.appendChild(viewsWrap);
+        if(viewsWrap) body.appendChild(viewsWrap);
       }
 
       card.appendChild(body);
@@ -258,21 +298,25 @@
       statsRow.appendChild(el);
     });
 
+    var brandsList = (state.lang === 'en' && data.brands_en && data.brands_en.length === (data.brands || []).length)
+      ? data.brands_en : (data.brands || []);
     var brandChips = document.getElementById('brand-chips');
     brandChips.innerHTML = '';
-    (data.brands || []).forEach(function(b){
+    brandsList.forEach(function(b){
       var chip = document.createElement('span');
       chip.className = 'chip';
       chip.textContent = b;
       brandChips.appendChild(chip);
     });
 
+    var endorsersList = (state.lang === 'en' && data.endorsers_en && data.endorsers_en.length === (data.endorsers || []).length)
+      ? data.endorsers_en : (data.endorsers || []);
     var endorsersBlock = document.getElementById('endorsers-block');
     var endorserChips = document.getElementById('endorser-chips');
     endorserChips.innerHTML = '';
-    if(data.endorsers && data.endorsers.length){
+    if(endorsersList && endorsersList.length){
       endorsersBlock.style.display = '';
-      data.endorsers.forEach(function(e){
+      endorsersList.forEach(function(e){
         var chip = document.createElement('span');
         chip.className = 'chip';
         chip.textContent = e;
@@ -286,13 +330,14 @@
   /* ---------------- Contact ---------------- */
   function renderContact(){
     var data = state.data;
-    document.getElementById('contact-company').textContent = data.contact.company;
+    var companyText = pick(data.contact, 'company') || data.contact.company;
+    document.getElementById('contact-company').textContent = companyText;
     var emailEl = document.getElementById('contact-email');
     emailEl.textContent = data.contact.email;
     emailEl.href = 'mailto:' + data.contact.email;
 
     document.getElementById('footer-year').textContent = new Date().getFullYear();
-    document.getElementById('footer-company').textContent = data.contact.company;
+    document.getElementById('footer-company').textContent = companyText;
   }
 
   /* ---------------- i18n chrome (nav labels etc) ---------------- */

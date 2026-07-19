@@ -248,12 +248,23 @@ section{ padding:120px 24px; position:relative; }
   border-radius:20px;
 }
 .views-badge.lg{ font-size:15px; padding:10px 20px; }
-.views-badge .info-dot{
-  width:15px; height:15px; border-radius:50%;
+.info-dot{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:16px; height:16px; border-radius:50%;
   border:1px solid currentColor;
-  font-size:10px; line-height:13px; text-align:center;
-  cursor:help; opacity:0.75;
+  background:transparent; padding:0; margin:0; font:inherit;
+  font-size:10px; line-height:1; text-align:center;
+  color:var(--text-dim);
+  cursor:pointer; opacity:0.85;
 }
+.info-dot:hover, .info-dot:focus-visible{ opacity:1; border-color:var(--accent); color:var(--accent-strong); }
+.info-popover{
+  display:block; margin-top:8px; padding:10px 14px;
+  background:var(--bg-raised); border:1px solid var(--line);
+  border-radius:var(--radius); color:var(--text-dim);
+  font-size:12px; line-height:1.6;
+}
+.info-popover[hidden]{ display:none; }
 
 /* ---------- Works grid ---------- */
 .works-grid{
