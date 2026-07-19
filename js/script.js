@@ -25,7 +25,8 @@
       footerRights: '版權所有',
       playLabel: '播放影片',
       infoTooltip: '關於此數據的說明',
-      noteLabel: '備註'
+      noteLabel: '備註',
+      conceptToggleLabel: '創作概念'
     },
     en: {
       brandName: 'Yao Jing Image',
@@ -50,7 +51,8 @@
       footerRights: 'All Rights Reserved.',
       playLabel: 'Play video',
       infoTooltip: 'Note on this figure',
-      noteLabel: 'Note'
+      noteLabel: 'Note',
+      conceptToggleLabel: 'Concept'
     }
   };
 
@@ -168,6 +170,43 @@
   }
 
   /* ---------------- Works ---------------- */
+  function buildConceptBlock(w, body){
+    var conceptText = pick(w, 'concept');
+    if(!conceptText) return;
+
+    var panelId = 'concept-panel-' + w.id;
+
+    var toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'concept-toggle';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', panelId);
+    toggle.innerHTML =
+      '<span class="concept-toggle-label">' + escapeHtml(t('conceptToggleLabel')) + '</span>' +
+      '<span class="concept-toggle-icon" aria-hidden="true">+</span>';
+    body.appendChild(toggle);
+
+    var wrap = document.createElement('div');
+    wrap.className = 'concept-wrap';
+    wrap.id = panelId;
+
+    var inner = document.createElement('div');
+    inner.className = 'concept-wrap-inner';
+
+    var p = document.createElement('p');
+    p.className = 'concept-text';
+    p.textContent = conceptText;
+    inner.appendChild(p);
+    wrap.appendChild(inner);
+    body.appendChild(wrap);
+
+    toggle.addEventListener('click', function(){
+      var isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+      wrap.classList.toggle('open', !isOpen);
+    });
+  }
+
   function buildWorkCard(w){
     var card = document.createElement('article');
     card.className = 'card' + (w.featured ? ' featured' : '');
@@ -207,6 +246,8 @@
     desc.className = 'card-desc';
     desc.textContent = pick(w,'desc');
     body.appendChild(desc);
+
+    buildConceptBlock(w, body);
 
     var viewsDisplay = pick(w, 'views_display');
     var noteText = pick(w, 'views_note') || w.views_note;
