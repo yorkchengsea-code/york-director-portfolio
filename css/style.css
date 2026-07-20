@@ -411,6 +411,7 @@ section{ padding:140px 24px; position:relative; }
   font-family:var(--font-serif);
   font-size:13.5px; line-height:1.9; color:var(--text-dim);
   font-style:italic;
+  white-space:pre-line;
 }
 .card.featured .concept-text{ font-size:14.5px; }
 
