@@ -1,497 +1,310 @@
-(function(){
+(function () {
   'use strict';
 
-  var STRINGS = {
-    zh: {
-      brandName: '鄭又勛',
-      navWorks: '作品', navAbout: '關於', navContact: '聯絡',
-      heroEyebrow: 'DIRECTOR PORTFOLIO',
-      worksTitle: '精選作品',
-      worksSub: '從遊戲廣告到消費品牌，跨市場影像製作',
-      worksBrandTitle: '品牌廣告',
-      worksGameTitle: '遊戲廣告',
-      featuredFlag: '精選',
-      comingSoonLabel: '即將上線',
-      comingSoonSub: '影片版本尚未公開，歡迎來信索取',
-      aboutEyebrow: 'ABOUT',
-      aboutTitle: '關於導演',
-      statYears: '年經驗',
-      statCases: '件案子',
-      statDeliverables: '支交付物',
-      brandsTitle: '合作品牌',
-      brandsConsumerTitle: '消費／科技品牌',
-      brandsGamesTitle: '遊戲 IP',
-      talentTitle: '合作藝人 Featured Talent',
-      contactEyebrow: 'CONTACT',
-      contactTitle: '聯絡合作',
-      footerRights: '版權所有',
-      playLabel: '播放影片',
-      infoTooltip: '關於此數據的說明',
-      noteLabel: '備註',
-      conceptToggleLabel: '創作概念'
-    },
-    en: {
-      brandName: 'York Cheng',
-      navWorks: 'Works', navAbout: 'About', navContact: 'Contact',
-      heroEyebrow: 'DIRECTOR PORTFOLIO',
-      worksTitle: 'Selected Works',
-      worksSub: 'From game advertising to consumer brands, across markets',
-      worksBrandTitle: 'Brand Films',
-      worksGameTitle: 'Game Films',
-      featuredFlag: 'Featured',
-      comingSoonLabel: 'Coming Soon',
-      comingSoonSub: 'Video not yet public — available on request',
-      aboutEyebrow: 'ABOUT',
-      aboutTitle: 'About the Director',
-      statYears: 'Years',
-      statCases: 'Projects',
-      statDeliverables: 'Deliverables',
-      brandsTitle: 'Brand Collaborations',
-      brandsConsumerTitle: 'Consumer / Tech Brands',
-      brandsGamesTitle: 'Game IPs',
-      talentTitle: 'Featured Talent',
-      contactEyebrow: 'CONTACT',
-      contactTitle: 'Get in Touch',
-      footerRights: 'All Rights Reserved.',
-      playLabel: 'Play video',
-      infoTooltip: 'Note on this figure',
-      noteLabel: 'Note',
-      conceptToggleLabel: 'Concept'
-    }
-  };
+  var state = { lang: 'zh', data: null, activeWork: null, activeVideo: 0 };
+  var dialog = document.getElementById('video-dialog');
+  var frame = document.getElementById('video-frame');
+  var tabs = document.getElementById('video-tabs');
+  var videoTitle = document.getElementById('video-title');
 
-  var state = { lang: 'zh', data: null };
-
-  function t(key){ return STRINGS[state.lang][key] || ''; }
-
-  function pick(obj, key){
-    // obj has key_zh / key_en fields
-    return obj[key + '_' + state.lang];
+  function pick(item, key) {
+    return item[key + '_' + state.lang] || item[key + '_zh'] || item[key + '_en'] || '';
   }
 
-  function escapeHtml(str){
-    if(str == null) return '';
-    return String(str)
-      .replace(/&/g,'&amp;')
-      .replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;');
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text != null) node.textContent = text;
+    return node;
   }
 
-  function formatViews(n){
-    if(n == null) return null;
-    if(state.lang === 'zh'){
-      if(n >= 10000){
-        var v = (n/10000).toFixed(1).replace(/\.0$/,'');
-        return v + '萬次觀看';
-      }
-      return n.toLocaleString('zh-Hant') + '次觀看';
-    } else {
-      if(n >= 1000000){
-        var m = (n/1000000).toFixed(2).replace(/0$/,'').replace(/\.$/,'');
-        return m + 'M views';
-      }
-      if(n >= 1000){
-        var k = (n/1000).toFixed(1).replace(/\.0$/,'');
-        return k + 'K views';
-      }
-      return n.toLocaleString('en-US') + ' views';
-    }
+  function formatIndex(index) {
+    return String(index + 1).padStart(2, '0');
   }
 
-  function closeAllPopovers(){
-    document.querySelectorAll('.info-popover').forEach(function(p){ p.hidden = true; });
-    document.querySelectorAll('.info-dot[aria-expanded="true"]').forEach(function(b){ b.setAttribute('aria-expanded', 'false'); });
-  }
-  document.addEventListener('click', closeAllPopovers);
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') closeAllPopovers();
-  });
-
-  var PLAY_SVG = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
-
-  function buildLiteYt(youtubeId, altText, sizeClass){
-    var wrap = document.createElement('div');
-    wrap.className = 'lite-yt' + (sizeClass ? ' ' + sizeClass : '');
-    wrap.style.backgroundImage = 'url(https://i.ytimg.com/vi/' + youtubeId + '/hqdefault.jpg)';
-    wrap.setAttribute('role','button');
-    wrap.setAttribute('tabindex','0');
-    wrap.setAttribute('aria-label', t('playLabel') + ': ' + altText);
-
-    var btn = document.createElement('span');
-    btn.className = 'play-btn';
-    btn.innerHTML = PLAY_SVG;
-    wrap.appendChild(btn);
-
-    function activate(){
-      var iframe = document.createElement('iframe');
-      iframe.src = 'https://www.youtube.com/embed/' + youtubeId + '?autoplay=1&rel=0';
-      iframe.title = altText;
-      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      wrap.innerHTML = '';
-      wrap.style.backgroundImage = 'none';
-      wrap.removeAttribute('role');
-      wrap.removeAttribute('tabindex');
-      wrap.appendChild(iframe);
-    }
-    wrap.addEventListener('click', activate);
-    wrap.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); activate(); }
-    });
-    return wrap;
+  function allWorks() {
+    return state.data.flagship.concat(state.data.selected, state.data.additional);
   }
 
-  function buildComingSoon(){
-    var el = document.createElement('div');
-    el.className = 'coming-soon-media';
-    el.innerHTML =
-      '<div class="cs-label">' + escapeHtml(t('comingSoonLabel')) + '</div>' +
-      '<div class="cs-sub">' + escapeHtml(t('comingSoonSub')) + '</div>';
-    return el;
+  function findWork(id) {
+    return allWorks().find(function (work) { return work.id === id; });
   }
 
-  /* ---------------- Hero ---------------- */
-  function renderHero(){
-    var data = state.data;
-    document.getElementById('hero-tagline').textContent = pick(data.director, 'tagline');
-
-    var heroWork = data.works.find(function(w){ return w.id === 'schick-hydropro'; }) || data.works[0];
-    var videoWrap = document.getElementById('hero-video-wrap');
-    videoWrap.innerHTML = '';
-    if(heroWork && heroWork.youtube_id){
-      videoWrap.appendChild(buildLiteYt(heroWork.youtube_id, pick(heroWork,'title'), 'lg'));
-    }
-
-    var badge = document.getElementById('hero-badge');
-    badge.innerHTML = '';
-    if(heroWork && heroWork.views != null){
-      var b = document.createElement('span');
-      b.className = 'views-badge lg';
-      b.textContent = formatViews(heroWork.views);
-      badge.appendChild(b);
-    }
-  }
-
-  /* ---------------- Works ---------------- */
-  function buildConceptBlock(w, body){
-    var conceptText = pick(w, 'concept');
-    if(!conceptText) return;
-
-    var panelId = 'concept-panel-' + w.id;
-
-    var toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'concept-toggle';
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-controls', panelId);
-    toggle.innerHTML =
-      '<span class="concept-toggle-label">' + escapeHtml(t('conceptToggleLabel')) + '</span>' +
-      '<span class="concept-toggle-icon" aria-hidden="true">+</span>';
-    body.appendChild(toggle);
-
-    var wrap = document.createElement('div');
-    wrap.className = 'concept-wrap';
-    wrap.id = panelId;
-
-    var inner = document.createElement('div');
-    inner.className = 'concept-wrap-inner';
-
-    var p = document.createElement('p');
-    p.className = 'concept-text';
-    p.textContent = conceptText;
-    inner.appendChild(p);
-    wrap.appendChild(inner);
-    body.appendChild(wrap);
-
-    toggle.addEventListener('click', function(){
-      var isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
-      wrap.classList.toggle('open', !isOpen);
+  function setPlayer(index) {
+    var work = state.activeWork;
+    if (!work || !work.videos || !work.videos.length) return;
+    state.activeVideo = index;
+    var video = work.videos[index];
+    frame.innerHTML = '';
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(video.id) + '?autoplay=1&rel=0';
+    iframe.title = pick(work, 'title') + ' — ' + pick(video, 'label');
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    frame.appendChild(iframe);
+    Array.prototype.forEach.call(tabs.children, function (tab, tabIndex) {
+      tab.setAttribute('aria-selected', tabIndex === index ? 'true' : 'false');
     });
   }
 
-  function buildWorkCard(w){
-    var card = document.createElement('article');
-    card.className = 'card' + (w.featured ? ' featured' : '');
+  function openVideo(work) {
+    if (!work || !work.videos || !work.videos.length) return;
+    state.activeWork = work;
+    state.activeVideo = 0;
+    videoTitle.textContent = pick(work, 'title');
+    tabs.innerHTML = '';
+    work.videos.forEach(function (video, index) {
+      var tab = el('button', 'video-tab', pick(video, 'label') || String(index + 1));
+      tab.type = 'button';
+      tab.setAttribute('role', 'tab');
+      tab.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+      tab.addEventListener('click', function () { setPlayer(index); });
+      tabs.appendChild(tab);
+    });
+    setPlayer(0);
+    if (typeof dialog.showModal === 'function') dialog.showModal();
+    else dialog.setAttribute('open', '');
+  }
 
-    var videos = (w.videos && w.videos.length) ? w.videos : (w.youtube_id ? [{ youtube_id: w.youtube_id }] : []);
+  function closeVideo() {
+    frame.innerHTML = '';
+    state.activeWork = null;
+    if (dialog.open && typeof dialog.close === 'function') dialog.close();
+    else dialog.removeAttribute('open');
+  }
 
-    var media = document.createElement('div');
-    media.className = 'card-media';
-
-    function renderMedia(idx){
-      media.innerHTML = '';
-      if(videos.length){
-        media.appendChild(buildLiteYt(videos[idx].youtube_id, pick(w,'title')));
-      } else {
-        media.appendChild(buildComingSoon());
-      }
+  function buildMedia(work, className) {
+    var hasVideo = work.videos && work.videos.length;
+    var media = el(hasVideo ? 'button' : 'div', className || 'work-media');
+    if (hasVideo) {
+      media.type = 'button';
+      media.setAttribute('aria-label', (state.lang === 'zh' ? '播放：' : 'Play: ') + pick(work, 'title'));
+      media.addEventListener('click', function () { openVideo(work); });
     }
-    renderMedia(0);
-    card.appendChild(media);
+    if (work.image_fit) media.dataset.fit = work.image_fit;
+    var img = document.createElement('img');
+    img.src = work.image;
+    img.alt = pick(work, 'title');
+    img.loading = 'lazy';
+    img.width = 1600;
+    img.height = 900;
+    media.appendChild(img);
+    if (hasVideo) {
+      media.appendChild(el('span', 'media-shade'));
+      media.appendChild(el('span', 'play-mark', '▶'));
+    }
+    return media;
+  }
 
-    var body = document.createElement('div');
-    body.className = 'card-body';
+  function buildWatch(work) {
+    if (!work.videos || !work.videos.length) return null;
+    var button = el('button', 'watch-link', state.lang === 'zh' ? '觀看完整影片 ↗' : 'Watch full film ↗');
+    button.type = 'button';
+    button.addEventListener('click', function () { openVideo(work); });
+    return button;
+  }
 
-    if(videos.length > 1){
-      var tabs = document.createElement('div');
-      tabs.className = 'video-tabs';
-      var tabBtns = [];
-      videos.forEach(function(v, idx){
-        var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'video-tab' + (idx === 0 ? ' active' : '');
-        btn.textContent = pick(v, 'label') || String(idx + 1);
-        btn.addEventListener('click', function(){
-          renderMedia(idx);
-          tabBtns.forEach(function(b, i){ b.classList.toggle('active', i === idx); });
-        });
-        tabBtns.push(btn);
-        tabs.appendChild(btn);
+  function renderFlagship() {
+    var list = document.getElementById('flagship-list');
+    list.innerHTML = '';
+    state.data.flagship.forEach(function (work, index) {
+      var card = el('article', 'flagship-card');
+      card.appendChild(buildMedia(work, 'work-media'));
+      var copy = el('div', 'work-copy');
+      var meta = el('div', 'work-index');
+      meta.appendChild(el('span', '', formatIndex(index) + ' / 08'));
+      meta.appendChild(el('span', '', [pick(work, 'type'), work.year].filter(Boolean).join(' · ')));
+      copy.appendChild(meta);
+      copy.appendChild(el('h3', '', pick(work, 'title')));
+      copy.appendChild(el('p', '', pick(work, 'copy')));
+      var watch = buildWatch(work);
+      if (watch) copy.appendChild(watch);
+      card.appendChild(copy);
+      list.appendChild(card);
+    });
+  }
+
+  function renderSelected() {
+    var grid = document.getElementById('selected-grid');
+    grid.innerHTML = '';
+    state.data.selected.forEach(function (work, index) {
+      var card = el('article', 'selected-card');
+      card.appendChild(buildMedia(work, 'work-media'));
+      card.appendChild(el('h3', '', pick(work, 'title')));
+      var meta = el('div', 'card-meta');
+      meta.appendChild(el('span', '', formatIndex(index) + ' / 12'));
+      meta.appendChild(el('span', '', [pick(work, 'type'), work.year].filter(Boolean).join(' · ')));
+      card.appendChild(meta);
+      card.appendChild(el('p', 'card-copy', pick(work, 'copy')));
+      var watch = buildWatch(work);
+      if (watch) card.appendChild(watch);
+      grid.appendChild(card);
+    });
+  }
+
+  function renderAdditional() {
+    var grid = document.getElementById('additional-grid');
+    grid.innerHTML = '';
+    state.data.additional.forEach(function (work, index) {
+      var card = el('article', 'additional-card');
+      card.appendChild(buildMedia(work, 'work-media'));
+      card.appendChild(el('h3', '', pick(work, 'title')));
+      card.appendChild(el('p', '', formatIndex(index) + ' / 12' + (work.videos.length ? ' · PLAY FILM ↗' : ' · SELECTED CAMPAIGN')));
+      grid.appendChild(card);
+    });
+  }
+
+  function renderArchive() {
+    var grid = document.getElementById('archive-grid');
+    grid.innerHTML = '';
+    state.data.archive.forEach(function (group, index) {
+      var card = el('article', 'archive-card');
+      var img = document.createElement('img');
+      img.src = group.image;
+      img.alt = pick(group, 'title');
+      img.loading = 'lazy';
+      img.width = 1600;
+      img.height = 900;
+      card.appendChild(img);
+      var copy = el('div');
+      copy.appendChild(el('h3', '', group.title_en));
+      copy.appendChild(el('h4', '', group.title_zh));
+      var list = el('ol');
+      group.works.forEach(function (title, workIndex) {
+        var item = el('li');
+        item.innerHTML = '<span>' + formatIndex(workIndex) + '</span>' + title;
+        list.appendChild(item);
       });
-      body.appendChild(tabs);
-    }
-
-    var metaRow = document.createElement('div');
-    metaRow.className = 'card-meta-row';
-    var clientTypeText = pick(w, 'client_type') || w.client_type;
-    metaRow.innerHTML =
-      (w.featured ? '<span class="featured-flag">' + escapeHtml(t('featuredFlag')) + '</span>' : '') +
-      '<span class="card-year">' + escapeHtml(w.year || '') + '</span>' +
-      (clientTypeText ? '<span class="card-type">' + escapeHtml(clientTypeText) + '</span>' : '');
-    body.appendChild(metaRow);
-
-    var title = document.createElement('h3');
-    title.className = 'card-title';
-    title.textContent = pick(w,'title');
-    body.appendChild(title);
-
-    var client = document.createElement('p');
-    client.className = 'card-client';
-    client.textContent = pick(w, 'client') || w.client || '';
-    body.appendChild(client);
-
-    var desc = document.createElement('p');
-    desc.className = 'card-desc';
-    desc.textContent = pick(w,'desc');
-    body.appendChild(desc);
-
-    buildConceptBlock(w, body);
-
-    var viewsDisplay = pick(w, 'views_display');
-    var noteText = pick(w, 'views_note') || w.views_note;
-    if(w.views != null || noteText || viewsDisplay){
-      var viewsWrap = document.createElement('div');
-      viewsWrap.className = 'card-views';
-      if(viewsDisplay){
-        var vb2 = document.createElement('span');
-        vb2.className = 'views-badge';
-        vb2.textContent = viewsDisplay;
-        viewsWrap.appendChild(vb2);
-      } else if(w.views != null){
-        var vb = document.createElement('span');
-        vb.className = 'views-badge';
-        vb.textContent = formatViews(w.views);
-        viewsWrap.appendChild(vb);
-      }
-      if(noteText){
-        if(w.views == null && !viewsDisplay){
-          var noteLabel = document.createElement('span');
-          noteLabel.className = 'card-year';
-          noteLabel.textContent = t('noteLabel');
-          viewsWrap.appendChild(noteLabel);
-        }
-        var info = document.createElement('button');
-        info.type = 'button';
-        info.className = 'info-dot';
-        info.textContent = 'i';
-        info.setAttribute('aria-expanded', 'false');
-        info.setAttribute('aria-label', t('infoTooltip'));
-        info.style.marginLeft = '6px';
-        viewsWrap.appendChild(info);
-
-        var pop = document.createElement('div');
-        pop.className = 'info-popover';
-        pop.hidden = true;
-        pop.textContent = noteText;
-
-        info.addEventListener('click', function(btn, panel){
-          return function(e){
-            e.stopPropagation();
-            var willOpen = panel.hidden;
-            closeAllPopovers();
-            if(willOpen){
-              panel.hidden = false;
-              btn.setAttribute('aria-expanded', 'true');
-            }
-          };
-        }(info, pop));
-
-        body.appendChild(viewsWrap);
-        body.appendChild(pop);
-        viewsWrap = null;
-      }
-      if(viewsWrap) body.appendChild(viewsWrap);
-    }
-
-    card.appendChild(body);
-    return card;
-  }
-
-  function sortWorks(list){
-    return list.slice().sort(function(a,b){
-      var af = a.featured ? 1 : 0, bf = b.featured ? 1 : 0;
-      if(af !== bf) return bf - af;
-      return (b.year || 0) - (a.year || 0);
+      copy.appendChild(list);
+      card.appendChild(copy);
+      grid.appendChild(card);
     });
   }
 
-  function renderWorks(){
-    var data = state.data;
-    var all = data.works || [];
-    var brandWorks = sortWorks(all.filter(function(w){ return w.group === 'brand'; }));
-    var gameWorks = sortWorks(all.filter(function(w){ return w.group === 'game'; }));
-
-    var brandGrid = document.getElementById('works-grid-brand');
-    brandGrid.innerHTML = '';
-    brandWorks.forEach(function(w){ brandGrid.appendChild(buildWorkCard(w)); });
-
-    var gameGrid = document.getElementById('works-grid-game');
-    gameGrid.innerHTML = '';
-    gameWorks.forEach(function(w){ gameGrid.appendChild(buildWorkCard(w)); });
-
-    var brandCountEl = document.getElementById('works-brand-count');
-    if(brandCountEl) brandCountEl.textContent = brandWorks.length;
-    var gameCountEl = document.getElementById('works-game-count');
-    if(gameCountEl) gameCountEl.textContent = gameWorks.length;
-
-    var brandGroupEl = document.getElementById('works-group-brand');
-    if(brandGroupEl) brandGroupEl.style.display = brandWorks.length ? '' : 'none';
-    var gameGroupEl = document.getElementById('works-group-game');
-    if(gameGroupEl) gameGroupEl.style.display = gameWorks.length ? '' : 'none';
-  }
-
-  /* ---------------- About ---------------- */
-  function renderAbout(){
-    var data = state.data;
-    document.getElementById('about-bio').textContent = pick(data.director, 'bio');
-
-    var stats = data.director.stats;
-    var statsRow = document.getElementById('stats-row');
-    statsRow.innerHTML = '';
-    var statDefs = [
-      { num: stats.years, label: t('statYears') },
-      { num: stats.cases, label: t('statCases') },
-      { num: stats.deliverables, label: t('statDeliverables') }
-    ];
-    statDefs.forEach(function(s){
-      var el = document.createElement('div');
-      el.className = 'stat';
-      el.innerHTML =
-        '<div class="stat-num">' + escapeHtml(s.num) + '</div>' +
-        '<div class="stat-label">' + escapeHtml(s.label) + '</div>';
-      statsRow.appendChild(el);
+  function renderHero() {
+    var director = state.data.director;
+    document.getElementById('hero-pov').textContent = pick(director, 'point_of_view');
+    document.getElementById('hero-disciplines').textContent = pick(director, 'tagline');
+    var facts = document.getElementById('hero-facts');
+    facts.innerHTML = '';
+    director.facts.forEach(function (fact) {
+      var node = el('div', 'fact');
+      node.appendChild(el('b', '', fact.value));
+      node.appendChild(el('span', '', pick(fact, 'label')));
+      facts.appendChild(node);
     });
-
-    function renderBrandGroup(elId, zhList, enList){
-      var list = (state.lang === 'en' && enList && enList.length === (zhList || []).length)
-        ? enList : (zhList || []);
-      var el = document.getElementById(elId);
-      if(!el) return;
-      el.innerHTML = '';
-      list.forEach(function(b){
-        var chip = document.createElement('span');
-        chip.className = 'chip';
-        chip.textContent = b;
-        el.appendChild(chip);
-      });
-    }
-    renderBrandGroup('brand-chips-consumer', data.brands_consumer, data.brands_consumer_en);
-    renderBrandGroup('brand-chips-games', data.brands_games, data.brands_games_en);
-
-    // Talent wall: always shown bilingually (中英對照), regardless of active language toggle
-    var talentZh = data.endorsers || [];
-    var talentEn = data.endorsers_en || [];
-    var talentBlock = document.getElementById('talent-block');
-    var talentWall = document.getElementById('talent-wall');
-    talentWall.innerHTML = '';
-    if(talentZh.length){
-      talentBlock.style.display = '';
-      talentZh.forEach(function(nameZh, i){
-        var nameEn = talentEn[i] || '';
-        var card = document.createElement('div');
-        card.className = 'talent-card';
-        card.innerHTML =
-          '<span class="talent-zh">' + escapeHtml(nameZh) + '</span>' +
-          (nameEn ? '<span class="talent-en">' + escapeHtml(nameEn) + '</span>' : '');
-        talentWall.appendChild(card);
-      });
-    } else {
-      talentBlock.style.display = 'none';
-    }
+    var tea = findWork('tea');
+    var heroPlay = document.getElementById('hero-play');
+    heroPlay.onclick = function () { openVideo(tea); };
   }
 
-  /* ---------------- Contact ---------------- */
-  function renderContact(){
-    var data = state.data;
-    var companyText = pick(data.contact, 'company') || data.contact.company;
-    document.getElementById('contact-company').textContent = companyText;
-    var emailEl = document.getElementById('contact-email');
-    emailEl.textContent = data.contact.email;
-    emailEl.href = 'mailto:' + data.contact.email;
-
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
-    document.getElementById('footer-company').textContent = companyText;
-  }
-
-  /* ---------------- i18n chrome (nav labels etc) ---------------- */
-  function applyStaticStrings(){
-    document.querySelectorAll('[data-i18n-text]').forEach(function(el){
-      var key = el.getAttribute('data-i18n-text');
-      el.textContent = t(key);
+  function renderGambling() {
+    var data = state.data.gambling;
+    document.getElementById('gambling-title').textContent = pick(data, 'title');
+    document.getElementById('gambling-copy').textContent = pick(data, 'copy');
+    var images = document.getElementById('gambling-images');
+    images.innerHTML = '';
+    data.images.forEach(function (src, index) {
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = pick(data, 'title') + ' ' + (index + 1);
+      img.loading = 'lazy';
+      images.appendChild(img);
     });
+    var stats = document.getElementById('gambling-stats');
+    stats.innerHTML = '';
+    [
+      [data.films, state.lang === 'zh' ? '支作品' : 'Films'],
+      [data.commercials, state.lang === 'zh' ? '支商業廣告' : 'Commercials'],
+      [data.social_films, state.lang === 'zh' ? '支社群影片' : 'Social Films']
+    ].forEach(function (item) {
+      var stat = el('div', 'gambling-stat');
+      stat.appendChild(el('b', '', item[0]));
+      stat.appendChild(el('span', '', item[1]));
+      stats.appendChild(stat);
+    });
+  }
+
+  function renderAbout() {
+    var director = state.data.director;
+    document.getElementById('about-bio').textContent = pick(director, 'bio');
+    var facts = document.getElementById('about-facts');
+    facts.innerHTML = '';
+    director.facts.forEach(function (fact) {
+      var node = el('div', 'about-fact');
+      node.appendChild(el('b', '', fact.value));
+      node.appendChild(el('span', '', pick(fact, 'label')));
+      facts.appendChild(node);
+    });
+    var experience = document.getElementById('experience');
+    experience.innerHTML = '';
+    [
+      [state.lang === 'zh' ? '品牌' : 'Brands', state.data.experience.brands],
+      [state.lang === 'zh' ? '遊戲 IP' : 'Game IPs', state.data.experience.game_ips],
+      [state.lang === 'zh' ? '合作藝人（精選）' : 'Selected Talent', state.data.experience.talent]
+    ].forEach(function (group) {
+      var node = el('div', 'experience-group');
+      node.appendChild(el('h3', '', group[0]));
+      node.appendChild(el('p', '', group[1].join(' · ')));
+      experience.appendChild(node);
+    });
+    document.getElementById('contact-location').textContent = pick(state.data.contact, 'location');
+  }
+
+  function applyStaticLabels() {
     document.documentElement.lang = state.lang === 'zh' ? 'zh-Hant' : 'en';
-    var toggle = document.getElementById('lang-toggle');
-    if(toggle) toggle.setAttribute('data-active', state.lang);
-  }
-
-  /* ---------------- Full render ---------------- */
-  function renderAll(){
-    if(!state.data) return;
-    applyStaticStrings();
-    renderHero();
-    renderWorks();
-    renderAbout();
-    renderContact();
-  }
-
-  function setLang(lang){
-    if(lang !== 'zh' && lang !== 'en') return;
-    state.lang = lang;
-    renderAll();
-  }
-
-  function initLangToggle(){
-    var toggle = document.getElementById('lang-toggle');
-    if(!toggle) return;
-    toggle.addEventListener('click', function(){
-      setLang(state.lang === 'zh' ? 'en' : 'zh');
+    document.querySelectorAll('[data-label-zh]').forEach(function (node) {
+      node.textContent = node.getAttribute('data-label-' + state.lang);
     });
+    document.getElementById('lang-toggle').textContent = state.lang === 'zh' ? '中 / EN' : 'ZH / EN';
   }
 
-  function init(){
-    initLangToggle();
-    fetch('site-data.json')
-      .then(function(res){ return res.json(); })
-      .then(function(json){
-        state.data = json;
-        renderAll();
-      })
-      .catch(function(err){
-        console.error('Failed to load site-data.json', err);
-      });
+  function renderAll() {
+    if (!state.data) return;
+    applyStaticLabels();
+    renderHero();
+    renderFlagship();
+    renderSelected();
+    renderAdditional();
+    renderArchive();
+    renderGambling();
+    renderAbout();
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
   }
 
-  document.addEventListener('DOMContentLoaded', init);
-})();
+  document.getElementById('lang-toggle').addEventListener('click', function () {
+    state.lang = state.lang === 'zh' ? 'en' : 'zh';
+    localStorage.setItem('york-portfolio-lang', state.lang);
+    renderAll();
+  });
+  document.getElementById('video-close').addEventListener('click', closeVideo);
+  dialog.addEventListener('click', function (event) {
+    if (event.target === dialog) closeVideo();
+  });
+  dialog.addEventListener('close', function () { frame.innerHTML = ''; });
+
+  var savedLang = localStorage.getItem('york-portfolio-lang');
+  if (savedLang === 'en' || savedLang === 'zh') state.lang = savedLang;
+
+  fetch('site-data.json', { cache: 'no-store' })
+    .then(function (response) {
+      if (!response.ok) throw new Error('site-data.json ' + response.status);
+      return response.json();
+    })
+    .then(function (data) {
+      state.data = data;
+      renderAll();
+      if (window.location.hash) {
+        var fontReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+        fontReady.then(function () {
+          window.requestAnimationFrame(function () {
+            var target = document.querySelector(window.location.hash);
+            if (target) target.scrollIntoView({ block: 'start' });
+          });
+        });
+      }
+    })
+    .catch(function (error) {
+      console.error('Portfolio data failed to load', error);
+    });
+}());
