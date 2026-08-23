@@ -1,6 +1,142 @@
 {
   "schema": "york-director-website-v4",
-  "revision": "2026-08-23-v3-concise-live",
+  "revision": "2026-08-23-v4-quick-intro",
+  "quick_intro": {
+    "slides": [
+      {
+        "theme": "dark",
+        "eyebrow": "DIRECTOR PORTFOLIO",
+        "context": "YORK CHENG 鄭又勛",
+        "title_zh": "類型敘事廣告導演",
+        "title_en": "Genre-Narrative Commercial Director",
+        "copy_zh": "把廣告拍成一個世界。",
+        "copy_en": "Make every commercial a world.",
+        "image": "assets/portrait.jpg",
+        "alt_zh": "鄭又勛 York Cheng 肖像",
+        "alt_en": "Portrait of York Cheng"
+      },
+      {
+        "theme": "light",
+        "eyebrow": "COMMERCIAL NARRATIVE / 商業敘事",
+        "context_zh": "茶裏王｜客棧圍攻篇",
+        "context_en": "Tea’s Tea — Inn Siege",
+        "title_zh": "一壺茶，讓圍攻的人坐下來。",
+        "title_en": "One pot of tea brings a siege to the table.",
+        "copy_zh": "先把武俠衝突推到最高點，再用大容量茶壺改寫結局；產品不是插入，而是故事轉折。",
+        "copy_en": "Push the wuxia conflict to its peak, then let an oversized teapot rewrite the ending. The product does not interrupt the story; it becomes the turn.",
+        "image": "assets/quick/slide-02.webp",
+        "alt_zh": "茶裏王客棧中武俠人物圍坐喝茶",
+        "alt_en": "Wuxia characters gather around tea in the Tea’s Tea inn",
+        "links": [{ "label_zh": "茶裏王｜觀看本片", "label_en": "Tea’s Tea | Watch full film", "id": "rPfEga9kxU4" }]
+      },
+      {
+        "theme": "dark",
+        "eyebrow": "HORROR / 鬼片・恐怖類型",
+        "context_zh": "最後的道長",
+        "context_en": "The Last Taoist",
+        "title_zh": "婚禮的口令，變成鬼故事的倒數。",
+        "title_en": "Wedding commands become a countdown to a ghost story.",
+        "copy_zh": "從拜堂、紅妝到新娘回魂，讓熟悉的儀式逐步失控，明確落在鬼片的驚嚇。",
+        "copy_en": "From ceremonial bows and red bridal makeup to the bride’s return, familiar rituals gradually lose control and land squarely in horror.",
+        "image": "assets/quick/slide-03.webp",
+        "alt_zh": "最後的道長中紅妝新娘的恐怖畫面",
+        "alt_en": "Red-bridal horror scene from The Last Taoist",
+        "links": [{ "label_zh": "最後的道長｜觀看本片", "label_en": "The Last Taoist | Watch full film", "id": "ep29rG5y45o" }]
+      },
+      {
+        "theme": "light",
+        "eyebrow": "MARTIAL ARTS DIRECTION / 武打導演",
+        "context_zh": "霸王之野望 × 御劍神州 × 煙雨江湖",
+        "context_en": "Bawang no Bou × Yujian Shenzhou × Misty River",
+        "title_zh": "我擅長拍武打。",
+        "title_en": "Martial arts direction is one of my strengths.",
+        "copy_zh": "近身兵刃、群戰走位、演員連續招式——我把動作的難度拍清楚，也把力道拍出來。",
+        "copy_en": "Close-quarters weapons, ensemble combat and continuous choreography—I make the difficulty legible and the impact felt.",
+        "image": "assets/quick/slide-04.webp",
+        "alt_zh": "武俠角色在森林中持劍交鋒",
+        "alt_en": "Martial artists cross swords in a forest",
+        "links": [
+          { "label_zh": "霸王之野望｜觀看本片", "label_en": "Bawang no Bou | Watch full film", "id": "jcQ-spf44sI" },
+          { "label_zh": "御劍神州｜觀看本片", "label_en": "Yujian Shenzhou | Watch full film", "id": "Ct-1d0nXWRM" },
+          { "label_zh": "煙雨江湖・桃花篇｜觀看本片", "label_en": "Misty River — Taohua | Watch full film", "id": "f9LeV0kl3a0" }
+        ]
+      },
+      {
+        "theme": "dark",
+        "eyebrow": "LIVE ACTION × VFX / 真人 × 後期",
+        "context_zh": "斗羅大陸 × 不休的烏拉拉 × 神魔傳說",
+        "context_en": "Soul Land × Ulala × Shenmo Legend",
+        "title_zh": "特效不是貼上去，是演進去。",
+        "title_en": "VFX is not pasted on. It is performed into the scene.",
+        "copy_zh": "演員先看、躲、出手；特效再沿著視線、動作與場景發生。三種作品，三種整合尺度。",
+        "copy_en": "Actors look, dodge and strike first; effects then follow their eyelines, movement and the space. Three works, three scales of integration.",
+        "image": "assets/quick/slide-05.webp",
+        "alt_zh": "真人演員與奇幻特效共構的戰鬥場面",
+        "alt_en": "Live-action performance integrated with fantasy visual effects",
+        "links": [
+          { "label_zh": "斗羅・篇一", "label_en": "Soul Land | Film I", "id": "slorjwyR06A" },
+          { "label_zh": "斗羅・篇二", "label_en": "Soul Land | Film II", "id": "QMX1bwPORS8" },
+          { "label_zh": "不休的烏拉拉", "label_en": "Ulala | Watch full film", "id": "SvUU0LTiEec" },
+          { "label_zh": "神魔傳說", "label_en": "Shenmo Legend | Watch full film", "id": "iIUDbPBPqSw" }
+        ]
+      },
+      {
+        "theme": "light",
+        "eyebrow": "PERFORMANCE & EMOTION / 表演與情緒",
+        "context_zh": "Google Play｜就差一點",
+        "context_en": "Google Play Taiwan — So Close",
+        "title_zh": "不是拍點數；是拍「就差一點」的人。",
+        "title_en": "Not points—the people who came this close.",
+        "copy_zh": "先用演員表演和群像節奏，讓挫折被看懂；Google Play 的補點才成為解法。",
+        "copy_en": "Performance and ensemble rhythm make the frustration readable first; only then does Google Play’s top-up become the solution.",
+        "image": "assets/quick/slide-06.webp",
+        "alt_zh": "Google Play 廣告中多人對著遊戲螢幕的表演",
+        "alt_en": "Ensemble performance around a game screen in Google Play’s film",
+        "links": [{ "label_zh": "Google Play｜觀看本片", "label_en": "Google Play | Watch full film", "id": "IOeQ5IwqYN0" }]
+      },
+      {
+        "theme": "dark",
+        "eyebrow": "PRODUCT DIRECTION / 產品敘事",
+        "context": "Schick HydroPRO",
+        "title_zh": "刀頭碰到臉頰，規格才有感覺。",
+        "title_en": "The feature only feels real when the razor touches the cheek.",
+        "copy_zh": "用貼臉表演、藍光路徑與產品特寫，把「磁浮」拍成觀眾看得到的機制。",
+        "copy_en": "Close-up performance, a blue-light path and product detail turn magnetic suspension into a mechanism the audience can see.",
+        "image": "assets/quick/slide-07.webp",
+        "alt_zh": "舒適牌 HydroPRO 刮鬍刀與藍光產品特寫",
+        "alt_en": "Schick HydroPRO razor product detail with blue light",
+        "links": [{ "label_zh": "Schick HydroPRO｜觀看本片", "label_en": "Schick HydroPRO | Watch full film", "id": "d_B7amkyM6Y" }]
+      },
+      {
+        "theme": "light",
+        "eyebrow": "AI CONCEPT & BRAND TRANSLATION / AI 概念與品牌轉譯",
+        "context_zh": "王品肉次方｜肉道三部曲",
+        "context_en": "ROU CI FANG — The Way of Meat Trilogy",
+        "title_zh": "切肉，不只是一個動作。",
+        "title_en": "Cutting meat is more than one action.",
+        "copy_zh": "三支片分別建立武館世界、刀法符號與角色關係，讓同一個產品動作變成可延伸的品牌語言。",
+        "copy_en": "Three films build a dojo world, a cutting symbol and character relationships, turning one product action into an extendable brand language.",
+        "image": "assets/quick/slide-08.webp",
+        "alt_zh": "肉次方 AI 武館中刀法與切肉的畫面",
+        "alt_en": "AI dojo imagery of cutting technique for ROU CI FANG",
+        "links": [
+          { "label_zh": "壹之型｜觀看本片", "label_en": "Form I | Watch full film", "id": "3KVSg0WNciw" },
+          { "label_zh": "貳之型｜觀看本片", "label_en": "Form II | Watch full film", "id": "uAuxnr8chUE" },
+          { "label_zh": "參之型｜觀看本片", "label_en": "Form III | Watch full film", "id": "6YA5sBdlxXU" }
+        ]
+      },
+      {
+        "theme": "dark",
+        "eyebrow": "CONTACT",
+        "context": "YORK CHENG 鄭又勛",
+        "title_zh": "一起完成下一個世界。",
+        "title_en": "Let’s make the next world.",
+        "copy_zh": "類型敘事廣告導演｜把廣告拍成一個世界。",
+        "copy_en": "Genre-Narrative Commercial Director | Make every commercial a world.",
+        "email": "hey.yuhsuncheng@gmail.com"
+      }
+    ]
+  },
   "director": {
     "name_zh": "鄭又勛",
     "name_en": "York Cheng",

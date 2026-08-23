@@ -70,6 +70,7 @@ const css = await readSite('css/style.css');
 const js = await readSite('js/script.js');
 
 check(data.schema === 'york-director-website-v4', `unexpected site-data schema: ${data.schema}`);
+check(data.revision === '2026-08-23-v4-quick-intro', `unexpected site-data revision: ${data.revision}`);
 check(Array.isArray(data.works), 'site-data.works must be an array');
 check(data.works?.length === 31, `works must contain 31 linked entries, found ${data.works?.length ?? 0}`);
 check(Array.isArray(data.filmography), 'site-data.filmography must be an array');
@@ -92,6 +93,37 @@ check(data.gambling_commercials?.title_en === 'GAMBLING COMMERCIALS', 'gambling 
 check(data.gambling_commercials?.image === 'assets/works/gambling-commercials.webp', 'gambling image path is incorrect');
 check(works.every(work => Array.isArray(work.videos) && work.videos.length > 0), 'every WORKS case must have at least one public full-film link');
 check(data.contact?.email === 'hey.yuhsuncheng@gmail.com', 'contact email must use the approved director address');
+
+const quickSlides = data.quick_intro?.slides;
+const expectedQuickVideoIds = [
+  'rPfEga9kxU4', 'ep29rG5y45o', 'jcQ-spf44sI', 'Ct-1d0nXWRM', 'f9LeV0kl3a0',
+  'slorjwyR06A', 'QMX1bwPORS8', 'SvUU0LTiEec', 'iIUDbPBPqSw', 'IOeQ5IwqYN0',
+  'd_B7amkyM6Y', '3KVSg0WNciw', 'uAuxnr8chUE', '6YA5sBdlxXU'
+];
+check(Array.isArray(quickSlides), 'quick_intro.slides must be an array');
+check(quickSlides?.length === 9, `quick_intro.slides must contain 9 entries, found ${quickSlides?.length ?? 0}`);
+if (Array.isArray(quickSlides) && quickSlides.length === 9) {
+  const quickVideoIds = quickSlides.flatMap(slide => slide.links || []).map(link => link.id);
+  check(quickVideoIds.length === 14, `quick introduction must contain 14 film entries, found ${quickVideoIds.length}`);
+  check(JSON.stringify(quickVideoIds) === JSON.stringify(expectedQuickVideoIds), 'quick introduction film IDs do not exactly match the approved sequence');
+  for (const id of quickVideoIds) check(/^[A-Za-z0-9_-]{11}$/.test(id), `invalid quick-introduction YouTube id: ${id}`);
+  check(quickSlides[0].theme === 'dark' && quickSlides[8].theme === 'dark', 'quick cover and contact themes must be dark');
+  check(quickSlides.slice(1, 8).every((slide, index) => slide.theme === (index % 2 === 0 ? 'light' : 'dark')), 'quick evidence-slide themes do not alternate light/dark');
+  check(!quickSlides[0].links?.length && !quickSlides[8].links?.length, 'quick cover/contact must not contain film entries');
+  check(quickSlides[8].email === 'hey.yuhsuncheng@gmail.com', 'quick contact email is incorrect');
+  for (let index = 1; index <= 7; index += 1) {
+    const image = quickSlides[index].image;
+    const expected = `assets/quick/slide-${String(index + 1).padStart(2, '0')}.webp`;
+    check(image === expected, `quick slide ${index + 1} image path is incorrect: ${image}`);
+    try {
+      const buffer = await fs.readFile(path.join(siteRoot, image));
+      check(buffer.length > 1000, `quick slide ${index + 1} image is unexpectedly small`);
+      check(buffer.subarray(0, 4).toString() === 'RIFF' && buffer.subarray(8, 12).toString() === 'WEBP', `quick slide ${index + 1} is not a valid WebP container`);
+    } catch {
+      failures.push(`missing quick slide image: ${image}`);
+    }
+  }
+}
 
 for (const legacyKey of ['flagship', 'selected', 'additional', 'archive', 'gambling']) {
   check(!Object.hasOwn(data, legacyKey), `legacy tier key remains in site-data: ${legacyKey}`);
@@ -328,6 +360,7 @@ async function validateRenderedSite() {
           brokenImages: [...document.images]
             .filter(image => !image.complete || image.naturalWidth === 0)
             .map(image => image.getAttribute('src')),
+          iframeCount: document.querySelectorAll('iframe').length,
           horizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
           forbidden
         };
@@ -340,6 +373,7 @@ async function validateRenderedSite() {
       check(metrics.gamblingTitle === '博弈廣告作品', `${viewport.label} rendered gambling title is incorrect`);
       check(metrics.gamblingLinks === 0, `${viewport.label} gambling showcase must not contain an unverified link`);
       check(metrics.brokenImages.length === 0, `${viewport.label} has broken images: ${metrics.brokenImages.join(', ')}`);
+      check(metrics.iframeCount === 0, `${viewport.label} initially contains ${metrics.iframeCount} iframe(s)`);
       check(!metrics.horizontalOverflow, `${viewport.label} has horizontal overflow`);
       check(metrics.forbidden.length === 0, `${viewport.label} renders forbidden text: ${metrics.forbidden.join(', ')}`);
 
@@ -362,8 +396,82 @@ async function validateRenderedSite() {
         check(closedIframeCount === 0, `${viewport.label} work ${index + 1} left an iframe after closing`);
       }
 
+      await page.locator('#quick-open').click();
+      check(await page.locator('#quick-dialog').evaluate(node => node.open), `${viewport.label} quick dialog did not open`);
+      const initialQuickTitle = await page.locator('#quick-title').textContent();
+      await page.locator('#quick-lang-toggle').click();
+      check(await page.locator('#quick-title').textContent() !== initialQuickTitle, `${viewport.label} quick language toggle did not update the open slide`);
+      await page.locator('#quick-lang-toggle').click();
+      await page.keyboard.press('End');
+      check(await page.locator('#quick-progress').textContent() === '09 / 09', `${viewport.label} End key did not reach the final quick slide`);
+      await page.keyboard.press('Home');
+      check(await page.locator('#quick-progress').textContent() === '01 / 09', `${viewport.label} Home key did not return to the first quick slide`);
+      await page.keyboard.press('ArrowRight');
+      check(await page.locator('#quick-progress').textContent() === '02 / 09', `${viewport.label} ArrowRight did not advance the quick slide`);
+      await page.keyboard.press('ArrowLeft');
+      check(await page.locator('#quick-progress').textContent() === '01 / 09', `${viewport.label} ArrowLeft did not return the quick slide`);
+      for (let index = 0; index < quickSlides.length; index += 1) {
+        await page.locator('#quick-title').waitFor({ state: 'visible' });
+        if (quickSlides[index].image) {
+          await page.waitForFunction(() => {
+            const image = document.querySelector('#quick-stage img');
+            return Boolean(image?.complete && image.naturalWidth > 0);
+          });
+        }
+        const quickMetrics = await page.evaluate((expectsImage) => {
+          const title = document.querySelector('#quick-title');
+          const dialog = document.querySelector('#quick-dialog');
+          const image = document.querySelector('#quick-stage img');
+          const titleBox = title?.getBoundingClientRect();
+          return {
+            titleVisible: Boolean(titleBox && titleBox.width > 0 && titleBox.height > 0),
+            dialogOpen: Boolean(dialog?.open),
+            badImage: expectsImage && (!image?.complete || image.naturalWidth === 0),
+            horizontalOverflow: Boolean(dialog && dialog.scrollWidth > dialog.clientWidth),
+            progress: document.querySelector('#quick-progress')?.textContent?.trim()
+          };
+        }, Boolean(quickSlides[index].image));
+        check(quickMetrics.titleVisible, `${viewport.label} quick slide ${index + 1} title is not visible`);
+        check(quickMetrics.dialogOpen, `${viewport.label} quick slide ${index + 1} dialog is not open`);
+        check(!quickMetrics.badImage, `${viewport.label} quick slide ${index + 1} has an undecodable image`);
+        check(!quickMetrics.horizontalOverflow, `${viewport.label} quick slide ${index + 1} has horizontal overflow`);
+        check(quickMetrics.progress === `${String(index + 1).padStart(2, '0')} / 09`, `${viewport.label} quick slide ${index + 1} progress is incorrect`);
+        if (index < quickSlides.length - 1) await page.locator('#quick-next').click();
+      }
+      check(await page.locator('#quick-next').isDisabled(), `${viewport.label} quick next control remains enabled on the final slide`);
+      check(await page.locator('#quick-prev').isEnabled(), `${viewport.label} quick previous control is disabled on the final slide`);
+      await page.locator('#quick-close').click();
+      check(await page.locator('#video-frame iframe').count() === 0, `${viewport.label} quick close left a video iframe`);
+
+      let quickModalChecks = 0;
+      if (viewport.label === 'desktop') {
+        for (let slideIndex = 0; slideIndex < quickSlides.length; slideIndex += 1) {
+          const links = quickSlides[slideIndex].links || [];
+          for (let linkIndex = 0; linkIndex < links.length; linkIndex += 1) {
+            const expectedId = links[linkIndex].id;
+            await page.locator('#quick-open').click();
+            await page.locator('.quick-dot').nth(slideIndex).click();
+            await page.locator('.quick-watch').nth(linkIndex).click();
+            const quickVideoState = await page.evaluate(() => ({
+              quickClosed: !document.querySelector('#quick-dialog')?.open,
+              videoOpen: Boolean(document.querySelector('#video-dialog')?.open),
+              iframeCount: document.querySelectorAll('#video-frame iframe').length,
+              iframeSrc: document.querySelector('#video-frame iframe')?.getAttribute('src') || ''
+            }));
+            check(quickVideoState.quickClosed, `quick film ${expectedId} did not close the quick dialog`);
+            check(quickVideoState.videoOpen, `quick film ${expectedId} did not open the existing video dialog`);
+            check(quickVideoState.iframeCount === 1, `quick film ${expectedId} rendered ${quickVideoState.iframeCount} iframe(s)`);
+            check(quickVideoState.iframeSrc.includes(`/embed/${expectedId}?`), `quick film ${expectedId} opened the wrong iframe: ${quickVideoState.iframeSrc}`);
+            await page.locator('#video-close').click();
+            check(await page.locator('#video-frame iframe').count() === 0, `quick film ${expectedId} left an iframe after closing`);
+            quickModalChecks += 1;
+          }
+        }
+        check(quickModalChecks === 14, `desktop checked ${quickModalChecks}/14 quick film entries`);
+      }
+
       check(pageErrors.length === 0, `${viewport.label} page errors: ${pageErrors.join(' | ')}`);
-      renderedViews.push({ ...viewport, ...metrics, modalChecks, pageErrors: pageErrors.length });
+      renderedViews.push({ ...viewport, ...metrics, modalChecks, quickModalChecks, pageErrors: pageErrors.length });
       await page.close();
     }
   } catch (error) {
@@ -377,8 +485,9 @@ async function validateRenderedSite() {
 if (process.argv.includes('--rendered')) await validateRenderedSite();
 
 if (process.argv.includes('--online')) {
-  for (let offset = 0; offset < videoIds.length; offset += 6) {
-    const batch = videoIds.slice(offset, offset + 6);
+  const onlineVideoIds = [...new Set([...videoIds, ...expectedQuickVideoIds])];
+  for (let offset = 0; offset < onlineVideoIds.length; offset += 6) {
+    const batch = onlineVideoIds.slice(offset, offset + 6);
     const results = await Promise.all(batch.map(async id => {
       const url = `https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=${id}`;
       try {
@@ -396,9 +505,14 @@ check(html.includes('assets/og-york-director.jpg'), 'Open Graph preview is missi
 check(html.includes('id="gambling"'), 'gambling showcase section is missing from index.html');
 check(html.includes('GAMBLING COMMERCIALS'), 'approved gambling label is missing from index.html');
 check(html.includes('mailto:hey.yuhsuncheng@gmail.com'), 'approved contact mailto is missing from index.html');
+check(html.includes('id="quick-open"'), 'quick introduction CTA is missing from index.html');
+check(html.includes('id="quick-dialog"'), 'quick introduction dialog is missing from index.html');
+check(html.includes('id="quick-lang-toggle"'), 'quick introduction language control is missing from index.html');
 check(css.includes('@media(max-width:680px)'), 'mobile breakpoint is missing');
+check(css.includes('.quick-dialog'), 'quick introduction dialog styles are missing');
 check(js.includes('youtube-nocookie.com/embed/'), 'privacy-enhanced YouTube embed is missing');
 check(js.includes('window.location.hash'), 'hash navigation recovery is missing');
+check(js.includes("event.key === 'ArrowLeft'") && js.includes("event.key === 'ArrowRight'") && js.includes("event.key === 'Home'") && js.includes("event.key === 'End'"), 'quick introduction keyboard navigation is incomplete');
 
 if (failures.length) {
   console.error(JSON.stringify({ status: 'FAIL', failures }, null, 2));
@@ -411,6 +525,8 @@ console.log(JSON.stringify({
   filmography: filmographyTitles.length,
   uniqueFilmography: new Set(filmographyTitles).size,
   videoIds: videoIds.length,
+  quickVideoIds: expectedQuickVideoIds.length,
+  onlineUniqueVideoIds: new Set([...videoIds, ...expectedQuickVideoIds]).size,
   ordinarySelectedImages: assetManifest.items.filter(item => item.slug !== 'gambling-commercials').length,
   gamblingSelectedImages: assetManifest.items.filter(item => item.slug === 'gambling-commercials').length,
   onlineVideoCheck: process.argv.includes('--online'),

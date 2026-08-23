@@ -1,11 +1,19 @@
 (function () {
   'use strict';
 
-  var state = { lang: 'zh', data: null, activeWork: null, activeVideo: 0 };
+  var state = { lang: 'zh', data: null, activeWork: null, activeVideo: 0, quickIndex: 0 };
   var dialog = document.getElementById('video-dialog');
   var frame = document.getElementById('video-frame');
   var tabs = document.getElementById('video-tabs');
   var videoTitle = document.getElementById('video-title');
+  var quickDialog = document.getElementById('quick-dialog');
+  var quickStage = document.getElementById('quick-stage');
+  var quickDots = document.getElementById('quick-dots');
+  var quickProgress = document.getElementById('quick-progress');
+  var quickKicker = document.getElementById('quick-kicker');
+  var quickPrev = document.getElementById('quick-prev');
+  var quickNext = document.getElementById('quick-next');
+  var quickOpen = document.getElementById('quick-open');
 
   function pick(item, key) {
     return item[key + '_' + state.lang] || item[key + '_zh'] || item[key + '_en'] || '';
@@ -67,6 +75,104 @@
     state.activeWork = null;
     if (dialog.open && typeof dialog.close === 'function') dialog.close();
     else dialog.removeAttribute('open');
+  }
+
+  function quickSlides() {
+    return state.data && state.data.quick_intro && Array.isArray(state.data.quick_intro.slides)
+      ? state.data.quick_intro.slides
+      : [];
+  }
+
+  function quickContext(slide) {
+    return pick(slide, 'context') || slide.context || '';
+  }
+
+  function renderQuick() {
+    var slides = quickSlides();
+    if (!slides.length) return;
+    state.quickIndex = Math.max(0, Math.min(state.quickIndex, slides.length - 1));
+    var slide = slides[state.quickIndex];
+    quickDialog.className = 'quick-dialog quick-theme-' + (slide.theme || 'dark');
+    quickKicker.textContent = slide.eyebrow || '';
+    quickProgress.textContent = String(state.quickIndex + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    quickStage.innerHTML = '';
+
+    var copy = el('div', 'quick-copy');
+    var context = quickContext(slide);
+    if (context) copy.appendChild(el('p', 'quick-context', context));
+    var title = el('h2', 'quick-title', pick(slide, 'title'));
+    title.id = 'quick-title';
+    copy.appendChild(title);
+    copy.appendChild(el('p', 'quick-description', pick(slide, 'copy')));
+    if (slide.email) {
+      var email = el('a', 'quick-email', String(slide.email).toUpperCase() + ' ↗');
+      email.href = 'mailto:' + slide.email;
+      copy.appendChild(email);
+    }
+    if (Array.isArray(slide.links) && slide.links.length) {
+      var links = el('div', 'quick-links');
+      slide.links.forEach(function (link) {
+        var watch = el('button', 'quick-watch', pick(link, 'label'));
+        watch.type = 'button';
+        watch.addEventListener('click', function () {
+          closeQuick(false);
+          openVideo({
+            title_zh: String(link.label_zh || slide.title_zh || '').replace(/｜觀看本片$/, ''),
+            title_en: String(link.label_en || slide.title_en || '').replace(/\s*\|\s*Watch full film$/, ''),
+            videos: [{ id: link.id, label_zh: link.label_zh, label_en: link.label_en }]
+          });
+        });
+        links.appendChild(watch);
+      });
+      copy.appendChild(links);
+    }
+    quickStage.appendChild(copy);
+
+    if (slide.image) {
+      var visual = el('div', 'quick-visual');
+      var image = document.createElement('img');
+      image.src = slide.image;
+      image.alt = pick(slide, 'alt');
+      image.width = 1600;
+      image.height = 900;
+      visual.appendChild(image);
+      quickStage.appendChild(visual);
+    }
+
+    quickDots.innerHTML = '';
+    slides.forEach(function (item, index) {
+      var dot = el('button', 'quick-dot', String(index + 1).padStart(2, '0'));
+      dot.type = 'button';
+      dot.setAttribute('aria-label', (state.lang === 'zh' ? '前往第 ' : 'Go to slide ') + String(index + 1) + (state.lang === 'zh' ? ' 頁' : ''));
+      dot.setAttribute('aria-current', index === state.quickIndex ? 'step' : 'false');
+      dot.addEventListener('click', function () { state.quickIndex = index; renderQuick(); });
+      quickDots.appendChild(dot);
+    });
+    quickPrev.disabled = state.quickIndex === 0;
+    quickNext.disabled = state.quickIndex === slides.length - 1;
+  }
+
+  function openQuick() {
+    if (!quickSlides().length) return;
+    state.quickIndex = 0;
+    renderQuick();
+    if (typeof quickDialog.showModal === 'function') quickDialog.showModal();
+    else quickDialog.setAttribute('open', '');
+    document.getElementById('quick-close').focus();
+  }
+
+  function closeQuick(restoreFocus) {
+    if (quickDialog.open && typeof quickDialog.close === 'function') quickDialog.close();
+    else quickDialog.removeAttribute('open');
+    if (restoreFocus !== false) quickOpen.focus();
+  }
+
+  function moveQuick(amount) {
+    var slides = quickSlides();
+    var next = state.quickIndex + amount;
+    if (next < 0 || next >= slides.length) return;
+    state.quickIndex = next;
+    renderQuick();
   }
 
   function buildMedia(work, className) {
@@ -169,6 +275,7 @@
       node.textContent = node.getAttribute('data-label-' + state.lang);
     });
     document.getElementById('lang-toggle').textContent = state.lang === 'zh' ? '中 / EN' : 'ZH / EN';
+    document.getElementById('quick-lang-toggle').textContent = state.lang === 'zh' ? '中 / EN' : 'ZH / EN';
   }
 
   function renderAll() {
@@ -179,18 +286,40 @@
     renderGambling();
     renderFilmography();
     renderAbout();
+    if (quickDialog.open) renderQuick();
   }
 
-  document.getElementById('lang-toggle').addEventListener('click', function () {
+  function toggleLanguage() {
     state.lang = state.lang === 'zh' ? 'en' : 'zh';
     localStorage.setItem('york-portfolio-lang', state.lang);
     renderAll();
-  });
+  }
+
+  document.getElementById('lang-toggle').addEventListener('click', toggleLanguage);
+  document.getElementById('quick-lang-toggle').addEventListener('click', toggleLanguage);
   document.getElementById('video-close').addEventListener('click', closeVideo);
   dialog.addEventListener('click', function (event) {
     if (event.target === dialog) closeVideo();
   });
   dialog.addEventListener('close', function () { frame.innerHTML = ''; });
+  quickOpen.addEventListener('click', openQuick);
+  document.getElementById('quick-close').addEventListener('click', function () { closeQuick(); });
+  quickPrev.addEventListener('click', function () { moveQuick(-1); });
+  quickNext.addEventListener('click', function () { moveQuick(1); });
+  quickDialog.addEventListener('click', function (event) {
+    if (event.target === quickDialog) closeQuick();
+  });
+  quickDialog.addEventListener('cancel', function (event) {
+    event.preventDefault();
+    closeQuick();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (!quickDialog.open) return;
+    if (event.key === 'ArrowLeft') { event.preventDefault(); moveQuick(-1); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); moveQuick(1); }
+    if (event.key === 'Home') { event.preventDefault(); state.quickIndex = 0; renderQuick(); }
+    if (event.key === 'End') { event.preventDefault(); state.quickIndex = quickSlides().length - 1; renderQuick(); }
+  });
 
   var savedLang = localStorage.getItem('york-portfolio-lang');
   if (savedLang === 'en' || savedLang === 'zh') state.lang = savedLang;

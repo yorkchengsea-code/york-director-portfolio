@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+TC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260823a">
+  <link rel="stylesheet" href="css/style.css?v=20260823b">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -47,6 +47,7 @@
         <p class="hero-disciplines" id="hero-disciplines"></p>
         <div class="hero-actions">
           <a class="text-link" href="#works" data-label-zh="觀看作品 ↓" data-label-en="View works ↓">觀看作品 ↓</a>
+          <button class="text-link muted quick-open" id="quick-open" type="button" data-label-zh="快速認識 →" data-label-en="Quick introduction →">快速認識 →</button>
           <a class="text-link muted" href="mailto:hey.yuhsuncheng@gmail.com">EMAIL ↗</a>
         </div>
       </div>
@@ -119,6 +120,25 @@
     <div class="video-frame" id="video-frame"></div>
   </dialog>
 
-  <script src="js/script.js?v=20260823a"></script>
+  <dialog class="quick-dialog" id="quick-dialog" aria-labelledby="quick-title">
+    <div class="quick-shell">
+      <header class="quick-head">
+        <p class="quick-kicker" id="quick-kicker">DIRECTOR PORTFOLIO</p>
+        <div class="quick-head-actions">
+          <p class="quick-progress" id="quick-progress" aria-live="polite">01 / 09</p>
+          <button class="quick-lang-toggle" id="quick-lang-toggle" type="button" aria-label="Switch language">中 / EN</button>
+          <button class="quick-close" id="quick-close" type="button" aria-label="Close quick introduction">CLOSE ×</button>
+        </div>
+      </header>
+      <div class="quick-dots" id="quick-dots" aria-label="Quick introduction slides"></div>
+      <div class="quick-stage" id="quick-stage"></div>
+      <footer class="quick-controls">
+        <button id="quick-prev" type="button" aria-label="Previous slide">← <span data-label-zh="上一頁" data-label-en="Previous">上一頁</span></button>
+        <button id="quick-next" type="button" aria-label="Next slide"><span data-label-zh="下一頁" data-label-en="Next">下一頁</span> →</button>
+      </footer>
+    </div>
+  </dialog>
+
+  <script src="js/script.js?v=20260823b"></script>
 </body>
 </html>
