@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>鄭又勛 York Cheng｜Director — Game Advertising & Commercial Film</title>
-  <meta name="description" content="鄭又勛 York Cheng，台灣導演。9 年、100+ 執導專案，作品橫跨遊戲廣告、商業影像、真人實拍、CG 與 AI 影像。">
+  <meta name="description" content="鄭又勛 York Cheng，台灣導演。作品橫跨遊戲廣告、商業影像、真人實拍、CG 與 AI 影像。">
   <meta name="theme-color" content="#11120f">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://yorkchengsea-code.github.io/york-director-portfolio/">
@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+TC:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20260822b">
+  <link rel="stylesheet" href="css/style.css?v=20260823a">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -29,7 +29,7 @@
       <span>YORK CHENG</span><small>DIRECTOR</small>
     </a>
     <nav class="site-nav" aria-label="Primary navigation">
-      <a href="#flagship" data-label-zh="作品" data-label-en="Works">作品</a>
+      <a href="#works" data-label-zh="作品" data-label-en="Works">作品</a>
       <a href="#filmography" data-label-zh="片目" data-label-en="Filmography">片目</a>
       <a href="#about" data-label-zh="關於" data-label-en="About">關於</a>
       <a href="#contact" data-label-zh="聯絡" data-label-en="Contact">聯絡</a>
@@ -46,64 +46,43 @@
         <p class="hero-pov" id="hero-pov"></p>
         <p class="hero-disciplines" id="hero-disciplines"></p>
         <div class="hero-actions">
-          <a class="text-link" href="#flagship" data-label-zh="觀看精選作品 ↓" data-label-en="Watch selected works ↓">觀看精選作品 ↓</a>
+          <a class="text-link" href="#works" data-label-zh="觀看作品 ↓" data-label-en="View works ↓">觀看作品 ↓</a>
           <a class="text-link muted" href="mailto:hey.yuhsuncheng@gmail.com">EMAIL ↗</a>
         </div>
-        <div class="facts" id="hero-facts"></div>
       </div>
       <button class="hero-media media-button" id="hero-play" type="button" aria-label="播放茶裏王客棧圍攻篇">
         <img src="assets/works/tea.webp" alt="茶裏王《客棧圍攻篇》正片畫面" width="1600" height="900">
         <span class="media-shade"></span>
         <span class="play-mark" aria-hidden="true">▶</span>
-        <span class="media-caption"><b>01 / FLAGSHIP</b><i>茶裏王《客棧圍攻篇》</i></span>
+        <span class="media-caption"><b>TEA’S TEA</b><i>茶裏王《客棧圍攻篇》</i></span>
       </button>
     </section>
 
-    <section class="section section-paper" id="flagship">
+    <section class="section section-paper" id="works">
       <div class="section-heading">
-        <p>01 / FLAGSHIP</p>
-        <h2 data-label-zh="旗艦作品" data-label-en="Flagship Works">旗艦作品</h2>
-        <span>08</span>
+        <p>WORKS</p>
+        <h2 data-label-zh="作品" data-label-en="Works">作品</h2>
       </div>
-      <div class="flagship-list" id="flagship-list"></div>
+      <div class="works-grid" id="works-grid"></div>
     </section>
 
-    <section class="section section-paper selected-section" id="selected">
+    <section class="section section-dark gambling-showcase" id="gambling">
       <div class="section-heading">
-        <p>02 / SELECTED</p>
-        <h2 data-label-zh="精選作品" data-label-en="Selected Works">精選作品</h2>
-        <span>12</span>
+        <p>GAMBLING COMMERCIALS</p>
+        <h2 id="gambling-title">博弈廣告作品</h2>
       </div>
-      <div class="selected-grid" id="selected-grid"></div>
-    </section>
-
-    <section class="section section-dark" id="additional">
-      <div class="section-heading">
-        <p>03 / ADDITIONAL</p>
-        <h2 data-label-zh="延伸精選" data-label-en="Additional Selected">延伸精選</h2>
-        <span>12</span>
+      <div class="gambling-layout">
+        <img id="gambling-image" src="assets/works/gambling-commercials.webp" alt="博弈廣告作品" width="1600" height="900" loading="lazy">
+        <p id="gambling-copy"></p>
       </div>
-      <div class="additional-grid" id="additional-grid"></div>
     </section>
 
     <section class="section section-paper" id="filmography">
       <div class="section-heading">
-        <p>04 / ARCHIVE</p>
-        <h2 data-label-zh="作品片目" data-label-en="Filmography">作品片目</h2>
-        <span>26</span>
+        <p>FILMOGRAPHY</p>
+        <h2 data-label-zh="片目" data-label-en="Filmography">片目</h2>
       </div>
-      <p class="section-intro" data-label-zh="完整片目保留廣度，旗艦與精選維持閱讀層級。" data-label-en="The full index preserves breadth while the selected tiers keep the reading clear.">完整片目保留廣度，旗艦與精選維持閱讀層級。</p>
-      <div class="archive-grid" id="archive-grid"></div>
-    </section>
-
-    <section class="gambling section-dark" id="gambling">
-      <div class="gambling-images" id="gambling-images"></div>
-      <div class="gambling-copy">
-        <p class="eyebrow">05 / COLLECTION</p>
-        <h2 id="gambling-title"></h2>
-        <p id="gambling-copy"></p>
-        <div class="gambling-stats" id="gambling-stats"></div>
-      </div>
+      <div class="filmography-list" id="filmography-list"></div>
     </section>
 
     <section class="about section-paper" id="about">
@@ -111,16 +90,15 @@
         <img src="assets/portrait.jpg" alt="鄭又勛 York Cheng" width="932" height="1200" loading="lazy">
       </div>
       <div class="about-copy">
-        <p class="eyebrow">06 / PROFILE</p>
+        <p class="eyebrow">PROFILE</p>
         <h2>YORK CHENG<br><span>鄭又勛</span></h2>
         <p class="about-bio" id="about-bio"></p>
-        <div class="about-facts" id="about-facts"></div>
         <div class="experience" id="experience"></div>
       </div>
     </section>
 
     <section class="contact section-dark" id="contact">
-      <p class="eyebrow">07 / CONTACT</p>
+      <p class="eyebrow">CONTACT</p>
       <h2 data-label-zh="一起完成下一個世界。" data-label-en="Let’s make the next world.">一起完成下一個世界。</h2>
       <a id="contact-email" href="mailto:hey.yuhsuncheng@gmail.com">HEY.YUHSUNCHENG@GMAIL.COM ↗</a>
       <p id="contact-location"></p>
@@ -129,7 +107,7 @@
 
   <footer class="site-footer">
     <span>YORK CHENG / DIRECTOR</span>
-    <span>© <b id="footer-year"></b></span>
+    <span>HEY.YUHSUNCHENG@GMAIL.COM</span>
   </footer>
 
   <dialog class="video-dialog" id="video-dialog">
@@ -141,6 +119,6 @@
     <div class="video-frame" id="video-frame"></div>
   </dialog>
 
-  <script src="js/script.js?v=20260822b"></script>
+  <script src="js/script.js?v=20260823a"></script>
 </body>
 </html>

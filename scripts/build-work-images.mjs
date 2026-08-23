@@ -11,7 +11,7 @@ const sharpEntry = path.join(
 );
 const sharp = (await import(pathToFileURL(sharpEntry).href)).default;
 const outputDir = path.join(siteRoot, 'assets/works');
-const manifestPath = path.resolve(siteRoot, '../website-refresh-2026-08-22-asset-manifest.json');
+const manifestPath = path.resolve(siteRoot, '../website-refresh-2026-08-22-v2-asset-manifest.json');
 
 const sources = [
   ['tea', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/茶裏王／客棧圍攻篇/frame-21-t15.350.png'],
@@ -45,15 +45,7 @@ const sources = [
   ['moji-story', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/魔姬物語/01_職場篇/frame-29-t14.000.png'],
   ['play-metropolis', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/玩賺大都會/frame-36-t17.500.png'],
   ['era-of-conquest', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/文明與征服／全球大戰篇/frame-06-t2.500.png'],
-  ['fat-taro', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/胖太郎捉妖記/frame-41-t20.000.png'],
-  ['archive-fantasy', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/冒險聯盟/frame-43-t21.000.png'],
-  ['archive-extensions', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/神翼契約/frame-35-t17.000.png'],
-  ['archive-mmo', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/問劍長生／開服主題曲 MV/frame-73-t36.000.png'],
-  ['archive-comedy', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/謀攻・鬆一下篇/frame-09-t4.000.png'],
-  ['archive-action', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/夢幻新誅仙/frame-50-t24.500.png'],
-  ['archive-other', '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/蒼穹幻夢/frame-10-t4.500.png'],
-  ['gambling-spectacle', '導演功課/導演作品集/reframe-80-works-2026-08-09/candidates/GAM-001-man-guan-anniversary-dense-v1/frame-01-t0.000.png'],
-  ['gambling-genre', '導演功課/導演作品集/reframe-80-works-2026-08-09/candidates/072-LCL-11-aceclub-dense-v1/frame-18-t8.500.png']
+  ['gambling-commercials', 'assets/gambling-dense-library-49-films/01_正式廣告主片/002_滿貫大亨_舞獅篇/frame-19-t9.000.png']
 ];
 
 const hash = buffer => crypto.createHash('sha256').update(buffer).digest('hex');
@@ -101,9 +93,8 @@ const ogType = Buffer.from(`
     <text x="36" y="324" font-family="Arial Black, Arial, sans-serif" font-size="88" font-weight="900" letter-spacing="-6" fill="#11120f">CHENG</text>
     <text x="42" y="374" font-family="Microsoft JhengHei, Arial, sans-serif" font-size="20" letter-spacing="5" fill="#777772">鄭又勛／導演</text>
     <line x1="42" y1="440" x2="394" y2="440" stroke="#c9c9c3" stroke-width="1"/>
-    <text x="42" y="478" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#11120f">9 YEARS · 100+ PROJECTS</text>
-    <text x="42" y="540" font-family="Arial, sans-serif" font-size="11" letter-spacing="1" fill="#777772">GAME ADVERTISING · COMMERCIAL FILM</text>
-    <text x="42" y="562" font-family="Arial, sans-serif" font-size="11" letter-spacing="1" fill="#777772">LIVE ACTION · CG · AI FILM</text>
+    <text x="42" y="500" font-family="Arial, sans-serif" font-size="11" letter-spacing="1" fill="#777772">GAME ADVERTISING · COMMERCIAL FILM</text>
+    <text x="42" y="522" font-family="Arial, sans-serif" font-size="11" letter-spacing="1" fill="#777772">LIVE ACTION · CG · AI FILM</text>
     <rect x="440" y="0" width="760" height="630" fill="url(#shade)"/>
     <defs><linearGradient id="shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.55"/></linearGradient></defs>
     <text x="1160" y="588" text-anchor="end" font-family="Arial, sans-serif" font-size="11" letter-spacing="1" fill="#f3f3f0">YORK CHENG / DIRECTOR</text>
@@ -116,7 +107,7 @@ await sharp({ create: { width: 1200, height: 630, channels: 3, background: '#111
 const ogBuffer = await fs.readFile(ogPath);
 
 await fs.writeFile(manifestPath, JSON.stringify({
-  schema: 'york-website-image-build-v1',
+  schema: 'york-website-image-build-v2',
   items: manifest,
   socialPreview: {
     output: 'assets/og-york-director.jpg',

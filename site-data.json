@@ -1,6 +1,6 @@
 {
-  "schema": "york-director-website-v3",
-  "revision": "2026-08-22",
+  "schema": "york-director-website-v4",
+  "revision": "2026-08-23-v3-concise-live",
   "director": {
     "name_zh": "鄭又勛",
     "name_en": "York Cheng",
@@ -9,14 +9,44 @@
     "point_of_view_zh": "每個案子先找到一個清楚的觀看理由，再把商業訊息放進人物的選擇與情緒裡。",
     "point_of_view_en": "Find one clear reason to watch, then build the commercial message into character, choice and emotion.",
     "bio_zh": "鄭又勛是台灣導演，專注遊戲廣告與商業影像。作品橫跨真人實拍、CG 與 AI 影像，從人物喜劇、類型世界到產品敘事，皆以清楚的觀看理由作為起點。",
-    "bio_en": "York Cheng is a Taiwan-based director working across game advertising and commercial film. His work spans live action, CG and AI film, from character comedy and genre worlds to product storytelling.",
-    "facts": [
-      { "value": "9", "label_zh": "年導演經驗", "label_en": "Years Directing" },
-      { "value": "100+", "label_zh": "執導專案", "label_en": "Directed Projects" },
-      { "value": "TAIWAN", "label_zh": "工作基地", "label_en": "Based In" }
+    "bio_en": "York Cheng is a Taiwan-based director working across game advertising and commercial film. His work spans live action, CG and AI film, from character comedy and genre worlds to product storytelling."
+  },
+  "experience": {
+    "brands": [
+      "茶裏王",
+      "Schick HydroPRO",
+      "Google Play",
+      "王品肉次方",
+      "GODIVA",
+      "ASUS"
+    ],
+    "game_ips": [
+      "天龍八部2",
+      "神魔傳說",
+      "慶餘年",
+      "斗羅大陸",
+      "失落的方舟",
+      "開天",
+      "魔靈召喚",
+      "新仙俠：起源"
+    ],
+    "talent": [
+      "林志穎",
+      "徐若瑄",
+      "邵雨薇",
+      "蕭煌奇",
+      "Selina 任家萱",
+      "任容萱",
+      "蛇丸",
+      "阿紅"
     ]
   },
-  "flagship": [
+  "contact": {
+    "email": "hey.yuhsuncheng@gmail.com",
+    "location_zh": "台灣 · 可洽跨市場合作",
+    "location_en": "Taiwan · Available for cross-market projects"
+  },
+  "works": [
     {
       "id": "tea",
       "title_zh": "茶裏王《客棧圍攻篇》",
@@ -27,7 +57,13 @@
       "image": "assets/works/tea.webp",
       "copy_zh": "把一場武俠圍攻，翻成眾人聚飲。",
       "copy_en": "Turn a wuxia siege into a shared round of tea.",
-      "videos": [{ "id": "rPfEga9kxU4", "label_zh": "完整影片", "label_en": "Full Film" }]
+      "videos": [
+        {
+          "id": "rPfEga9kxU4",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
     },
     {
       "id": "tianlong2",
@@ -39,7 +75,13 @@
       "image": "assets/works/tianlong2.webp",
       "copy_zh": "以三個問句，把執念拆成三種代價。",
       "copy_en": "Three questions turn obsession into three different costs.",
-      "videos": [{ "id": "cX7d8eiJfz8", "label_zh": "完整影片", "label_en": "Full Film" }]
+      "videos": [
+        {
+          "id": "cX7d8eiJfz8",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
     },
     {
       "id": "shenmo",
@@ -51,7 +93,13 @@
       "image": "assets/works/shenmo.webp",
       "copy_zh": "以白袍到黑袍，完成由人入魔的傳記。",
       "copy_en": "A life story shifts from white robes to black.",
-      "videos": [{ "id": "iIUDbPBPqSw", "label_zh": "完整影片", "label_en": "Full Film" }]
+      "videos": [
+        {
+          "id": "iIUDbPBPqSw",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
     },
     {
       "id": "last-taoist",
@@ -63,7 +111,13 @@
       "image": "assets/works/last-taoist.webp",
       "copy_zh": "先用唯美婚妝偽裝，再翻成冥婚驚悚。",
       "copy_en": "Beauty disguises the scene before it turns into a ghost marriage.",
-      "videos": [{ "id": "ep29rG5y45o", "label_zh": "完整影片", "label_en": "Full Film" }]
+      "videos": [
+        {
+          "id": "ep29rG5y45o",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
     },
     {
       "id": "qing-yu-nian",
@@ -76,8 +130,16 @@
       "copy_zh": "把看不見，翻成劍客最強的看得見。",
       "copy_en": "Make the unseen the swordsman’s sharpest sight.",
       "videos": [
-        { "id": "JMxwi8Wf7w4", "label_zh": "客棧篇", "label_en": "Inn Film" },
-        { "id": "03Q5qpXcqaE", "label_zh": "變身篇", "label_en": "Transformation Film" }
+        {
+          "id": "JMxwi8Wf7w4",
+          "label_zh": "客棧篇",
+          "label_en": "Inn Film"
+        },
+        {
+          "id": "03Q5qpXcqaE",
+          "label_zh": "變身篇",
+          "label_en": "Transformation Film"
+        }
       ]
     },
     {
@@ -92,9 +154,21 @@
       "copy_zh": "以全 AI 武館，把嫩肉拍成修煉功夫。",
       "copy_en": "An all-AI dojo turns tender meat into martial training.",
       "videos": [
-        { "id": "3KVSg0WNciw", "label_zh": "壹之型", "label_en": "Form I" },
-        { "id": "uAuxnr8chUE", "label_zh": "貳之型", "label_en": "Form II" },
-        { "id": "6YA5sBdlxXU", "label_zh": "參之型", "label_en": "Form III" }
+        {
+          "id": "3KVSg0WNciw",
+          "label_zh": "壹之型",
+          "label_en": "Form I"
+        },
+        {
+          "id": "uAuxnr8chUE",
+          "label_zh": "貳之型",
+          "label_en": "Form II"
+        },
+        {
+          "id": "6YA5sBdlxXU",
+          "label_zh": "參之型",
+          "label_en": "Form III"
+        }
       ]
     },
     {
@@ -107,7 +181,13 @@
       "image": "assets/works/schick.webp",
       "copy_zh": "讓唯一藍光，把磁浮規格變成可見保護。",
       "copy_en": "One line of blue light makes magnetic suspension visible.",
-      "videos": [{ "id": "d_B7amkyM6Y", "label_zh": "完整影片", "label_en": "Full Film" }]
+      "videos": [
+        {
+          "id": "d_B7amkyM6Y",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
     },
     {
       "id": "google-play",
@@ -119,107 +199,450 @@
       "image": "assets/works/google-play.webp",
       "copy_zh": "不拍點數，專拍每個玩家都懂的差一點。",
       "copy_en": "Skip the points; film the ‘so close’ every player knows.",
-      "videos": [{ "id": "IOeQ5IwqYN0", "label_zh": "完整影片", "label_en": "Full Film" }]
+      "videos": [
+        {
+          "id": "IOeQ5IwqYN0",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "bawang",
+      "title_zh": "霸王之野望",
+      "title_en": "霸王之野望",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/bawang.webp",
+      "copy_zh": "以和室對稱開場，再把權力推向燃燒戰場。",
+      "copy_en": "Begin in symmetrical calm, then push power toward a burning battlefield.",
+      "videos": [
+        {
+          "id": "jcQ-spf44sI",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "soul-land",
+      "title_zh": "斗羅大陸：獵魂世界",
+      "title_en": "Soul Land: World of Soul Hunters",
+      "year": "2025",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/soul-land.webp",
+      "copy_zh": "把真實校園與武魂特效壓進同一格。",
+      "copy_en": "Hold a real campus and spirit effects inside the same frame.",
+      "videos": [
+        {
+          "id": "slorjwyR06A",
+          "label_zh": "宗門集結篇",
+          "label_en": "Clan Assembly"
+        },
+        {
+          "id": "QMX1bwPORS8",
+          "label_zh": "第二篇",
+          "label_en": "Film II"
+        }
+      ]
+    },
+    {
+      "id": "xin-xianxia",
+      "title_zh": "新仙俠：起源",
+      "title_en": "Xin Xianxia: Qiyuan",
+      "year": "2021",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/xin-xianxia.webp",
+      "copy_zh": "用冷暖光與框中框，縫合古今姊妹線。",
+      "copy_en": "Cool and warm light stitch two sisters across time.",
+      "videos": [
+        {
+          "id": "H2JsDnzXdV4",
+          "label_zh": "完整版",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "lost-ark",
+      "title_zh": "失落的方舟《命運篇》",
+      "title_en": "Lost Ark — Fate",
+      "year": "2022",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/lost-ark.webp",
+      "copy_zh": "只留紅與黑，讓墮落在沉默中發生。",
+      "copy_en": "Leave only red and black, and let the fall happen in silence.",
+      "videos": [
+        {
+          "id": "7-5QP4MJhto",
+          "label_zh": "命運篇",
+          "label_en": "Fate"
+        }
+      ]
+    },
+    {
+      "id": "chaobao",
+      "title_zh": "超爆三國志",
+      "title_en": "超爆三國志",
+      "year": "2023",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/chaobao.webp",
+      "copy_zh": "以冷黑今生對照赤壁火海，合上前世鏡像。",
+      "copy_en": "Set a cold present against Red Cliffs in flames and close the past-life mirror.",
+      "videos": [
+        {
+          "id": "3YPjfSLgPSw",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "yanyu",
+      "title_zh": "煙雨江湖",
+      "title_en": "煙雨江湖",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/yanyu.webp",
+      "copy_zh": "讓古風庭院與扇舞，成為人物登場的主軸。",
+      "copy_en": "Let the courtyard and fan dance lead the character’s entrance.",
+      "videos": [
+        {
+          "id": "WN5JAf9ajTo",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "kaitian",
+      "title_zh": "開天",
+      "title_en": "Kaitian",
+      "year": "2025",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/kaitian.webp",
+      "copy_zh": "讓冷藍天地被暖金劍光一擊劈開。",
+      "copy_en": "Split a cold-blue world open with one warm-gold strike.",
+      "videos": [
+        {
+          "id": "3SBvQKWW2_Y",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "summoners-war",
+      "title_zh": "魔靈召喚",
+      "title_en": "Summoners War",
+      "year": "2023",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/summoners-war.webp",
+      "copy_zh": "把選擇題拍成連續失控的按鈕喜劇。",
+      "copy_en": "Turn a simple choice into an escalating button comedy.",
+      "videos": [
+        {
+          "id": "5asZppi0EHE",
+          "label_zh": "紅色按鈕篇",
+          "label_en": "Red Button"
+        },
+        {
+          "id": "2xLmv5q-0k4",
+          "label_zh": "第二篇",
+          "label_en": "Film II"
+        }
+      ]
+    },
+    {
+      "id": "ulala",
+      "title_zh": "不休的烏拉拉",
+      "title_en": "Ulala: Idle Adventure",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/ulala.webp",
+      "copy_zh": "從明亮家庭日常，讓巨型恐龍闖進現實。",
+      "copy_en": "Let a giant dinosaur crash into a bright family routine.",
+      "videos": [
+        {
+          "id": "SvUU0LTiEec",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "mirror-story",
+      "title_zh": "魔鏡物語",
+      "title_en": "Mirror Story",
+      "year": "2022",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/mirror-story.webp",
+      "copy_zh": "讓明亮童話逐步轉入冷色懸疑與黑化。",
+      "copy_en": "Shift a bright fairy tale into cold suspense and corruption.",
+      "videos": [
+        {
+          "id": "hnmel0QLnTs",
+          "label_zh": "第一篇",
+          "label_en": "Film I"
+        },
+        {
+          "id": "OZgkanGRTGY",
+          "label_zh": "魔白雪篇",
+          "label_en": "Dark Snow White"
+        }
+      ]
+    },
+    {
+      "id": "new-ludingji",
+      "title_zh": "新鹿鼎記",
+      "title_en": "New Ludingji",
+      "year": "2019",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/new-ludingji.webp",
+      "copy_zh": "把鰲拜越要越多的台詞，變成收集節奏。",
+      "copy_en": "Turn Ao Bai’s growing demands into a collection rhythm.",
+      "videos": [
+        {
+          "id": "c_dGawjH7bc",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "yujian",
+      "title_zh": "御劍神州",
+      "title_en": "Yujian Shenzhou",
+      "type_zh": "遊戲廣告",
+      "type_en": "Game Film",
+      "image": "assets/works/yujian.webp",
+      "copy_zh": "讓現代街景切入冷色夜林，完成時空轉換。",
+      "copy_en": "Cut from a modern street into a cold night forest to cross time.",
+      "videos": [
+        {
+          "id": "Ct-1d0nXWRM",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "asus",
+      "title_zh": "ASUS ZenBook Pro Duo",
+      "title_en": "ASUS ZenBook Pro Duo",
+      "image": "assets/works/asus.webp",
+      "videos": [
+        {
+          "id": "XVNa4XYyHnc",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "godiva",
+      "title_zh": "GODIVA",
+      "title_en": "GODIVA",
+      "image": "assets/works/godiva.webp",
+      "videos": [
+        {
+          "id": "D48bDkOSsSY",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "schick-cc",
+      "title_zh": "舒芙晶透煥亮 CC 刀",
+      "title_en": "Schick Intuition CC Razor",
+      "image": "assets/works/schick-cc.webp",
+      "videos": [
+        {
+          "id": "OKSb5mOVTMU",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "gcs-2018",
+      "title_zh": "GCS 2018 夏季賽片頭",
+      "title_en": "GCS 2018 Summer Opening",
+      "image": "assets/works/gcs-2018.webp",
+      "videos": [
+        {
+          "id": "1cUBSFAU800",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "lms-2018",
+      "title_zh": "LMS 2018 春季賽片頭",
+      "title_en": "LMS 2018 Spring Opening",
+      "image": "assets/works/lms-2018.webp",
+      "videos": [
+        {
+          "id": "LKL_M4jJzwY",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "earth-revival",
+      "title_zh": "星球重啟",
+      "title_en": "Earth: Revival",
+      "image": "assets/works/earth-revival.webp",
+      "videos": [
+        {
+          "id": "X1bRLBYQg8k",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "street-basketball",
+      "title_zh": "街頭籃球2：正宗續作",
+      "title_en": "Street Basketball 2",
+      "image": "assets/works/street-basketball.webp",
+      "videos": [
+        {
+          "id": "3yzFLrexRCk",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "hot-blooded-jianghu",
+      "title_zh": "熱血江湖：歸來",
+      "title_en": "熱血江湖：歸來",
+      "image": "assets/works/hot-blooded-jianghu.webp",
+      "videos": [
+        {
+          "id": "8EgIgrQZv34",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "moji-story",
+      "title_zh": "魔姬物語",
+      "title_en": "魔姬物語",
+      "image": "assets/works/moji-story.webp",
+      "videos": [
+        {
+          "id": "qxFvIaYaezY",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "play-metropolis",
+      "title_zh": "玩賺大都會",
+      "title_en": "玩賺大都會",
+      "image": "assets/works/play-metropolis.webp",
+      "videos": [
+        {
+          "id": "q-kKr1qZtf4",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
+    },
+    {
+      "id": "era-of-conquest",
+      "title_zh": "文明與征服／全球大戰篇",
+      "title_en": "Era of Conquest — Global War",
+      "image": "assets/works/era-of-conquest.webp",
+      "videos": [
+        {
+          "id": "vTY-dNNAcbA",
+          "label_zh": "完整影片",
+          "label_en": "Full Film"
+        }
+      ]
     }
   ],
-  "selected": [
-    {
-      "id": "bawang", "title_zh": "霸王之野望", "title_en": "霸王之野望", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/bawang.webp",
-      "copy_zh": "以和室對稱開場，再把權力推向燃燒戰場。", "copy_en": "Begin in symmetrical calm, then push power toward a burning battlefield.",
-      "videos": [{ "id": "jcQ-spf44sI", "label_zh": "完整影片", "label_en": "Full Film" }]
-    },
-    {
-      "id": "soul-land", "title_zh": "斗羅大陸：獵魂世界", "title_en": "Soul Land: World of Soul Hunters", "year": "2025", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/soul-land.webp",
-      "copy_zh": "把真實校園與武魂特效壓進同一格。", "copy_en": "Hold a real campus and spirit effects inside the same frame.",
-      "videos": [{ "id": "slorjwyR06A", "label_zh": "宗門集結篇", "label_en": "Clan Assembly" }, { "id": "QMX1bwPORS8", "label_zh": "第二篇", "label_en": "Film II" }]
-    },
-    {
-      "id": "xin-xianxia", "title_zh": "新仙俠：起源", "title_en": "Xin Xianxia: Qiyuan", "year": "2021", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/xin-xianxia.webp",
-      "copy_zh": "用冷暖光與框中框，縫合古今姊妹線。", "copy_en": "Cool and warm light stitch two sisters across time.",
-      "videos": [{ "id": "H2JsDnzXdV4", "label_zh": "完整版", "label_en": "Full Film" }]
-    },
-    {
-      "id": "lost-ark", "title_zh": "失落的方舟《命運篇》", "title_en": "Lost Ark — Fate", "year": "2022", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/lost-ark.webp",
-      "copy_zh": "只留紅與黑，讓墮落在沉默中發生。", "copy_en": "Leave only red and black, and let the fall happen in silence.",
-      "videos": [{ "id": "7-5QP4MJhto", "label_zh": "命運篇", "label_en": "Fate" }]
-    },
-    {
-      "id": "chaobao", "title_zh": "超爆三國志", "title_en": "超爆三國志", "year": "2023", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/chaobao.webp",
-      "copy_zh": "以冷黑今生對照赤壁火海，合上前世鏡像。", "copy_en": "Set a cold present against Red Cliffs in flames and close the past-life mirror.",
-      "videos": [{ "id": "3YPjfSLgPSw", "label_zh": "完整影片", "label_en": "Full Film" }]
-    },
-    {
-      "id": "yanyu", "title_zh": "煙雨江湖", "title_en": "煙雨江湖", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/yanyu.webp",
-      "copy_zh": "讓古風庭院與扇舞，成為人物登場的主軸。", "copy_en": "Let the courtyard and fan dance lead the character’s entrance.",
-      "videos": [{ "id": "WN5JAf9ajTo", "label_zh": "完整影片", "label_en": "Full Film" }]
-    },
-    {
-      "id": "kaitian", "title_zh": "開天", "title_en": "Kaitian", "year": "2025", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/kaitian.webp",
-      "copy_zh": "讓冷藍天地被暖金劍光一擊劈開。", "copy_en": "Split a cold-blue world open with one warm-gold strike.",
-      "videos": [{ "id": "3SBvQKWW2_Y", "label_zh": "完整影片", "label_en": "Full Film" }]
-    },
-    {
-      "id": "summoners-war", "title_zh": "魔靈召喚", "title_en": "Summoners War", "year": "2023", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/summoners-war.webp",
-      "copy_zh": "把選擇題拍成連續失控的按鈕喜劇。", "copy_en": "Turn a simple choice into an escalating button comedy.",
-      "videos": [{ "id": "5asZppi0EHE", "label_zh": "紅色按鈕篇", "label_en": "Red Button" }, { "id": "2xLmv5q-0k4", "label_zh": "第二篇", "label_en": "Film II" }]
-    },
-    {
-      "id": "ulala", "title_zh": "不休的烏拉拉", "title_en": "Ulala: Idle Adventure", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/ulala.webp",
-      "copy_zh": "從明亮家庭日常，讓巨型恐龍闖進現實。", "copy_en": "Let a giant dinosaur crash into a bright family routine.",
-      "videos": [{ "id": "SvUU0LTiEec", "label_zh": "完整影片", "label_en": "Full Film" }]
-    },
-    {
-      "id": "mirror-story", "title_zh": "魔鏡物語", "title_en": "Mirror Story", "year": "2022", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/mirror-story.webp",
-      "copy_zh": "讓明亮童話逐步轉入冷色懸疑與黑化。", "copy_en": "Shift a bright fairy tale into cold suspense and corruption.",
-      "videos": [{ "id": "hnmel0QLnTs", "label_zh": "第一篇", "label_en": "Film I" }, { "id": "OZgkanGRTGY", "label_zh": "魔白雪篇", "label_en": "Dark Snow White" }]
-    },
-    {
-      "id": "new-ludingji", "title_zh": "新鹿鼎記", "title_en": "New Ludingji", "year": "2019", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/new-ludingji.webp",
-      "copy_zh": "把鰲拜越要越多的台詞，變成收集節奏。", "copy_en": "Turn Ao Bai’s growing demands into a collection rhythm.",
-      "videos": [{ "id": "c_dGawjH7bc", "label_zh": "完整影片", "label_en": "Full Film" }]
-    },
-    {
-      "id": "yujian", "title_zh": "御劍神州", "title_en": "Yujian Shenzhou", "type_zh": "遊戲廣告", "type_en": "Game Film", "image": "assets/works/yujian.webp",
-      "copy_zh": "讓現代街景切入冷色夜林，完成時空轉換。", "copy_en": "Cut from a modern street into a cold night forest to cross time.",
-      "videos": [{ "id": "Ct-1d0nXWRM", "label_zh": "完整影片", "label_en": "Full Film" }]
-    }
-  ],
-  "additional": [
-    { "id": "asus", "title_zh": "ASUS ZenBook Pro Duo", "title_en": "ASUS ZenBook Pro Duo", "image": "assets/works/asus.webp", "videos": [{ "id": "XVNa4XYyHnc", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "godiva", "title_zh": "GODIVA", "title_en": "GODIVA", "image": "assets/works/godiva.webp", "videos": [{ "id": "D48bDkOSsSY", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "schick-cc", "title_zh": "舒芙晶透煥亮 CC 刀", "title_en": "Schick Intuition CC Razor", "image": "assets/works/schick-cc.webp", "videos": [{ "id": "OKSb5mOVTMU", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "gcs-2018", "title_zh": "GCS 2018 夏季賽片頭", "title_en": "GCS 2018 Summer Opening", "image": "assets/works/gcs-2018.webp", "videos": [{ "id": "1cUBSFAU800", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "lms-2018", "title_zh": "LMS 2018 春季賽片頭", "title_en": "LMS 2018 Spring Opening", "image": "assets/works/lms-2018.webp", "videos": [{ "id": "LKL_M4jJzwY", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "earth-revival", "title_zh": "星球重啟", "title_en": "Earth: Revival", "image": "assets/works/earth-revival.webp", "videos": [{ "id": "X1bRLBYQg8k", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "street-basketball", "title_zh": "街頭籃球2：正宗續作", "title_en": "Street Basketball 2", "image": "assets/works/street-basketball.webp", "videos": [{ "id": "3yzFLrexRCk", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "hot-blooded-jianghu", "title_zh": "熱血江湖：歸來", "title_en": "熱血江湖：歸來", "image": "assets/works/hot-blooded-jianghu.webp", "videos": [{ "id": "8EgIgrQZv34", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "moji-story", "title_zh": "魔姬物語", "title_en": "魔姬物語", "image": "assets/works/moji-story.webp", "videos": [{ "id": "qxFvIaYaezY", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "play-metropolis", "title_zh": "玩賺大都會", "title_en": "玩賺大都會", "image": "assets/works/play-metropolis.webp", "videos": [{ "id": "q-kKr1qZtf4", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "era-of-conquest", "title_zh": "文明與征服／全球大戰篇", "title_en": "Era of Conquest — Global War", "image": "assets/works/era-of-conquest.webp", "videos": [{ "id": "vTY-dNNAcbA", "label_zh": "完整影片", "label_en": "Full Film" }] },
-    { "id": "fat-taro", "title_zh": "胖太郎捉妖記", "title_en": "胖太郎捉妖記", "image": "assets/works/fat-taro.webp", "videos": [] }
-  ],
-  "archive": [
-    { "title_en": "Fantasy Worlds", "title_zh": "奇幻世界", "image": "assets/works/archive-fantasy.webp", "works": ["SS 光之編年史", "天涯明月刀", "完美世界M", "完美世界M・妖刃篇", "冒險聯盟"] },
-    { "title_en": "Fantasy Extensions", "title_zh": "奇幻延伸", "image": "assets/works/archive-extensions.webp", "works": ["奇蹟 MU 紀元", "奇蹟 MU：無限金蛋", "奇蹟MU跨時代・噹噹噹篇", "神契／氣靈師篇", "神翼契約"] },
-    { "title_en": "Multi-film / MMO", "title_zh": "多支系列／MMO", "image": "assets/works/archive-mmo.webp", "works": ["RO 仙境傳說：初心之戰", "三國奇謀天下", "時光大爆炸", "問劍長生／開服主題曲 MV"] },
-    { "title_en": "Character & Comedy", "title_zh": "人物與喜劇", "image": "assets/works/archive-comedy.webp", "works": ["元氣火柴人", "新不良人", "新笑傲江湖M", "謀攻・鬆一下篇"] },
-    { "title_en": "Action & Genre", "title_zh": "動作與類型", "image": "assets/works/archive-action.webp", "works": ["盛唐幻夜", "絕地求生M", "聖域對決", "夢幻新誅仙"] },
-    { "title_en": "Other Campaign Work", "title_zh": "其他廣告作品", "image": "assets/works/archive-other.webp", "works": ["高粱58凍飲", "最強船王", "超蝦大作戰", "蒼穹幻夢"] }
-  ],
-  "gambling": {
-    "title_zh": "博弈廣告作品合輯", "title_en": "Gambling Film Collection",
-    "copy_zh": "49 支作品集中呈現，不與一般品牌與遊戲案例混列。", "copy_en": "A focused collection of 49 films, kept separate from the brand and game portfolio.",
-    "films": "49", "commercials": "43", "social_films": "6",
-    "images": ["assets/works/gambling-spectacle.webp", "assets/works/gambling-genre.webp"]
+  "gambling_commercials": {
+    "title_zh": "博弈廣告作品",
+    "title_en": "GAMBLING COMMERCIALS",
+    "image": "assets/works/gambling-commercials.webp",
+    "copy_zh": "大型棚景、群戲調度、代言人表演與多場景轉換。",
+    "copy_en": "Large-scale sets, ensemble direction, talent performance and multi-scene transitions."
   },
-  "experience": {
-    "brands": ["茶裏王", "Schick HydroPRO", "Google Play", "王品肉次方", "GODIVA", "ASUS"],
-    "game_ips": ["天龍八部2", "神魔傳說", "慶餘年", "斗羅大陸", "失落的方舟", "開天", "魔靈召喚", "新仙俠：起源"],
-    "talent": ["林志穎", "徐若瑄", "邵雨薇", "蕭煌奇", "Selina 任家萱", "任容萱", "蛇丸", "阿紅"]
-  },
-  "contact": {
-    "email": "hey.yuhsuncheng@gmail.com",
-    "location_zh": "台灣 · 可洽跨市場合作",
-    "location_en": "Taiwan · Available for cross-market projects"
-  }
+  "filmography": [
+    "茶裏王《客棧圍攻篇》",
+    "天龍八部 2",
+    "神魔傳說",
+    "最後的道長",
+    "慶餘年",
+    "王品肉次方《AI 武館三部曲》",
+    "舒適牌 HydroPRO 磁浮刮鬍刀",
+    "Google Play 台灣《就差一點》",
+    "霸王之野望",
+    "斗羅大陸：獵魂世界",
+    "新仙俠：起源",
+    "失落的方舟《命運篇》",
+    "超爆三國志",
+    "煙雨江湖",
+    "開天",
+    "魔靈召喚",
+    "不休的烏拉拉",
+    "魔鏡物語",
+    "新鹿鼎記",
+    "御劍神州",
+    "ASUS ZenBook Pro Duo",
+    "GODIVA",
+    "舒芙晶透煥亮 CC 刀",
+    "GCS 2018 夏季賽片頭",
+    "LMS 2018 春季賽片頭",
+    "星球重啟",
+    "街頭籃球2：正宗續作",
+    "熱血江湖：歸來",
+    "魔姬物語",
+    "玩賺大都會",
+    "文明與征服／全球大戰篇",
+    "胖太郎捉妖記",
+    "SS 光之編年史",
+    "天涯明月刀",
+    "完美世界M",
+    "完美世界M・妖刃篇",
+    "冒險聯盟",
+    "奇蹟 MU 紀元",
+    "奇蹟 MU：無限金蛋",
+    "奇蹟MU跨時代・噹噹噹篇",
+    "神契／氣靈師篇",
+    "神翼契約",
+    "RO 仙境傳說：初心之戰",
+    "三國奇謀天下",
+    "時光大爆炸",
+    "問劍長生／開服主題曲 MV",
+    "元氣火柴人",
+    "新不良人",
+    "新笑傲江湖M",
+    "謀攻・鬆一下篇",
+    "盛唐幻夜",
+    "絕地求生M",
+    "聖域對決",
+    "夢幻新誅仙",
+    "高粱58凍飲",
+    "最強船王",
+    "超蝦大作戰",
+    "蒼穹幻夢"
+  ]
 }

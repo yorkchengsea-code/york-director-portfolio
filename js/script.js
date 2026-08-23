@@ -18,12 +18,8 @@
     return node;
   }
 
-  function formatIndex(index) {
-    return String(index + 1).padStart(2, '0');
-  }
-
   function allWorks() {
-    return state.data.flagship.concat(state.data.selected, state.data.additional);
+    return state.data.works;
   }
 
   function findWork(id) {
@@ -104,144 +100,60 @@
     return button;
   }
 
-  function renderFlagship() {
-    var list = document.getElementById('flagship-list');
-    list.innerHTML = '';
-    state.data.flagship.forEach(function (work, index) {
-      var card = el('article', 'flagship-card');
+  function renderWorks() {
+    var grid = document.getElementById('works-grid');
+    grid.innerHTML = '';
+    state.data.works.forEach(function (work) {
+      var card = el('article', 'work-card');
       card.appendChild(buildMedia(work, 'work-media'));
       var copy = el('div', 'work-copy');
-      var meta = el('div', 'work-index');
-      meta.appendChild(el('span', '', formatIndex(index) + ' / 08'));
-      meta.appendChild(el('span', '', [pick(work, 'type'), work.year].filter(Boolean).join(' · ')));
-      copy.appendChild(meta);
+      var metaText = [pick(work, 'type'), work.year].filter(Boolean).join(' · ');
+      if (metaText) copy.appendChild(el('p', 'work-meta', metaText));
       copy.appendChild(el('h3', '', pick(work, 'title')));
-      copy.appendChild(el('p', '', pick(work, 'copy')));
+      var workCopy = pick(work, 'copy');
+      if (workCopy) copy.appendChild(el('p', 'work-description', workCopy));
       var watch = buildWatch(work);
       if (watch) copy.appendChild(watch);
       card.appendChild(copy);
-      list.appendChild(card);
-    });
-  }
-
-  function renderSelected() {
-    var grid = document.getElementById('selected-grid');
-    grid.innerHTML = '';
-    state.data.selected.forEach(function (work, index) {
-      var card = el('article', 'selected-card');
-      card.appendChild(buildMedia(work, 'work-media'));
-      card.appendChild(el('h3', '', pick(work, 'title')));
-      var meta = el('div', 'card-meta');
-      meta.appendChild(el('span', '', formatIndex(index) + ' / 12'));
-      meta.appendChild(el('span', '', [pick(work, 'type'), work.year].filter(Boolean).join(' · ')));
-      card.appendChild(meta);
-      card.appendChild(el('p', 'card-copy', pick(work, 'copy')));
-      var watch = buildWatch(work);
-      if (watch) card.appendChild(watch);
       grid.appendChild(card);
     });
   }
 
-  function renderAdditional() {
-    var grid = document.getElementById('additional-grid');
-    grid.innerHTML = '';
-    state.data.additional.forEach(function (work, index) {
-      var card = el('article', 'additional-card');
-      card.appendChild(buildMedia(work, 'work-media'));
-      card.appendChild(el('h3', '', pick(work, 'title')));
-      card.appendChild(el('p', '', formatIndex(index) + ' / 12' + (work.videos.length ? ' · PLAY FILM ↗' : ' · SELECTED CAMPAIGN')));
-      grid.appendChild(card);
+  function renderFilmography() {
+    var list = document.getElementById('filmography-list');
+    list.innerHTML = '';
+    state.data.filmography.forEach(function (title) {
+      list.appendChild(el('div', 'filmography-item', title));
     });
   }
 
-  function renderArchive() {
-    var grid = document.getElementById('archive-grid');
-    grid.innerHTML = '';
-    state.data.archive.forEach(function (group, index) {
-      var card = el('article', 'archive-card');
-      var img = document.createElement('img');
-      img.src = group.image;
-      img.alt = pick(group, 'title');
-      img.loading = 'lazy';
-      img.width = 1600;
-      img.height = 900;
-      card.appendChild(img);
-      var copy = el('div');
-      copy.appendChild(el('h3', '', group.title_en));
-      copy.appendChild(el('h4', '', group.title_zh));
-      var list = el('ol');
-      group.works.forEach(function (title, workIndex) {
-        var item = el('li');
-        item.innerHTML = '<span>' + formatIndex(workIndex) + '</span>' + title;
-        list.appendChild(item);
-      });
-      copy.appendChild(list);
-      card.appendChild(copy);
-      grid.appendChild(card);
-    });
+  function renderGambling() {
+    var gambling = state.data.gambling_commercials;
+    document.getElementById('gambling-title').textContent = pick(gambling, 'title');
+    document.getElementById('gambling-copy').textContent = pick(gambling, 'copy');
+    var image = document.getElementById('gambling-image');
+    image.src = gambling.image;
+    image.alt = pick(gambling, 'title');
   }
 
   function renderHero() {
     var director = state.data.director;
     document.getElementById('hero-pov').textContent = pick(director, 'point_of_view');
     document.getElementById('hero-disciplines').textContent = pick(director, 'tagline');
-    var facts = document.getElementById('hero-facts');
-    facts.innerHTML = '';
-    director.facts.forEach(function (fact) {
-      var node = el('div', 'fact');
-      node.appendChild(el('b', '', fact.value));
-      node.appendChild(el('span', '', pick(fact, 'label')));
-      facts.appendChild(node);
-    });
     var tea = findWork('tea');
     var heroPlay = document.getElementById('hero-play');
     heroPlay.onclick = function () { openVideo(tea); };
   }
 
-  function renderGambling() {
-    var data = state.data.gambling;
-    document.getElementById('gambling-title').textContent = pick(data, 'title');
-    document.getElementById('gambling-copy').textContent = pick(data, 'copy');
-    var images = document.getElementById('gambling-images');
-    images.innerHTML = '';
-    data.images.forEach(function (src, index) {
-      var img = document.createElement('img');
-      img.src = src;
-      img.alt = pick(data, 'title') + ' ' + (index + 1);
-      img.loading = 'lazy';
-      images.appendChild(img);
-    });
-    var stats = document.getElementById('gambling-stats');
-    stats.innerHTML = '';
-    [
-      [data.films, state.lang === 'zh' ? '支作品' : 'Films'],
-      [data.commercials, state.lang === 'zh' ? '支商業廣告' : 'Commercials'],
-      [data.social_films, state.lang === 'zh' ? '支社群影片' : 'Social Films']
-    ].forEach(function (item) {
-      var stat = el('div', 'gambling-stat');
-      stat.appendChild(el('b', '', item[0]));
-      stat.appendChild(el('span', '', item[1]));
-      stats.appendChild(stat);
-    });
-  }
-
   function renderAbout() {
     var director = state.data.director;
     document.getElementById('about-bio').textContent = pick(director, 'bio');
-    var facts = document.getElementById('about-facts');
-    facts.innerHTML = '';
-    director.facts.forEach(function (fact) {
-      var node = el('div', 'about-fact');
-      node.appendChild(el('b', '', fact.value));
-      node.appendChild(el('span', '', pick(fact, 'label')));
-      facts.appendChild(node);
-    });
     var experience = document.getElementById('experience');
     experience.innerHTML = '';
     [
       [state.lang === 'zh' ? '品牌' : 'Brands', state.data.experience.brands],
       [state.lang === 'zh' ? '遊戲 IP' : 'Game IPs', state.data.experience.game_ips],
-      [state.lang === 'zh' ? '合作藝人（精選）' : 'Selected Talent', state.data.experience.talent]
+      [state.lang === 'zh' ? '合作藝人' : 'Talent', state.data.experience.talent]
     ].forEach(function (group) {
       var node = el('div', 'experience-group');
       node.appendChild(el('h3', '', group[0]));
@@ -263,13 +175,10 @@
     if (!state.data) return;
     applyStaticLabels();
     renderHero();
-    renderFlagship();
-    renderSelected();
-    renderAdditional();
-    renderArchive();
+    renderWorks();
     renderGambling();
+    renderFilmography();
     renderAbout();
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
   }
 
   document.getElementById('lang-toggle').addEventListener('click', function () {
