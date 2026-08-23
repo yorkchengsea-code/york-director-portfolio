@@ -1,16 +1,16 @@
 {
   "schema": "york-director-website-v4",
-  "revision": "2026-08-23-v4-quick-intro",
+  "revision": "2026-08-24-v6-all-platform-copy",
   "quick_intro": {
     "slides": [
       {
         "theme": "dark",
         "eyebrow": "DIRECTOR PORTFOLIO",
         "context": "YORK CHENG 鄭又勛",
-        "title_zh": "類型敘事廣告導演",
-        "title_en": "Genre-Narrative Commercial Director",
-        "copy_zh": "把廣告拍成一個世界。",
-        "copy_en": "Make every commercial a world.",
+        "title_zh": "我是鄭又勛，台灣導演。",
+        "title_en": "I’m York Cheng, a director from Taiwan.",
+        "copy_zh": "這九頁，是我怎麼拍一支廣告的快速版本。",
+        "copy_en": "Nine pages on how I approach a commercial film.",
         "image": "assets/portrait.jpg",
         "alt_zh": "鄭又勛 York Cheng 肖像",
         "alt_en": "Portrait of York Cheng"
@@ -20,10 +20,10 @@
         "eyebrow": "COMMERCIAL NARRATIVE / 商業敘事",
         "context_zh": "茶裏王｜客棧圍攻篇",
         "context_en": "Tea’s Tea — Inn Siege",
-        "title_zh": "一壺茶，讓圍攻的人坐下來。",
-        "title_en": "One pot of tea brings a siege to the table.",
-        "copy_zh": "先把武俠衝突推到最高點，再用大容量茶壺改寫結局；產品不是插入，而是故事轉折。",
-        "copy_en": "Push the wuxia conflict to its peak, then let an oversized teapot rewrite the ending. The product does not interrupt the story; it becomes the turn.",
+        "title_zh": "一壺茶，拆掉一場圍攻。",
+        "title_en": "One pot of tea undoes a siege.",
+        "copy_zh": "我先讓刀光和走位把客棧逼緊。大茶壺一上桌，敵我坐成一桌，產品也把結局改了。",
+        "copy_en": "I let blades and movement tighten the inn first. When the oversized teapot lands, both sides sit together—and the product changes the ending.",
         "image": "assets/quick/slide-02.webp",
         "alt_zh": "茶裏王客棧中武俠人物圍坐喝茶",
         "alt_en": "Wuxia characters gather around tea in the Tea’s Tea inn",
@@ -34,10 +34,10 @@
         "eyebrow": "HORROR / 鬼片・恐怖類型",
         "context_zh": "最後的道長",
         "context_en": "The Last Taoist",
-        "title_zh": "婚禮的口令，變成鬼故事的倒數。",
-        "title_en": "Wedding commands become a countdown to a ghost story.",
-        "copy_zh": "從拜堂、紅妝到新娘回魂，讓熟悉的儀式逐步失控，明確落在鬼片的驚嚇。",
-        "copy_en": "From ceremonial bows and red bridal makeup to the bride’s return, familiar rituals gradually lose control and land squarely in horror.",
+        "title_zh": "我讓它先像婚禮，再慢慢露出鬼片的樣子。",
+        "title_en": "I let the wedding slowly reveal its ghost story.",
+        "copy_zh": "拜堂、紅妝都先照熟悉的儀式走。等新娘回魂，那些原本好看的東西才一起變得不對勁。",
+        "copy_en": "The bows and red bridal makeup follow familiar rituals at first. When the bride returns from the dead, everything that looked beautiful starts to feel wrong.",
         "image": "assets/quick/slide-03.webp",
         "alt_zh": "最後的道長中紅妝新娘的恐怖畫面",
         "alt_en": "Red-bridal horror scene from The Last Taoist",
@@ -49,9 +49,9 @@
         "context_zh": "霸王之野望 × 御劍神州 × 煙雨江湖",
         "context_en": "Bawang no Bou × Yujian Shenzhou × Misty River",
         "title_zh": "我擅長拍武打。",
-        "title_en": "Martial arts direction is one of my strengths.",
-        "copy_zh": "近身兵刃、群戰走位、演員連續招式——我把動作的難度拍清楚，也把力道拍出來。",
-        "copy_en": "Close-quarters weapons, ensemble combat and continuous choreography—I make the difficulty legible and the impact felt.",
+        "title_en": "I know how to make a fight read.",
+        "copy_zh": "我在意的不是招式多，而是觀眾能不能跟上。近身出手、群戰走位、出劍帶水花，我都把起點和結果留在畫面裡。",
+        "copy_en": "What matters to me is whether the audience can follow the action. Close-range strikes, ensemble combat and a sword stroke kicking up water all keep the setup and result visible.",
         "image": "assets/quick/slide-04.webp",
         "alt_zh": "武俠角色在森林中持劍交鋒",
         "alt_en": "Martial artists cross swords in a forest",
@@ -63,13 +63,13 @@
       },
       {
         "theme": "dark",
-        "eyebrow": "LIVE ACTION × VFX / 真人 × 後期",
+        "eyebrow": "LIVE ACTION × VFX / 真人 × 特效",
         "context_zh": "斗羅大陸 × 不休的烏拉拉 × 神魔傳說",
         "context_en": "Soul Land × Ulala × Shenmo Legend",
-        "title_zh": "特效不是貼上去，是演進去。",
-        "title_en": "VFX is not pasted on. It is performed into the scene.",
-        "copy_zh": "演員先看、躲、出手；特效再沿著視線、動作與場景發生。三種作品，三種整合尺度。",
-        "copy_en": "Actors look, dodge and strike first; effects then follow their eyelines, movement and the space. Three works, three scales of integration.",
+        "title_zh": "拍特效，演員先看對地方。",
+        "title_en": "For VFX, the actors need a real point to see.",
+        "copy_zh": "斗羅用手勢帶出能量；烏拉拉讓巨龍闖進日常；神魔從白袍走到黑袍。視線、動作和場景先對上，特效才進得來。",
+        "copy_en": "In Soul Land, gestures lead the energy; Ulala brings a dragon into daily life; Shenmo moves from white robes to black. When performance and space agree, the effects can enter the scene.",
         "image": "assets/quick/slide-05.webp",
         "alt_zh": "真人演員與奇幻特效共構的戰鬥場面",
         "alt_en": "Live-action performance integrated with fantasy visual effects",
@@ -82,13 +82,13 @@
       },
       {
         "theme": "light",
-        "eyebrow": "PERFORMANCE & EMOTION / 表演與情緒",
+        "eyebrow": "PERFORMANCE & ENSEMBLE / 表演與群像",
         "context_zh": "Google Play｜就差一點",
         "context_en": "Google Play Taiwan — So Close",
-        "title_zh": "不是拍點數；是拍「就差一點」的人。",
-        "title_en": "Not points—the people who came this close.",
-        "copy_zh": "先用演員表演和群像節奏，讓挫折被看懂；Google Play 的補點才成為解法。",
-        "copy_en": "Performance and ensemble rhythm make the frustration readable first; only then does Google Play’s top-up become the solution.",
+        "title_zh": "我先拍「就差一點」的人。",
+        "title_en": "I start with the people who came this close.",
+        "copy_zh": "先讓每個演員演出那一下懊惱，再讓群像把挫折接下去。等大家都懂「就差一點」，補點才有理由出現。",
+        "copy_en": "Each actor plays that flash of frustration, and the ensemble carries it forward. Once everyone understands “so close,” Google Play’s top-up has a reason to appear.",
         "image": "assets/quick/slide-06.webp",
         "alt_zh": "Google Play 廣告中多人對著遊戲螢幕的表演",
         "alt_en": "Ensemble performance around a game screen in Google Play’s film",
@@ -98,10 +98,10 @@
         "theme": "dark",
         "eyebrow": "PRODUCT DIRECTION / 產品敘事",
         "context": "Schick HydroPRO",
-        "title_zh": "刀頭碰到臉頰，規格才有感覺。",
-        "title_en": "The feature only feels real when the razor touches the cheek.",
-        "copy_zh": "用貼臉表演、藍光路徑與產品特寫，把「磁浮」拍成觀眾看得到的機制。",
-        "copy_en": "Close-up performance, a blue-light path and product detail turn magnetic suspension into a mechanism the audience can see.",
+        "title_zh": "刀頭真的碰到臉，規格才會有感覺。",
+        "title_en": "A feature only feels real when the razor meets the face.",
+        "copy_zh": "我讓藍光沿著臉頰走，再把貼臉表演和刀頭特寫接在一起。「磁浮」這兩個字，才有了一個看得見的動作。",
+        "copy_en": "I let the blue light travel along the cheek, pairing the facial performance with close product detail. “Magnetic suspension” becomes a movement the audience can actually see.",
         "image": "assets/quick/slide-07.webp",
         "alt_zh": "舒適牌 HydroPRO 刮鬍刀與藍光產品特寫",
         "alt_en": "Schick HydroPRO razor product detail with blue light",
@@ -109,16 +109,16 @@
       },
       {
         "theme": "light",
-        "eyebrow": "AI CONCEPT & BRAND TRANSLATION / AI 概念與品牌轉譯",
+        "eyebrow": "AI × LIVE ACTION BRAND FILM / AI × 實拍品牌影像",
         "context_zh": "王品肉次方｜肉道三部曲",
         "context_en": "ROU CI FANG — The Way of Meat Trilogy",
-        "title_zh": "切肉，不只是一個動作。",
-        "title_en": "Cutting meat is more than one action.",
-        "copy_zh": "三支片分別建立武館世界、刀法符號與角色關係，讓同一個產品動作變成可延伸的品牌語言。",
-        "copy_en": "Three films build a dojo world, a cutting symbol and character relationships, turning one product action into an extendable brand language.",
+        "title_zh": "同一刀，我拍成三種招。",
+        "title_en": "I turn the same cut into three moves.",
+        "copy_zh": "壹之型立武館，貳之型把刀法變成符號，參之型收進人物關係。三支片共用一個世界，各有自己的打法。",
+        "copy_en": "Form I establishes the dojo, Form II makes the cut a symbol, and Form III turns to character relationships. They share one world, but each moves differently.",
         "image": "assets/quick/slide-08.webp",
-        "alt_zh": "肉次方 AI 武館中刀法與切肉的畫面",
-        "alt_en": "AI dojo imagery of cutting technique for ROU CI FANG",
+        "alt_zh": "肉次方武館與現切原塊肉的混合影像",
+        "alt_en": "AI/CG dojo and live-action meat cutting for ROU CI FANG",
         "links": [
           { "label_zh": "壹之型｜觀看本片", "label_en": "Form I | Watch full film", "id": "3KVSg0WNciw" },
           { "label_zh": "貳之型｜觀看本片", "label_en": "Form II | Watch full film", "id": "uAuxnr8chUE" },
@@ -129,10 +129,10 @@
         "theme": "dark",
         "eyebrow": "CONTACT",
         "context": "YORK CHENG 鄭又勛",
-        "title_zh": "一起完成下一個世界。",
-        "title_en": "Let’s make the next world.",
-        "copy_zh": "類型敘事廣告導演｜把廣告拍成一個世界。",
-        "copy_en": "Genre-Narrative Commercial Director | Make every commercial a world.",
+        "title_zh": "有一支片想拍，歡迎找我聊。",
+        "title_en": "Have a film in mind? Let’s talk.",
+        "copy_zh": "鄭又勛｜類型敘事廣告導演",
+        "copy_en": "York Cheng | Genre-Narrative Commercial Director",
         "email": "hey.yuhsuncheng@gmail.com"
       }
     ]
@@ -142,10 +142,10 @@
     "name_en": "York Cheng",
     "tagline_zh": "遊戲廣告 · 商業影像 · 真人實拍 · CG · AI 影像",
     "tagline_en": "Game Advertising · Commercial Film · Live Action · CG · AI Film",
-    "point_of_view_zh": "每個案子先找到一個清楚的觀看理由，再把商業訊息放進人物的選擇與情緒裡。",
-    "point_of_view_en": "Find one clear reason to watch, then build the commercial message into character, choice and emotion.",
-    "bio_zh": "鄭又勛是台灣導演，專注遊戲廣告與商業影像。作品橫跨真人實拍、CG 與 AI 影像，從人物喜劇、類型世界到產品敘事，皆以清楚的觀看理由作為起點。",
-    "bio_en": "York Cheng is a Taiwan-based director working across game advertising and commercial film. His work spans live action, CG and AI film, from character comedy and genre worlds to product storytelling."
+    "point_of_view_zh": "我通常先找一個自己會想看下去的畫面，再回頭想：人物怎麼站得住，產品又要怎麼走進他的選擇裡。",
+    "point_of_view_en": "I usually begin with an image I would want to keep watching, then work backwards: what makes the character feel real, and where can the product enter that choice naturally?",
+    "bio_zh": "我是鄭又勛，台灣導演，主要拍遊戲廣告與商業影像。真人、CG 或 AI 的形式可以變，但我在意的事情差不多：角色先站得住，產品才有地方進來。",
+    "bio_en": "I'm York Cheng, a Taiwan-based director working mainly in game advertising and commercial film. The format may shift between live action, CG and AI, but the question stays the same: make the character feel real, then find a natural place for the product."
   },
   "experience": {
     "brands": [
@@ -191,8 +191,8 @@
       "type_zh": "品牌廣告",
       "type_en": "Brand Film",
       "image": "assets/works/tea.webp",
-      "copy_zh": "把一場武俠圍攻，翻成眾人聚飲。",
-      "copy_en": "Turn a wuxia siege into a shared round of tea.",
+      "copy_zh": "一句「夠嗎？」先是武俠挑釁，最後變成這壺茶夠不夠大家喝。",
+      "copy_en": "“Is that enough?” begins as a wuxia challenge and ends as a question about sharing tea.",
       "videos": [
         {
           "id": "rPfEga9kxU4",
@@ -209,8 +209,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/tianlong2.webp",
-      "copy_zh": "以三個問句，把執念拆成三種代價。",
-      "copy_en": "Three questions turn obsession into three different costs.",
+      "copy_zh": "三個問句，把權力、愛情與兄弟留在林志穎的三杯酒裡。",
+      "copy_en": "Three questions leave power, love and brotherhood in Jimmy Lin’s three cups.",
       "videos": [
         {
           "id": "cX7d8eiJfz8",
@@ -227,8 +227,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/shenmo.webp",
-      "copy_zh": "以白袍到黑袍，完成由人入魔的傳記。",
-      "copy_en": "A life story shifts from white robes to black.",
+      "copy_zh": "徐若瑄從戰場白袍走到白骨王座，成魔不是片尾造型，是一段完整轉變。",
+      "copy_en": "Vivian Hsu moves from white robes on the battlefield to black on the bone throne; the demon is a full transformation, not a final look.",
       "videos": [
         {
           "id": "iIUDbPBPqSw",
@@ -245,8 +245,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/last-taoist.webp",
-      "copy_zh": "先用唯美婚妝偽裝，再翻成冥婚驚悚。",
-      "copy_en": "Beauty disguises the scene before it turns into a ghost marriage.",
+      "copy_zh": "不拍抓鬼，讓拜堂字卡一張張數到新娘回魂。",
+      "copy_en": "Do not chase the ghost; let each wedding card count down to the bride’s return.",
       "videos": [
         {
           "id": "ep29rG5y45o",
@@ -263,8 +263,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/qing-yu-nian.webp",
-      "copy_zh": "把看不見，翻成劍客最強的看得見。",
-      "copy_en": "Make the unseen the swordsman’s sharpest sight.",
+      "copy_zh": "蒙眼不是裝飾。變身前後兩位劍客都遮住雙眼，最後一句「我看得見」，才把看不見翻成武功。",
+      "copy_en": "The blindfold is not decoration. Both swordsmen enter the transformation unable to see; “I can see” lands only after blindness has become the skill.",
       "videos": [
         {
           "id": "JMxwi8Wf7w4",
@@ -280,15 +280,15 @@
     },
     {
       "id": "roucifang",
-      "title_zh": "王品肉次方《AI 武館三部曲》",
-      "title_en": "ROU CI FANG — AI Dojo Trilogy",
+      "title_zh": "王品肉次方《切肉之道》",
+      "title_en": "ROU CI FANG — The Way of Meat",
       "year": "2026",
-      "type_zh": "全 AI 品牌影像",
-      "type_en": "Full-AI Brand Film",
+      "type_zh": "AI × 實拍品牌影像",
+      "type_en": "AI × Live Action Brand Film",
       "image": "assets/works/roucifang.webp",
       "image_fit": "contain",
-      "copy_zh": "以全 AI 武館，把嫩肉拍成修煉功夫。",
-      "copy_en": "An all-AI dojo turns tender meat into martial training.",
+      "copy_zh": "現切原塊肉，也有肉道黑帶的三型招式。",
+      "copy_en": "Cutting whole meat to order becomes a three-form, black-belt discipline.",
       "videos": [
         {
           "id": "3KVSg0WNciw",
@@ -315,8 +315,8 @@
       "type_zh": "品牌廣告",
       "type_en": "Brand Film",
       "image": "assets/works/schick.webp",
-      "copy_zh": "讓唯一藍光，把磁浮規格變成可見保護。",
-      "copy_en": "One line of blue light makes magnetic suspension visible.",
+      "copy_zh": "純黑舞台只留一圈冷藍，讓磁浮在刀頭貼上臉頰時被看見。",
+      "copy_en": "Against pure black, one cold-blue ring makes magnetic suspension visible as the razor meets the cheek.",
       "videos": [
         {
           "id": "d_B7amkyM6Y",
@@ -333,8 +333,8 @@
       "type_zh": "品牌廣告",
       "type_en": "Brand Film",
       "image": "assets/works/google-play.webp",
-      "copy_zh": "不拍點數，專拍每個玩家都懂的差一點。",
-      "copy_en": "Skip the points; film the ‘so close’ every player knows.",
+      "copy_zh": "先拍玩家那口不甘心，再讓 Google Play Points 補上少掉的一「點」。",
+      "copy_en": "Start with the player’s frustration, then let Google Play Points supply the missing “point.”",
       "videos": [
         {
           "id": "IOeQ5IwqYN0",
@@ -350,8 +350,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/bawang.webp",
-      "copy_zh": "以和室對稱開場，再把權力推向燃燒戰場。",
-      "copy_en": "Begin in symmetrical calm, then push power toward a burning battlefield.",
+      "copy_zh": "每次落子都展開一段戰功；兜帽揭開後，才知道這局一直在和自己下。",
+      "copy_en": "Each move opens a campaign; when the hood comes off, we learn that he has been playing against himself all along.",
       "videos": [
         {
           "id": "jcQ-spf44sI",
@@ -368,8 +368,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/soul-land.webp",
-      "copy_zh": "把真實校園與武魂特效壓進同一格。",
-      "copy_en": "Hold a real campus and spirit effects inside the same frame.",
+      "copy_zh": "《終極一班》班底不回頭，在真實校園裡換一種武魂再成軍。",
+      "copy_en": "The KO One cast forms up again, this time with martial souls inside a real campus.",
       "videos": [
         {
           "id": "slorjwyR06A",
@@ -391,8 +391,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/xin-xianxia.webp",
-      "copy_zh": "用冷暖光與框中框，縫合古今姊妹線。",
-      "copy_en": "Cool and warm light stitch two sisters across time.",
+      "copy_zh": "任家萱與任容萱隔著古今彼此照應，片尾再以分割畫面並排留在兩個房間。",
+      "copy_en": "Across past and present, mirrors and window frames keep the sisters connected before a split screen places them side by side in two rooms.",
       "videos": [
         {
           "id": "H2JsDnzXdV4",
@@ -409,8 +409,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/lost-ark.webp",
-      "copy_zh": "只留紅與黑，讓墮落在沉默中發生。",
-      "copy_en": "Leave only red and black, and let the fall happen in silence.",
+      "copy_zh": "我先把明星臉拿掉，只留紅燭、黑甲和血月。七個職業亮相後，觀眾才被拉進選擇。",
+      "copy_en": "I hide the celebrity face behind red candles, black armor and a blood moon. Only after seven classes appear does the viewer enter the choice.",
       "videos": [
         {
           "id": "7-5QP4MJhto",
@@ -427,8 +427,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/chaobao.webp",
-      "copy_zh": "以冷黑今生對照赤壁火海，合上前世鏡像。",
-      "copy_en": "Set a cold present against Red Cliffs in flames and close the past-life mirror.",
+      "copy_zh": "從黑色晚禮服到赤壁紅袍，遠古召喚把林心如的前世叫醒。",
+      "copy_en": "From a black evening gown to red robes at Red Cliffs, an ancient call wakes Ruby Lin’s past life.",
       "videos": [
         {
           "id": "3YPjfSLgPSw",
@@ -444,8 +444,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/yanyu.webp",
-      "copy_zh": "讓古風庭院與扇舞，成為人物登場的主軸。",
-      "copy_en": "Let the courtyard and fan dance lead the character’s entrance.",
+      "copy_zh": "凌煙以扇作兵，桃花出劍帶起水花。兩支十五秒，各替一位紅顏留下一小段傳記。",
+      "copy_en": "Ling Yan turns a fan into a weapon; Taohua’s sword throws water into the air. Two fifteen-second films leave each woman a short chapter of her own.",
       "videos": [
         {
           "id": "WN5JAf9ajTo",
@@ -462,8 +462,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/kaitian.webp",
-      "copy_zh": "讓冷藍天地被暖金劍光一擊劈開。",
-      "copy_en": "Split a cold-blue world open with one warm-gold strike.",
+      "copy_zh": "冰龍與雷電先立起「天」，最後一劍才完成「開」。",
+      "copy_en": "Ice and lightning build the “heaven”; the final sword strike completes the “opening.”",
       "videos": [
         {
           "id": "3SBvQKWW2_Y",
@@ -480,8 +480,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/summoners-war.webp",
-      "copy_zh": "把選擇題拍成連續失控的按鈕喜劇。",
-      "copy_en": "Turn a simple choice into an escalating button comedy.",
+      "copy_zh": "一句「這些魔靈召喚都用送的」，把正經台語對峙推到百抽爆開。演員不先笑，笑點才留給觀眾。",
+      "copy_en": "A dead-serious Taiwanese standoff lands on “all these summons are free,” then bursts into a hundred-pull payoff. The cast never winks, so the laugh stays with the audience.",
       "videos": [
         {
           "id": "5asZppi0EHE",
@@ -502,8 +502,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/ulala.webp",
-      "copy_zh": "從明亮家庭日常，讓巨型恐龍闖進現實。",
-      "copy_en": "Let a giant dinosaur crash into a bright family routine.",
+      "copy_zh": "巨龍從落地窗外找上門；少年舉起手機，下一秒全家已經變成遊戲隊伍。",
+      "copy_en": "A dragon arrives outside the picture window; the boy raises his phone, and the whole family becomes the game party in the next beat.",
       "videos": [
         {
           "id": "SvUU0LTiEec",
@@ -515,13 +515,13 @@
     {
       "id": "mirror-story",
       "title_zh": "魔鏡物語",
-      "title_en": "Mirror Story",
+      "title_en": "Tales of Mirror",
       "year": "2022",
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/mirror-story.webp",
-      "copy_zh": "讓明亮童話逐步轉入冷色懸疑與黑化。",
-      "copy_en": "Shift a bright fairy tale into cold suspense and corruption.",
+      "copy_zh": "小紅帽帶回狼頭，白雪改問最強大；童話走到一半，受害者開始掌局。",
+      "copy_en": "Red Riding Hood brings back the wolf’s head; Snow White asks for power. Halfway through, the victims take control.",
       "videos": [
         {
           "id": "hnmel0QLnTs",
@@ -543,8 +543,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/new-ludingji.webp",
-      "copy_zh": "把鰲拜越要越多的台詞，變成收集節奏。",
-      "copy_en": "Turn Ao Bai’s growing demands into a collection rhythm.",
+      "copy_zh": "鰲拜的「我要」一路加成「我全都要」，片尾手機替整張集卡清單結帳。",
+      "copy_en": "Oboi’s “I want it” grows into “I want it all,” and the final phone checks out the whole card-collection list.",
       "videos": [
         {
           "id": "c_dGawjH7bc",
@@ -560,8 +560,8 @@
       "type_zh": "遊戲廣告",
       "type_en": "Game Film",
       "image": "assets/works/yujian.webp",
-      "copy_zh": "讓現代街景切入冷色夜林，完成時空轉換。",
-      "copy_en": "Cut from a modern street into a cold night forest to cross time.",
+      "copy_zh": "同一枚玉珮從今生喚回前世，再把千年等待收進一次回頭。",
+      "copy_en": "One jade pendant calls back the past, then gathers a thousand-year wait into one final look.",
       "videos": [
         {
           "id": "Ct-1d0nXWRM",
@@ -575,6 +575,8 @@
       "title_zh": "ASUS ZenBook Pro Duo",
       "title_en": "ASUS ZenBook Pro Duo",
       "image": "assets/works/asus.webp",
+      "copy_zh": "我沒有讓規格先出場。先拍花、氣球和那些容易被忽略的美，雙螢幕最後才像一件創作工具接進來。",
+      "copy_en": "I kept the specifications off screen at first. Flowers, balloons and overlooked details lead the film; the dual screens arrive later as a tool for making those ideas tangible.",
       "videos": [
         {
           "id": "XVNa4XYyHnc",
@@ -588,6 +590,8 @@
       "title_zh": "GODIVA",
       "title_en": "GODIVA",
       "image": "assets/works/godiva.webp",
+      "copy_zh": "一盒巧克力被放大成整座城市都要抬頭看的聖誕吊飾。貼地仰拍和藍金色，是為了把櫃上的商品拉成一座地標。",
+      "copy_en": "A box of chocolate becomes a Christmas ornament large enough for the whole city to look up at. Low angles and a blue-gold palette turn a counter display into a landmark.",
       "videos": [
         {
           "id": "D48bDkOSsSY",
@@ -601,6 +605,8 @@
       "title_zh": "舒芙晶透煥亮 CC 刀",
       "title_en": "Schick Intuition CC Razor",
       "image": "assets/works/schick-cc.webp",
+      "copy_zh": "四種保養成分沒有被拍成成分表，而是變成繞著刀頭走的透明氣泡。隔離網一出現，安心才成了看得見的東西。",
+      "copy_en": "Four skincare ingredients become clear bubbles moving around the razor head instead of a list of claims. When the protective mesh appears, reassurance becomes something visible.",
       "videos": [
         {
           "id": "OKSb5mOVTMU",
@@ -614,6 +620,8 @@
       "title_zh": "GCS 2018 夏季賽片頭",
       "title_en": "GCS 2018 Summer Opening",
       "image": "assets/works/gcs-2018.webp",
+      "copy_zh": "紅、藍兩隊先各自蓄勢，光刃、火球和人影都成雙出現。最後拉開寬鏡，才看見他們一直在同一局裡。",
+      "copy_en": "Red and blue sides gather separately as blades, fireballs and silhouettes appear in pairs. Only the final wide shot reveals that they have been inside the same match all along.",
       "videos": [
         {
           "id": "1cUBSFAU800",
@@ -627,6 +635,8 @@
       "title_zh": "LMS 2018 春季賽片頭",
       "title_en": "LMS 2018 Spring Opening",
       "image": "assets/works/lms-2018.webp",
+      "copy_zh": "獎盃先出現，接著才倒回去看選手怎麼走到那裡。火光、逆光和隊徽，把最後的並肩拍得像剛走完一場硬仗。",
+      "copy_en": "The trophy appears first, then the film works backward through the road that led there. Fire, backlight and team crests make the final line-up feel earned.",
       "videos": [
         {
           "id": "LKL_M4jJzwY",
@@ -640,6 +650,8 @@
       "title_zh": "星球重啟",
       "title_en": "Earth: Revival",
       "image": "assets/works/earth-revival.webp",
+      "copy_zh": "我最喜歡的是那個「一億戰力」的手機畫面。前面把街頭拍得像一場幫派資格審查，數字一亮，地位立刻翻過來。",
+      "copy_en": "My favorite beat is the phone revealing a combat power of one hundred million. The street first plays like a gang initiation; one number reverses the entire pecking order.",
       "videos": [
         {
           "id": "X1bRLBYQg8k",
@@ -653,6 +665,8 @@
       "title_zh": "街頭籃球2：正宗續作",
       "title_en": "Street Basketball 2",
       "image": "assets/works/street-basketball.webp",
+      "copy_zh": "一顆撞色籃球，把停車場、潑漆和城市球場連成同一條弧線。田壘與高國豪不是站台，而是帶我們走進這個世界的人。",
+      "copy_en": "One two-tone basketball connects a parking lot, splashes of paint and the city court in a single arc. The athletes are not endorsements placed on top; they are the way into the world.",
       "videos": [
         {
           "id": "3yzFLrexRCk",
@@ -666,6 +680,8 @@
       "title_zh": "熱血江湖：歸來",
       "title_en": "熱血江湖：歸來",
       "image": "assets/works/hot-blooded-jianghu.webp",
+      "copy_zh": "我想先保留啦啦隊原本明亮的青春感，再用一道紅光把她們換成武者。刀、弓、扇接上去，日常和江湖才真的合在一起。",
+      "copy_en": "I wanted to keep the bright energy of the cheer squad before a red flash turns them into warriors. Sword, bow and fan complete the handoff from everyday life to the martial world.",
       "videos": [
         {
           "id": "8EgIgrQZv34",
@@ -679,6 +695,8 @@
       "title_zh": "魔姬物語",
       "title_en": "魔姬物語",
       "image": "assets/works/moji-story.webp",
+      "copy_zh": "辦公室開場故意拍得很正經，視角卻一格一格往桌面、網襪和俯拍移。等權力關係翻過來，角色解鎖也成了那個笑點。",
+      "copy_en": "The office begins with complete seriousness, while the camera shifts step by step to the desk, fishnets and an overhead view. Once the power dynamic flips, the character reveal lands as the joke.",
       "videos": [
         {
           "id": "qxFvIaYaezY",
@@ -692,6 +710,8 @@
       "title_zh": "玩賺大都會",
       "title_en": "玩賺大都會",
       "image": "assets/works/play-metropolis.webp",
+      "copy_zh": "三種人生先躺在海灘上，接著被放大成天際線廣告，最後連鈔票都落回真實街道。選擇越誇張，反而越像玩家會相信的日常。",
+      "copy_en": "Three possible lives begin side by side on a beach, expand into skyline billboards, then send money falling into the real street. The larger the fantasy becomes, the more believable the choice feels.",
       "videos": [
         {
           "id": "q-kKr1qZtf4",
@@ -705,6 +725,8 @@
       "title_zh": "文明與征服／全球大戰篇",
       "title_en": "Era of Conquest — Global War",
       "image": "assets/works/era-of-conquest.webp",
+      "copy_zh": "大殿拍得越一本正經，吳宗憲那句「有誰不服？」就越好笑。這支片的喜劇沒有多做什麼，只把那一拍留準。",
+      "copy_en": "The more seriously the great hall is played, the funnier Jacky Wu’s “Anyone disagree?” becomes. The comedy comes from doing less and holding that beat precisely.",
       "videos": [
         {
           "id": "vTY-dNNAcbA",
@@ -727,7 +749,7 @@
     "神魔傳說",
     "最後的道長",
     "慶餘年",
-    "王品肉次方《AI 武館三部曲》",
+    "王品肉次方《切肉之道》",
     "舒適牌 HydroPRO 磁浮刮鬍刀",
     "Google Play 台灣《就差一點》",
     "霸王之野望",

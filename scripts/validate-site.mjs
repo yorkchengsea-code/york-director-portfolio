@@ -70,7 +70,7 @@ const css = await readSite('css/style.css');
 const js = await readSite('js/script.js');
 
 check(data.schema === 'york-director-website-v4', `unexpected site-data schema: ${data.schema}`);
-check(data.revision === '2026-08-23-v4-quick-intro', `unexpected site-data revision: ${data.revision}`);
+check(data.revision === '2026-08-24-v6-all-platform-copy', `unexpected site-data revision: ${data.revision}`);
 check(Array.isArray(data.works), 'site-data.works must be an array');
 check(data.works?.length === 31, `works must contain 31 linked entries, found ${data.works?.length ?? 0}`);
 check(Array.isArray(data.filmography), 'site-data.filmography must be an array');
