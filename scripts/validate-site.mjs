@@ -104,7 +104,7 @@ const css = await readSite('css/style.css');
 const js = await readSite('js/script.js');
 
 check(data.schema === 'york-director-website-v4', `unexpected site-data schema: ${data.schema}`);
-check(data.revision === '2026-08-24-v7-media-parity-gambling-wall', `unexpected site-data revision: ${data.revision}`);
+check(data.revision === '2026-08-24-v9-no-template-copy', `unexpected site-data revision: ${data.revision}`);
 check(Array.isArray(data.works), 'site-data.works must be an array');
 check(data.works?.length === 31, `works must contain 31 linked entries, found ${data.works?.length ?? 0}`);
 check(Array.isArray(data.filmography), 'site-data.filmography must be an array');
@@ -363,6 +363,135 @@ if (assetManifest) {
     const work = works.find(candidate => candidate.id === slug);
     check(normalize(item?.source).includes(expected.sourceFragment), `${slug} thumbnail is not from the same named film as its public video`);
     check(work?.videos?.some(video => video.id === expected.videoId), `${slug} is missing its approved matching public video`);
+  }
+
+  const humanCopyExpectations = {
+    'tea': {
+      zh: '「夠嗎？」問的根本不是同一件事：刀還舉著時是在挑釁，1250ml 大瓶茶一上桌，就成了夠不夠大家喝。',
+      en: '“Is that enough?” changes meaning inside the scene: with the blades still raised, it is a challenge; once the 1,250ml bottles reach the table, it becomes a question of whether there is enough tea to share.'
+    },
+    'shenmo': {
+      zh: '白袍的倖存者一路被綠色魔氣吞沒，黑袍和白骨王座只是這段變化的落點。成魔好不好看，關鍵都在中間。',
+      en: 'Green energy slowly overtakes the survivor in white. The black robes and bone throne are only the destination; the transformation lives in the passage between them.'
+    },
+    'google-play': {
+      zh: '玩家那口不甘心，和 Google Play Points 少掉的一「點」其實是同一個笑點。那口氣演對了，Points 出來就不用另外解釋。',
+      en: 'The player’s frustration and the missing “point” in Google Play Points are the same joke. Get that frustration right, and Points needs no separate explanation when it appears.'
+    },
+    'bawang': {
+      zh: '「人生最大的對手，正是自己。」棋子落下時看見的是戰功，兜帽揭開，這句話才對上同一張臉。',
+      en: '“Your greatest opponent is yourself.” The moves seem to reveal a campaign; when the hood comes off, the line lands on the same face.'
+    },
+    'xin-xianxia': {
+      zh: '任家萱與任容萱本來就是姊妹，所以古今兩條線不用解釋太多。圓鏡和窗格把時空隔開，兩人之間的熟悉感一直都在。',
+      en: 'Real-life sisters play one in the past and one in the present, so the bond needs little explanation. Mirrors and window frames keep the eras apart while their familiarity remains.'
+    },
+    'lost-ark': {
+      zh: '女戰士的臉故意藏著，畫面只讓紅燭、黑甲和血月說話。職業卡一排開，「選擇你的命運吧」就從台詞變成玩家要做的事。',
+      en: 'The warrior’s face stays hidden, leaving red candles, black armour and a blood moon to speak for the ritual. Once the class cards fill the frame, “Choose your fate” stops being a line and becomes the player’s decision.'
+    },
+    'kaitian': {
+      zh: '《開天》拆開來看才好拍：冰龍和雷電是「天」，那一劍才是「開」。',
+      en: 'Kaitian became clearer once the title was split in two: the ice dragon and lightning are the “heaven”; the sword strike is the “opening.”'
+    },
+    'asus': {
+      zh: '花、氣球和那些容易被忽略的美，比規格更適合站在前面。雙螢幕也不是功能表，而是把這些細節做出來的工具。',
+      en: 'Flowers, balloons and overlooked details deserve the frame before the specifications do. The dual screens are not a feature list; they are the tool that makes those details tangible.'
+    },
+    'gcs-2018': {
+      zh: '紅、藍兩隊的光刃、火球和人影都成雙出現，畫面一直把他們分在兩邊。寬鏡一拉開，才發現這些對稱其實都在同一局裡。',
+      en: 'Blades, fireballs and silhouettes appear in red-blue pairs, keeping the two sides apart. Pulling wide reveals that every pair has belonged to the same match.'
+    },
+    'lms-2018': {
+      zh: '從獎盃倒著看回去，比一路拍到奪冠更有意思。火光、逆光和隊徽像剛走過的路，選手並肩站好時，那場硬仗才算完整。',
+      en: 'Starting from the trophy and looking backward is more interesting than building toward it. Fire, backlight and team crests feel like the road just travelled; the line-up closes the hard-fought journey.'
+    },
+    'earth-revival': {
+      zh: '最好笑的是手機亮出「一億戰力」那一下。街頭本來像幫派在驗資格，一個數字就把整條地位翻過來。',
+      en: 'The sharpest beat is the phone revealing a combat power of one hundred million. The street plays like a gang initiation until a single number reverses the pecking order.'
+    },
+    'street-basketball': {
+      zh: '一顆撞色籃球，把停車場、潑漆和城市球場連成同一條弧線。田壘與高國豪不站在世界外面代言，而是帶著球直接走進去。',
+      en: 'One two-tone basketball connects a parking lot, splashes of paint and the city court in a single arc. Rather than endorsers standing outside that world, the two athletes carry the ball straight into it.'
+    },
+    'hot-blooded-jianghu': {
+      zh: '啦啦隊原本明亮的青春感不能丟；一道紅光夠了，刀、弓、扇就接手把她們換成武者。日常沒有消失，江湖才進得來。',
+      en: 'The cheer squad’s bright, youthful energy has to stay. One red flash is enough for sword, bow and fan to turn them into warriors. Everyday life never disappears, so the martial world still feels like theirs.'
+    },
+    'moji-story': {
+      zh: '辦公室越正經，桌面、網襪和俯拍就越可疑。視角慢慢偏掉，等權力關係翻面，角色解鎖才剛好成為笑點。',
+      en: 'The straighter the office plays, the more suspicious the desk, fishnets and overhead view become. The camera keeps slipping off-centre until the power dynamic flips and the character unlock lands as the joke.'
+    },
+    'play-metropolis': {
+      zh: '海灘上並排的三種人生，本來只是選項；一放大成天際線廣告，連鈔票都能掉回街上。荒唐要一路接到真實街道，玩家才有理由相信這場夢。',
+      en: 'Three lives lying side by side on a beach begin as choices; once they expand into skyline billboards, even the money can fall into the street. The absurdity has to reach the real city before the fantasy feels believable.'
+    }
+  };
+  for (const [slug, expected] of Object.entries(humanCopyExpectations)) {
+    const work = works.find(candidate => candidate.id === slug);
+    check(work?.copy_zh === expected.zh, `${slug} Chinese copy drifted from the approved human-voice line`);
+    check(work?.copy_en === expected.en, `${slug} English copy drifted from the approved human-voice line`);
+  }
+  check(!JSON.stringify(data).includes('片尾再以分割畫面'), 'old template-like xin-xianxia copy is still present');
+  check(!JSON.stringify(data).includes('我先把明星臉拿掉'), 'old first-person lost-ark copy is still present');
+
+  const expectedDirectorCopy = {
+    point_of_view_zh: '畫面得先讓人想看下去，人物也要站得住；產品走進來時，最好像角色本來就會做的選擇。',
+    point_of_view_en: 'The image has to earn another look, and the character has to hold. When the product enters, it should feel like a choice that character would naturally make.',
+    bio_zh: '鄭又勛，台灣導演，主要拍遊戲廣告與商業影像。真人、CG 或 AI 都能用，前提是角色得先成立，產品才不會像後來塞進去的。',
+    bio_en: 'York Cheng is a Taiwan-based director working mainly in game advertising and commercial films. Live action, CG and AI can all work; the character has to hold first, or the product will always feel added afterward.'
+  };
+  for (const [key, expected] of Object.entries(expectedDirectorCopy)) {
+    check(data.director?.[key] === expected, `director.${key} drifted from the approved no-template copy`);
+  }
+
+  const expectedQuickIntro = [
+    ['鄭又勛，台灣導演。', 'York Cheng, a director from Taiwan.', '九頁，快速看一支廣告怎麼從畫面選擇走到完整成片。', 'Nine pages on how visual choices shape a finished commercial.'],
+    ['一壺茶，把圍攻變成同桌。', 'One pot of tea turns a siege into a shared table.', '刀光與走位把客棧逼到要開打；兩瓶 1250ml 大茶上桌，「夠嗎」便從戰力改成夠不夠喝。', 'Blades and blocking push the tavern to the edge of a fight; two 1,250ml bottles land, and “enough?” changes from strength to whether there is enough to drink.'],
+    ['婚禮走到第三句，才露出鬼片。', 'The wedding reaches its third line before the ghost story shows itself.', '拜堂與紅妝都照規矩進行；「新娘回魂夜」一出現，熟悉的喜事立刻開始不對勁。', 'The bows and red bridal makeup follow the rules; “The bride returns tonight” makes the familiar celebration turn wrong at once.'],
+    ['武打要讓人看懂出手，也看懂結果。', 'A fight should make both the strike and its result readable.', '近身動作留住受擊點，群戰守住人物走位，出劍帶起的水花把力道畫清楚。', 'Close action keeps the impact point visible, ensemble combat preserves blocking, and water kicked up by the blade draws the force clearly.'],
+    ['特效進場前，演員得先相信它在那裡。', 'Before VFX enters, the actors need to believe it is there.', '手勢帶出能量、全家迎上巨龍、白袍走到黑袍；效果各自不同，表演始終給得出它的位置。', 'A gesture releases energy, a family faces a dragon, and white robes turn black; each effect is different, but every one has a performance to hold onto.'],
+    ['「就差一點」先落在玩家臉上。', '“So close” lands on the players’ faces.', '那一下懊惱被群像接住，Google Play Points 才能補上片名裡少掉的那一「點」。', 'The ensemble carries that flash of frustration, giving Google Play Points a reason to supply the missing “point” in the title.'],
+    ['磁浮看不見，就讓藍光貼著臉頰走。', 'Magnetic suspension is invisible, so the blue light follows the cheek.', '刀頭碰到暖色肌膚時，冷藍光才出現；產品規格因此有了能被看見的動作。', 'It appears as the razor meets warm skin, giving the product feature a movement the audience can see.'],
+    ['同一刀，長成三支不同的片。', 'One cut becomes three different films.', '武館、符號與人物關係各走一條路，肉片落上烤盤的那一下始終沒變。', 'The dojo, graphic symbols and character relationships take separate paths, while the slice landing on the grill remains the shared endpoint.'],
+    ['有一支片想拍，歡迎聊聊。', 'Have a film in mind? Get in touch.', '鄭又勛｜類型敘事廣告導演', 'York Cheng | Genre-Narrative Commercial Director']
+  ];
+  check(data.quick_intro?.slides?.length === expectedQuickIntro.length, `quick intro must contain ${expectedQuickIntro.length} slides`);
+  expectedQuickIntro.forEach(([titleZh, titleEn, copyZh, copyEn], index) => {
+    const slide = data.quick_intro?.slides?.[index];
+    check(slide?.title_zh === titleZh, `quick intro P${index + 1} Chinese title drifted`);
+    check(slide?.title_en === titleEn, `quick intro P${index + 1} English title drifted`);
+    check(slide?.copy_zh === copyZh, `quick intro P${index + 1} Chinese copy drifted`);
+    check(slide?.copy_en === copyEn, `quick intro P${index + 1} English copy drifted`);
+  });
+  check(html.includes('data-label-zh="有一支片想拍，歡迎聊聊。" data-label-en="Have a film in mind? Get in touch."'), 'main contact copy drifted from the approved no-template line');
+
+  const narrativeTexts = [
+    ...Object.values(expectedDirectorCopy),
+    ...expectedQuickIntro.flat(),
+    ...works.flatMap(work => [work.copy_zh, work.copy_en])
+  ].filter(Boolean);
+  const withoutQuotedDialogue = value => String(value)
+    .replace(/「[^」]*」/g, '')
+    .replace(/“[^”]*”/g, '')
+    .replace(/"[^"]*"/g, '');
+  for (const value of narrativeTexts) {
+    const narratorOnly = withoutQuotedDialogue(value);
+    check(!narratorOnly.includes('我'), `narrator first-person Chinese remains: ${value}`);
+    check(!/\b(?:I|me|my|we|our|us)\b/i.test(narratorOnly), `narrator first-person English remains: ${value}`);
+  }
+  const forbiddenTemplatePatterns = [
+    /先.*(?:再|接著).*最後/,
+    /透過.*呈現/,
+    /片尾再以/,
+    /觀眾.*拉進/,
+    /不只是.*更是/,
+    /營造氛圍|品牌精神|核心價值|沉浸|張力|敘事層次/
+  ];
+  for (const value of narrativeTexts) {
+    forbiddenTemplatePatterns.forEach(pattern => {
+      check(!pattern.test(value), `template-like copy pattern remains (${pattern}): ${value}`);
+    });
   }
 
   const wallItems = Array.isArray(assetManifest.gamblingWall) ? assetManifest.gamblingWall : [];
