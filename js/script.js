@@ -237,9 +237,22 @@
     var gambling = state.data.gambling_commercials;
     document.getElementById('gambling-title').textContent = pick(gambling, 'title');
     document.getElementById('gambling-copy').textContent = pick(gambling, 'copy');
-    var image = document.getElementById('gambling-image');
-    image.src = gambling.image;
-    image.alt = pick(gambling, 'title');
+    var wall = document.getElementById('gambling-wall');
+    wall.setAttribute('aria-label', state.lang === 'zh' ? '博弈廣告作品截圖牆' : 'Gambling commercial stills');
+    wall.innerHTML = '';
+    gambling.images.forEach(function (still) {
+      var item = el('div', 'gambling-still');
+      item.setAttribute('role', 'listitem');
+      var image = document.createElement('img');
+      image.src = still.src;
+      image.alt = pick(still, 'alt');
+      image.width = 1600;
+      image.height = 900;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      item.appendChild(image);
+      wall.appendChild(item);
+    });
   }
 
   function renderHero() {

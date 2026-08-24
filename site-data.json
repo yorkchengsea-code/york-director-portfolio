@@ -1,6 +1,6 @@
 {
   "schema": "york-director-website-v4",
-  "revision": "2026-08-24-v6-all-platform-copy",
+  "revision": "2026-08-24-v7-media-parity-gambling-wall",
   "quick_intro": {
     "slides": [
       {
@@ -739,8 +739,84 @@
   "gambling_commercials": {
     "title_zh": "博弈廣告作品",
     "title_en": "GAMBLING COMMERCIALS",
-    "image": "assets/works/gambling-commercials.webp",
-    "copy_zh": "大型棚景、群戲調度、代言人表演與多場景轉換。",
+    "images": [
+      {
+        "src": "assets/gambling-wall/01-manguan-lion.webp",
+        "alt_zh": "滿貫大亨《舞獅篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Lion Dance"
+      },
+      {
+        "src": "assets/gambling-wall/02-manguan-power-card.webp",
+        "alt_zh": "滿貫大亨911《神力卡篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Power Card"
+      },
+      {
+        "src": "assets/gambling-wall/03-manguan-dinner.webp",
+        "alt_zh": "滿貫大亨911《加菜篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Dinner"
+      },
+      {
+        "src": "assets/gambling-wall/04-manguan-speed-911-a.webp",
+        "alt_zh": "滿貫大亨911《急速玖壹壹篇》廣告畫面一",
+        "alt_en": "Gambling commercial still — Speed 911, frame one"
+      },
+      {
+        "src": "assets/gambling-wall/05-manguan-speed-911-b.webp",
+        "alt_zh": "滿貫大亨911《急速玖壹壹篇》廣告畫面二",
+        "alt_en": "Gambling commercial still — Speed 911, frame two"
+      },
+      {
+        "src": "assets/gambling-wall/06-jubao-blessing.webp",
+        "alt_zh": "聚寶online禮生團《開光篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Blessing"
+      },
+      {
+        "src": "assets/gambling-wall/07-jubao-all-come.webp",
+        "alt_zh": "聚寶online《攏總來篇》廣告畫面",
+        "alt_en": "Gambling commercial still — All Come"
+      },
+      {
+        "src": "assets/gambling-wall/08-ace-gold-a.webp",
+        "alt_zh": "王牌俱樂部《黃金在手篇》廣告畫面一",
+        "alt_en": "Gambling commercial still — Gold in Hand, frame one"
+      },
+      {
+        "src": "assets/gambling-wall/09-ace-gold-b.webp",
+        "alt_zh": "王牌俱樂部《黃金在手篇》廣告畫面二",
+        "alt_en": "Gambling commercial still — Gold in Hand, frame two"
+      },
+      {
+        "src": "assets/gambling-wall/10-baonifa-midautumn.webp",
+        "alt_zh": "包你發《中秋工地篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Mid-Autumn Construction Site"
+      },
+      {
+        "src": "assets/gambling-wall/11-baonifa-worldcup.webp",
+        "alt_zh": "包你發《世足台灣隊篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Taiwan World Cup Team"
+      },
+      {
+        "src": "assets/gambling-wall/12-goodluck-samba.webp",
+        "alt_zh": "金好運《森巴篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Samba"
+      },
+      {
+        "src": "assets/gambling-wall/13-rich-motorcycle.webp",
+        "alt_zh": "老子有錢《機車篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Motorcycle"
+      },
+      {
+        "src": "assets/gambling-wall/14-rich-show-segment.webp",
+        "alt_zh": "老子有錢《節目橋段篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Variety Show Segment"
+      },
+      {
+        "src": "assets/gambling-wall/15-rich-sports-car.webp",
+        "alt_zh": "老子有錢《跑車篇》廣告畫面",
+        "alt_en": "Gambling commercial still — Sports Car"
+      }
+    ],
+    "copy_zh": "大型棚景、群戲、代言人表演與場景轉換。",
     "copy_en": "Large-scale sets, ensemble direction, talent performance and multi-scene transitions."
   },
   "filmography": [

@@ -81,9 +81,11 @@ button{border:0}
 .work-card:last-child:nth-child(odd) .work-media{aspect-ratio:2/1}
 
 .gambling-showcase .section-heading{border-color:var(--line-dark)}
-.gambling-layout{display:grid;grid-template-columns:minmax(0,5fr) minmax(260px,3fr);gap:clamp(28px,6vw,92px);align-items:end}
-.gambling-layout img{aspect-ratio:16/9;object-fit:cover;filter:saturate(.82) contrast(1.04)}
-.gambling-layout p{max-width:520px;margin:0;padding-top:24px;border-top:1px solid var(--line-dark);font-size:clamp(17px,2vw,26px);font-weight:500;line-height:1.55;letter-spacing:-.02em}
+.gambling-layout{display:block}
+.gambling-wall{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(5px,.65vw,10px)}
+.gambling-still{min-width:0;aspect-ratio:16/9;overflow:hidden;background:var(--dark-2)}
+.gambling-still img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.04)}
+.gambling-layout p{max-width:none;margin:clamp(24px,3vw,44px) 0 0;padding-top:clamp(18px,2vw,28px);border-top:1px solid var(--line-dark);font-size:clamp(17px,2vw,26px);font-weight:500;line-height:1.55;letter-spacing:-.02em}
 
 .filmography-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
 .filmography-item{min-height:58px;padding:16px 18px;display:flex;align-items:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13px;line-height:1.4}
@@ -153,7 +155,7 @@ button{border:0}
   .hero-media{min-height:0;aspect-ratio:16/10}
   .hero-copy{min-height:560px}
   .filmography-list{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .gambling-layout{grid-template-columns:1fr}
+  .gambling-wall{grid-template-columns:repeat(3,minmax(0,1fr))}
   .about{grid-template-columns:1fr}
   .about-image{position:static;max-width:430px}
 }
@@ -180,6 +182,8 @@ button{border:0}
   .work-card:last-child:nth-child(odd){grid-column:auto}
   .work-card:last-child:nth-child(odd) .work-media{aspect-ratio:16/9}
   .work-copy h3{font-size:29px}
+  .gambling-wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+  .gambling-still:last-child:nth-child(odd){grid-column:1/-1}
   .about-bio{margin-top:48px;font-size:18px}
   .experience-group{grid-template-columns:1fr;gap:7px}
   .contact{min-height:68vh}.contact h2{font-size:clamp(50px,17vw,78px)}
