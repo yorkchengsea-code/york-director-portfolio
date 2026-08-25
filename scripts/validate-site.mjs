@@ -6,7 +6,27 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const workspaceRoot = path.resolve(siteRoot, '../../..');
-const assetManifestPath = path.resolve(siteRoot, '../website-refresh-2026-08-22-v2-asset-manifest.json');
+const assetManifestPath = path.join(siteRoot, 'asset-manifest.json');
+const approvedCopyMapPath = path.resolve(
+  siteRoot,
+  '../downstream-sync-2026-08-25-v1/copy/copy-map-approved-v1.json'
+);
+const approvedZhSourcePath = path.resolve(
+  siteRoot,
+  '../copy-recalibration-2026-08-25-upstream-v5/MASTER-COPY-31-ZH-UPSTREAM-v5.md'
+);
+const quickCopyZhPath = path.resolve(
+  siteRoot,
+  '../downstream-sync-2026-08-25-v1/copy/QUICK-COPY-9-ZH-APPROVED-v2.md'
+);
+const quickCopyEnPath = path.resolve(
+  siteRoot,
+  '../downstream-sync-2026-08-25-v1/copy/QUICK-COPY-9-EN-APPROVED-v2.md'
+);
+const expectedApprovedCopyMapSha256 = '7b2c0874850b0b0893dfd3a5429905be0800316c1a76b681c9b3562e7ae469a6';
+const expectedApprovedZhSha256 = 'a503bd295c043736245196a01cc2464a1b77f9ee3e440ef189f4963d44a1ddb0';
+const expectedQuickCopyZhSha256 = '63bb885396bff331333f43452064e2f7bfead7c8911183c28c9ea766b202464b';
+const expectedQuickCopyEnSha256 = 'a8add976e2225082be1358cf319d854a956ddf0c8dc4f54173f6174ce4b34af6';
 const selectionManifestPath = path.join(
   workspaceRoot,
   '導演功課/導演作品集/portfolio-deck-whitelist-integration-2026-08-13-v1/selection-manifest-v6-r10.json'
@@ -61,6 +81,8 @@ const normalize = value => String(value || '').replaceAll('\\', '/');
 const failures = [];
 const check = (condition, message) => { if (!condition) failures.push(message); };
 const renderedViews = [];
+let onlineWorkVideoChecks = 0;
+let onlineQuickVideoChecks = 0;
 
 const contentTypes = new Map([
   ['.html', 'text/html; charset=utf-8'],
@@ -104,7 +126,7 @@ const css = await readSite('css/style.css');
 const js = await readSite('js/script.js');
 
 check(data.schema === 'york-director-website-v4', `unexpected site-data schema: ${data.schema}`);
-check(data.revision === '2026-08-24-v9-no-template-copy', `unexpected site-data revision: ${data.revision}`);
+check(data.revision === '2026-08-25-v11-approved-copy-local', `unexpected site-data revision: ${data.revision}`);
 check(Array.isArray(data.works), 'site-data.works must be an array');
 check(data.works?.length === 31, `works must contain 31 linked entries, found ${data.works?.length ?? 0}`);
 check(Array.isArray(data.filmography), 'site-data.filmography must be an array');
@@ -118,6 +140,238 @@ check(new Set(filmographyTitles).size === 58, `filmography must contain 58 uniqu
 
 const works = Array.isArray(data.works) ? data.works : [];
 const workIds = works.map(work => work.id);
+const expectedWorkYears = {
+  tea: '2025',
+  tianlong2: '2022',
+  shenmo: '2023',
+  'last-taoist': '2024',
+  'qing-yu-nian': '2023',
+  roucifang: '2026',
+  schick: '2026',
+  'google-play': '2025',
+  bawang: '2019',
+  'soul-land': '2025',
+  'xin-xianxia': '2021',
+  'lost-ark': '2022',
+  chaobao: '2022',
+  yanyu: '2021',
+  kaitian: '2025',
+  'summoners-war': '2023',
+  ulala: '2019',
+  'mirror-story': '2022',
+  'new-ludingji': '2019',
+  yujian: '2019',
+  asus: '2019',
+  godiva: '2025',
+  'schick-cc': '2026',
+  'gcs-2018': '2018',
+  'lms-2018': '2018',
+  'earth-revival': '2023',
+  'street-basketball': '2021',
+  'hot-blooded-jianghu': '2024',
+  'moji-story': '2024',
+  'play-metropolis': '2023',
+  'era-of-conquest': '2023'
+};
+check(
+  JSON.stringify(workIds) === JSON.stringify(Object.keys(expectedWorkYears)),
+  'work ID sequence does not match the 31-case source master'
+);
+for (const work of works) {
+  check(work.year === expectedWorkYears[work.id], `year drifted for ${work.id}: ${work.year}`);
+}
+
+let approvedCopyMap = { works: [] };
+try {
+  const approvedCopyMapBuffer = await fs.readFile(approvedCopyMapPath);
+  check(
+    sha256(approvedCopyMapBuffer) === expectedApprovedCopyMapSha256,
+    'approved copy map SHA-256 drifted'
+  );
+  approvedCopyMap = JSON.parse(approvedCopyMapBuffer.toString('utf8'));
+} catch (error) {
+  failures.push(`missing or unreadable approved copy map: ${approvedCopyMapPath} (${error.code || error.message})`);
+}
+const approvedEntries = Array.isArray(approvedCopyMap.works) ? approvedCopyMap.works : [];
+check(approvedEntries.length === 31, `approved copy map contains ${approvedEntries.length}/31 cases`);
+check(
+  JSON.stringify(approvedEntries.map(entry => entry.id)) === JSON.stringify(workIds),
+  'approved copy map IDs do not match website work sequence'
+);
+check(
+  String(approvedCopyMap.source_sha256 || '').toLowerCase() === expectedApprovedZhSha256,
+  'approved Chinese source SHA-256 drifted'
+);
+try {
+  check(
+    sha256(await fs.readFile(approvedZhSourcePath)) === expectedApprovedZhSha256,
+    'approved Chinese master file SHA-256 drifted'
+  );
+} catch (error) {
+  failures.push(`missing or unreadable approved Chinese master: ${approvedZhSourcePath} (${error.code || error.message})`);
+}
+check(
+  data.copy_source?.master === '../copy-recalibration-2026-08-25-upstream-v5/MASTER-COPY-31-ZH-UPSTREAM-v5.md',
+  'site-data copy_source.master does not point to the approved Chinese master'
+);
+check(
+  String(data.copy_source?.sha256 || '').toLowerCase() === expectedApprovedZhSha256,
+  'site-data Chinese master path/hash pairing is inconsistent'
+);
+check(
+  data.copy_source?.approved_map === '../downstream-sync-2026-08-25-v1/copy/copy-map-approved-v1.json',
+  'site-data copy_source.approved_map does not point to the approved map'
+);
+check(
+  String(data.copy_source?.approved_map_sha256 || '').toLowerCase() === expectedApprovedCopyMapSha256,
+  'site-data approved map path/hash pairing is inconsistent'
+);
+check(data.copy_source?.external_publish_authorized === false, 'external publish authorization must remain false');
+for (const entry of approvedEntries) {
+  const work = works.find(candidate => candidate.id === entry.id);
+  check(work?.title_zh === entry.title_zh, `${entry.id} Chinese title does not match the approved copy map`);
+  check(work?.title_en === entry.title_en, `${entry.id} English title does not match the approved copy map`);
+  check(work?.copy_zh === entry.copy_zh, `${entry.id} Chinese copy does not exactly match the approved copy map`);
+  check(work?.copy_en === entry.copy_en, `${entry.id} English copy does not exactly match the approved copy map`);
+}
+
+const parseQuickCopy = text => text
+  .split(/^## /m)
+  .slice(1)
+  .filter(section => /^P\d｜/.test(section))
+  .map(section => {
+    const lines = section.split(/\r?\n/);
+    const get = key => {
+      const line = lines.find(candidate => candidate.startsWith(`- ${key}`));
+      return line?.match(/`([\s\S]*?)`\s*$/)?.[1] || '';
+    };
+    return {
+      title: get('title：') || get('title:'),
+      copy: get('copy：') || get('copy:'),
+      email: get('email：') || get('email:')
+    };
+  });
+let quickCopyZh = [];
+let quickCopyEn = [];
+try {
+  const [quickZhBuffer, quickEnBuffer] = await Promise.all([
+    fs.readFile(quickCopyZhPath),
+    fs.readFile(quickCopyEnPath)
+  ]);
+  check(sha256(quickZhBuffer) === expectedQuickCopyZhSha256, 'Quick Chinese copy SHA-256 drifted');
+  check(sha256(quickEnBuffer) === expectedQuickCopyEnSha256, 'Quick English copy SHA-256 drifted');
+  quickCopyZh = parseQuickCopy(quickZhBuffer.toString('utf8'));
+  quickCopyEn = parseQuickCopy(quickEnBuffer.toString('utf8'));
+} catch (error) {
+  failures.push(`missing or unreadable Quick copy source (${error.code || error.message})`);
+}
+check(quickCopyZh.length === 9, `Quick Chinese source contains ${quickCopyZh.length}/9 pages`);
+check(quickCopyEn.length === 9, `Quick English source contains ${quickCopyEn.length}/9 pages`);
+
+const expectedWorkVideos = {
+  tea: [['rPfEga9kxU4', '完整影片', 'Full Film']],
+  tianlong2: [['cX7d8eiJfz8', '完整影片', 'Full Film']],
+  shenmo: [['iIUDbPBPqSw', '完整影片', 'Full Film']],
+  'last-taoist': [['ep29rG5y45o', '完整影片', 'Full Film']],
+  'qing-yu-nian': [
+    ['JMxwi8Wf7w4', '客棧篇', 'Inn Film'],
+    ['03Q5qpXcqaE', '變身篇', 'Transformation Film']
+  ],
+  roucifang: [
+    ['3KVSg0WNciw', '壹之型', 'Form I'],
+    ['uAuxnr8chUE', '貳之型', 'Form II'],
+    ['6YA5sBdlxXU', '參之型', 'Form III']
+  ],
+  schick: [['d_B7amkyM6Y', '完整影片', 'Full Film']],
+  'google-play': [
+    ['KE15Fm9mlJ8', 'Main 篇', 'Main Film'],
+    ['R8Ast7HW4I8', 'GPG 篇', 'GPG Film']
+  ],
+  bawang: [['jcQ-spf44sI', '完整影片', 'Full Film']],
+  'soul-land': [
+    ['slorjwyR06A', '宗門集結篇', 'Sect Assembly'],
+    ['QMX1bwPORS8', '高燃集結篇', 'Blazing Assembly']
+  ],
+  'xin-xianxia': [['H2JsDnzXdV4', '完整版', 'Full Film']],
+  'lost-ark': [['7-5QP4MJhto', '命運篇', 'Fate']],
+  chaobao: [['3YPjfSLgPSw', '完整影片', 'Full Film']],
+  yanyu: [
+    ['f9LeV0kl3a0', '桃花篇', 'Taohua Film'],
+    ['P5d8sLxIf-w', '凌煙篇', 'Lingyan Film'],
+    ['WN5JAf9ajTo', '雙人篇', 'Duo Film']
+  ],
+  kaitian: [['3SBvQKWW2_Y', '完整影片', 'Full Film']],
+  'summoners-war': [
+    ['5asZppi0EHE', '紅色按鈕篇', 'Red Button'],
+    ['2xLmv5q-0k4', '辦公室對峙篇', 'Office Standoff']
+  ],
+  ulala: [['SvUU0LTiEec', '完整影片', 'Full Film']],
+  'mirror-story': [
+    ['OZgkanGRTGY', '魔白雪篇', 'Dark Snow White'],
+    ['hnmel0QLnTs', '魔紅帽篇', 'Dark Red Riding Hood']
+  ],
+  'new-ludingji': [['c_dGawjH7bc', '完整影片', 'Full Film']],
+  yujian: [['Ct-1d0nXWRM', '完整影片', 'Full Film']],
+  asus: [['XVNa4XYyHnc', '完整影片', 'Full Film']],
+  godiva: [['D48bDkOSsSY', '完整影片', 'Full Film']],
+  'schick-cc': [['OKSb5mOVTMU', '完整影片', 'Full Film']],
+  'gcs-2018': [['1cUBSFAU800', '完整影片', 'Full Film']],
+  'lms-2018': [['LKL_M4jJzwY', '完整影片', 'Full Film']],
+  'earth-revival': [
+    ['X1bRLBYQg8k', '種田當大佬篇', 'Farming Boss'],
+    ['xPSvSYfp7W4', '後台直擊篇', 'Behind the Scenes'],
+    ['77O5o0cfz2M', '我撿垃圾養你篇', 'Scavenging for Us'],
+    ['S2xeWuqu07M', '你的機車已抵達篇', 'Your Ride Has Arrived'],
+    ['vCQQSPn1cp0', '你的怎麼這麼大篇', 'Why Is Yours So Big?'],
+    ['zfnPgyhqsBc', '末日只能帶一樣篇', 'One Thing for the Apocalypse']
+  ],
+  'street-basketball': [
+    ['3yzFLrexRCk', '默契主場篇', 'Home Court Chemistry'],
+    ['_uKMI-VQIho', '默契篇', 'Chemistry']
+  ],
+  'hot-blooded-jianghu': [
+    ['8EgIgrQZv34', '啦啦隊篇', 'Cheerleading Squad'],
+    ['7ADXhQ8_e04', '李雅英篇', 'Assassin Film']
+  ],
+  'moji-story': [
+    ['qxFvIaYaezY', '職場篇', 'Workplace Film'],
+    ['hLmnMqA_EwI', '校園篇', 'Campus Film']
+  ],
+  'play-metropolis': [['q-kKr1qZtf4', '完整影片', 'Full Film']],
+  'era-of-conquest': [
+    ['vTY-dNNAcbA', '全球大戰篇', 'Global War'],
+    ['go4yZKW27rE', '無損徵兵篇', 'Lossless Recruitment']
+  ]
+};
+for (const work of works) {
+  const projected = (work.videos || []).map(video => [video.id, video.label_zh, video.label_en]);
+  check(
+    JSON.stringify(projected) === JSON.stringify(expectedWorkVideos[work.id]),
+    `${work.id} video IDs/order/labels drifted from the approved 49-film structure`
+  );
+}
+
+const expectedAddedTypes = {
+  roucifang: ['品牌廣告', 'Brand Film'],
+  asus: ['互動藝術展形象片', 'Interactive Art Exhibition Film'],
+  godiva: ['品牌廣告', 'Brand Film'],
+  'schick-cc': ['產品廣告', 'Product Film'],
+  'gcs-2018': ['賽事片頭', 'Esports Opening Film'],
+  'lms-2018': ['賽事片頭', 'Esports Opening Film'],
+  'earth-revival': ['遊戲廣告', 'Game Film'],
+  'street-basketball': ['遊戲廣告', 'Game Film'],
+  'hot-blooded-jianghu': ['遊戲廣告', 'Game Film'],
+  'moji-story': ['遊戲廣告', 'Game Film'],
+  'play-metropolis': ['遊戲宣傳 MV', 'Game Promotional MV'],
+  'era-of-conquest': ['遊戲廣告', 'Game Film']
+};
+for (const [id, expected] of Object.entries(expectedAddedTypes)) {
+  const work = works.find(candidate => candidate.id === id);
+  check(
+    JSON.stringify([work?.type_zh, work?.type_en]) === JSON.stringify(expected),
+    `${id} bilingual type drifted from the approved source-backed value`
+  );
+}
 check(new Set(workIds).size === works.length, 'work ids must be unique');
 check(!workIds.includes('fat-taro'), 'fat-taro must remain in Filmography until a public film URL is verified');
 check(!workIds.includes('gambling-collection'), 'gambling collection must not masquerade as a linked case');
@@ -138,7 +392,7 @@ check(data.contact?.email === 'hey.yuhsuncheng@gmail.com', 'contact email must u
 const quickSlides = data.quick_intro?.slides;
 const expectedQuickVideoIds = [
   'rPfEga9kxU4', 'ep29rG5y45o', 'jcQ-spf44sI', 'Ct-1d0nXWRM', 'f9LeV0kl3a0',
-  'slorjwyR06A', 'QMX1bwPORS8', 'SvUU0LTiEec', 'iIUDbPBPqSw', 'IOeQ5IwqYN0',
+  'slorjwyR06A', 'QMX1bwPORS8', 'SvUU0LTiEec', 'iIUDbPBPqSw', 'KE15Fm9mlJ8',
   'd_B7amkyM6Y', '3KVSg0WNciw', 'uAuxnr8chUE', '6YA5sBdlxXU'
 ];
 check(Array.isArray(quickSlides), 'quick_intro.slides must be an array');
@@ -217,16 +471,33 @@ const forbiddenPatterns = [
   [/49\s*支/i, '49-work metric'],
   [/43\s*支/i, '43-commercial metric'],
   [/6\s*支社群/i, '6-social-film metric'],
+  [/\bAI\b/i, 'unsupported AI positioning'],
+  [/artificial\s+intelligence/i, 'unsupported artificial-intelligence positioning'],
   [/"(?:films|commercials|social_films)"\s*:\s*"(?:49|43|6)"/i, 'legacy metric data field']
 ];
 for (const [pattern, label] of forbiddenPatterns) {
   check(!pattern.test(publicText), `public source contains forbidden ${label}: ${pattern}`);
 }
 
-const videoIds = works.flatMap(work => work.videos || []).map(video => video.id);
-check(videoIds.length === 37, `expected 37 public video ids, found ${videoIds.length}`);
-check(new Set(videoIds).size === 37, `expected 37 unique public video ids, found ${new Set(videoIds).size}`);
-for (const id of videoIds) check(/^[A-Za-z0-9_-]{11}$/.test(id), `invalid YouTube id: ${id}`);
+const workVideoEntries = works.flatMap((work, workIndex) =>
+  (work.videos || []).map((video, tabIndex) => ({
+    workId: work.id,
+    workIndex,
+    tabIndex,
+    id: video.id,
+    labelZh: String(video.label_zh || video.label_en || tabIndex + 1),
+    labelEn: String(video.label_en || video.label_zh || tabIndex + 1)
+  }))
+);
+const videoIds = workVideoEntries.map(entry => entry.id);
+check(videoIds.length === 49, `expected 49 public video ids, found ${videoIds.length}`);
+check(new Set(videoIds).size === 49, `expected 49 unique public video ids, found ${new Set(videoIds).size}`);
+for (const entry of workVideoEntries) {
+  check(
+    /^[A-Za-z0-9_-]{11}$/.test(entry.id),
+    `invalid YouTube id for work ${entry.workId} tab ${entry.tabIndex + 1}: ${entry.id}`
+  );
+}
 
 const images = new Set([
   ...works.map(work => work.image),
@@ -345,6 +616,14 @@ if (assetManifest) {
   }
 
   const mediaParity = {
+    roucifang: {
+      sourceFragment: '/王品肉次方/01_壹之型/',
+      videoId: '3KVSg0WNciw'
+    },
+    'qing-yu-nian': {
+      sourceFragment: '/慶餘年/01_客棧篇/',
+      videoId: 'JMxwi8Wf7w4'
+    },
     'hot-blooded-jianghu': {
       sourceFragment: '/熱血江湖：歸來/01_啦啦隊篇/',
       videoId: '8EgIgrQZv34'
@@ -364,6 +643,15 @@ if (assetManifest) {
     check(normalize(item?.source).includes(expected.sourceFragment), `${slug} thumbnail is not from the same named film as its public video`);
     check(work?.videos?.some(video => video.id === expected.videoId), `${slug} is missing its approved matching public video`);
   }
+  const qingAsset = items.find(item => item.slug === 'qing-yu-nian');
+  check(
+    normalize(qingAsset?.source) === '導演功課/導演作品集/York挑圖_完整80案圖庫_2026-08-11/00_把喜歡的圖放這裡/慶餘年/01_客棧篇/frame-15-t7.000.png',
+    'qing-yu-nian thumbnail source is not York\'s approved inn still'
+  );
+  check(
+    String(qingAsset?.sourceSha256 || '').toLowerCase() === 'd1a0abdde3a80345fc05432820461170d8c92ed857eeacae838bf0f9147930c1',
+    'qing-yu-nian approved source SHA-256 drifted'
+  );
 
   const humanCopyExpectations = {
     'tea': {
@@ -427,35 +715,27 @@ if (assetManifest) {
       en: 'Three lives lying side by side on a beach begin as choices; once they expand into skyline billboards, even the money can fall into the street. The absurdity has to reach the real city before the fantasy feels believable.'
     }
   };
-  for (const [slug, expected] of Object.entries(humanCopyExpectations)) {
-    const work = works.find(candidate => candidate.id === slug);
-    check(work?.copy_zh === expected.zh, `${slug} Chinese copy drifted from the approved human-voice line`);
-    check(work?.copy_en === expected.en, `${slug} English copy drifted from the approved human-voice line`);
-  }
   check(!JSON.stringify(data).includes('片尾再以分割畫面'), 'old template-like xin-xianxia copy is still present');
   check(!JSON.stringify(data).includes('我先把明星臉拿掉'), 'old first-person lost-ark copy is still present');
 
   const expectedDirectorCopy = {
-    point_of_view_zh: '畫面得先讓人想看下去，人物也要站得住；產品走進來時，最好像角色本來就會做的選擇。',
-    point_of_view_en: 'The image has to earn another look, and the character has to hold. When the product enters, it should feel like a choice that character would naturally make.',
-    bio_zh: '鄭又勛，台灣導演，主要拍遊戲廣告與商業影像。真人、CG 或 AI 都能用，前提是角色得先成立，產品才不會像後來塞進去的。',
-    bio_en: 'York Cheng is a Taiwan-based director working mainly in game advertising and commercial films. Live action, CG and AI can all work; the character has to hold first, or the product will always feel added afterward.'
+    tagline_zh: '遊戲廣告 · 商業影像 · 產品片 · 賽事片頭 · 實拍 · CG',
+    tagline_en: 'Game Commercials · Branded Films · Product Films · Esports Opens · Live Action · CG',
+    point_of_view_zh: '遊戲廣告、商業影像、產品片與賽事片頭；武俠、奇幻、喜劇，實拍與 CG。',
+    point_of_view_en: 'Game commercials, branded films, product films and esports opens; wuxia, fantasy and comedy in live action and CG.',
+    bio_zh: '鄭又勛，台灣導演。作品涵蓋遊戲廣告、商業影像、產品片與賽事片頭，拍過武俠、奇幻、喜劇，也做實拍與 CG。',
+    bio_en: 'York Cheng is a director based in Taiwan. His work spans game commercials, branded films, product films and esports opens, moving through wuxia, fantasy and comedy in live action and CG.'
   };
   for (const [key, expected] of Object.entries(expectedDirectorCopy)) {
     check(data.director?.[key] === expected, `director.${key} drifted from the approved no-template copy`);
   }
 
-  const expectedQuickIntro = [
-    ['鄭又勛，台灣導演。', 'York Cheng, a director from Taiwan.', '九頁，快速看一支廣告怎麼從畫面選擇走到完整成片。', 'Nine pages on how visual choices shape a finished commercial.'],
-    ['一壺茶，把圍攻變成同桌。', 'One pot of tea turns a siege into a shared table.', '刀光與走位把客棧逼到要開打；兩瓶 1250ml 大茶上桌，「夠嗎」便從戰力改成夠不夠喝。', 'Blades and blocking push the tavern to the edge of a fight; two 1,250ml bottles land, and “enough?” changes from strength to whether there is enough to drink.'],
-    ['婚禮走到第三句，才露出鬼片。', 'The wedding reaches its third line before the ghost story shows itself.', '拜堂與紅妝都照規矩進行；「新娘回魂夜」一出現，熟悉的喜事立刻開始不對勁。', 'The bows and red bridal makeup follow the rules; “The bride returns tonight” makes the familiar celebration turn wrong at once.'],
-    ['武打要讓人看懂出手，也看懂結果。', 'A fight should make both the strike and its result readable.', '近身動作留住受擊點，群戰守住人物走位，出劍帶起的水花把力道畫清楚。', 'Close action keeps the impact point visible, ensemble combat preserves blocking, and water kicked up by the blade draws the force clearly.'],
-    ['特效進場前，演員得先相信它在那裡。', 'Before VFX enters, the actors need to believe it is there.', '手勢帶出能量、全家迎上巨龍、白袍走到黑袍；效果各自不同，表演始終給得出它的位置。', 'A gesture releases energy, a family faces a dragon, and white robes turn black; each effect is different, but every one has a performance to hold onto.'],
-    ['「就差一點」先落在玩家臉上。', '“So close” lands on the players’ faces.', '那一下懊惱被群像接住，Google Play Points 才能補上片名裡少掉的那一「點」。', 'The ensemble carries that flash of frustration, giving Google Play Points a reason to supply the missing “point” in the title.'],
-    ['磁浮看不見，就讓藍光貼著臉頰走。', 'Magnetic suspension is invisible, so the blue light follows the cheek.', '刀頭碰到暖色肌膚時，冷藍光才出現；產品規格因此有了能被看見的動作。', 'It appears as the razor meets warm skin, giving the product feature a movement the audience can see.'],
-    ['同一刀，長成三支不同的片。', 'One cut becomes three different films.', '武館、符號與人物關係各走一條路，肉片落上烤盤的那一下始終沒變。', 'The dojo, graphic symbols and character relationships take separate paths, while the slice landing on the grill remains the shared endpoint.'],
-    ['有一支片想拍，歡迎聊聊。', 'Have a film in mind? Get in touch.', '鄭又勛｜類型敘事廣告導演', 'York Cheng | Genre-Narrative Commercial Director']
-  ];
+  const expectedQuickIntro = quickCopyZh.map((entry, index) => [
+    entry.title,
+    quickCopyEn[index]?.title || '',
+    entry.copy,
+    quickCopyEn[index]?.copy || ''
+  ]);
   check(data.quick_intro?.slides?.length === expectedQuickIntro.length, `quick intro must contain ${expectedQuickIntro.length} slides`);
   expectedQuickIntro.forEach(([titleZh, titleEn, copyZh, copyEn], index) => {
     const slide = data.quick_intro?.slides?.[index];
@@ -464,12 +744,45 @@ if (assetManifest) {
     check(slide?.copy_zh === copyZh, `quick intro P${index + 1} Chinese copy drifted`);
     check(slide?.copy_en === copyEn, `quick intro P${index + 1} English copy drifted`);
   });
-  check(html.includes('data-label-zh="有一支片想拍，歡迎聊聊。" data-label-en="Have a film in mind? Get in touch."'), 'main contact copy drifted from the approved no-template line');
+  check(data.contact?.location_zh === '台灣', 'contact.location_zh drifted from the approved source-backed value');
+  check(data.contact?.location_en === 'Taiwan', 'contact.location_en drifted from the approved source-backed value');
+  check(data.quick_intro?.slides?.[3]?.eyebrow === 'ACTION / 動作場面', 'Quick P4 action eyebrow drifted');
+  check(data.quick_intro?.slides?.[7]?.eyebrow === 'BRAND FILM SERIES / 系列品牌廣告', 'Quick P8 brand-film eyebrow drifted');
+  check(data.quick_intro?.slides?.[7]?.alt_en === 'Dojo imagery and live-action tableside meat cutting for ROU CI FANG', 'Quick P8 alt text drifted');
+  check(html.includes('data-label-zh="有片想拍，歡迎來信。" data-label-en="Have a film in mind? Get in touch."'), 'main contact copy drifted from the approved source-backed line');
+
+  const sourceBackedZhProjection = JSON.stringify({
+    director: {
+      tagline_zh: data.director?.tagline_zh,
+      point_of_view_zh: data.director?.point_of_view_zh,
+      bio_zh: data.director?.bio_zh
+    },
+    quick: quickSlides.map(slide => ({ title_zh: slide.title_zh, copy_zh: slide.copy_zh })),
+    works: works.map(work => ({ id: work.id, copy_zh: work.copy_zh })),
+    contact: data.contact?.location_zh,
+    html
+  });
+  const retiredWrongPhrases = [
+    '婚禮走到第三句',
+    '新娘回魂夜',
+    '拜堂字卡',
+    '不拍抓鬼',
+    '巨龍從落地窗外找上門',
+    '蒙眼不是裝飾',
+    '才把看不見翻成武功',
+    '可洽跨市場合作',
+    '有一支片想拍，歡迎聊聊',
+    '類型敘事廣告導演',
+    '真人實拍 · CG · AI 影像',
+    '作品橫跨遊戲廣告、商業影像、真人實拍、CG 與 AI 影像'
+  ];
+  for (const phrase of retiredWrongPhrases) {
+    check(!sourceBackedZhProjection.includes(phrase), `retired unsupported/template phrase remains: ${phrase}`);
+  }
 
   const narrativeTexts = [
     ...Object.values(expectedDirectorCopy),
-    ...expectedQuickIntro.flat(),
-    ...works.flatMap(work => [work.copy_zh, work.copy_en])
+    ...expectedQuickIntro.flat()
   ].filter(Boolean);
   const withoutQuotedDialogue = value => String(value)
     .replace(/「[^」]*」/g, '')
@@ -647,28 +960,70 @@ async function validateRenderedSite() {
       check(!metrics.horizontalOverflow, `${viewport.label} has horizontal overflow`);
       check(metrics.forbidden.length === 0, `${viewport.label} renders forbidden text: ${metrics.forbidden.join(', ')}`);
 
-      const modalChecks = viewport.label === 'desktop' ? 31 : 1;
-      for (let index = 0; index < modalChecks; index += 1) {
-        const expectedVideoId = works[index].videos[0].id;
-        await page.locator('.watch-link').nth(index).click();
-        const modalState = await page.evaluate(() => ({
+      const modalChecks = viewport.label === 'desktop' ? works.length : 1;
+      let videoTabChecks = 0;
+      for (let workIndex = 0; workIndex < modalChecks; workIndex += 1) {
+        const work = works[workIndex];
+        const expectedVideos = work.videos || [];
+        const workLocation = `${viewport.label} work ${work.id}`;
+        await page.locator('.watch-link').nth(workIndex).click();
+
+        const initialModalState = await page.evaluate(() => ({
           open: Boolean(document.querySelector('#video-dialog')?.open),
           iframeCount: document.querySelectorAll('#video-frame iframe').length,
-          iframeSrc: document.querySelector('#video-frame iframe')?.getAttribute('src') || ''
+          iframeSrc: document.querySelector('#video-frame iframe')?.getAttribute('src') || '',
+          tabLabels: [...document.querySelectorAll('#video-tabs .video-tab')].map(tab => tab.textContent?.trim() || ''),
+          selectedTabs: [...document.querySelectorAll('#video-tabs .video-tab')].map(tab => tab.getAttribute('aria-selected'))
         }));
-        check(modalState.open, `${viewport.label} work ${index + 1} did not open the video dialog`);
-        check(modalState.iframeCount === 1, `${viewport.label} work ${index + 1} rendered ${modalState.iframeCount} video iframes`);
+        check(initialModalState.open, `${workLocation} did not open the video dialog`);
         check(
-          modalState.iframeSrc.startsWith('https://www.youtube-nocookie.com/embed/'),
-          `${viewport.label} work ${index + 1} did not use the approved YouTube embed`
+          initialModalState.iframeCount === 1,
+          `${workLocation} tab 1 rendered ${initialModalState.iframeCount} video iframes`
         );
         check(
-          modalState.iframeSrc.includes(`/embed/${expectedVideoId}?`),
-          `${viewport.label} work ${index + 1} opened the wrong video: ${modalState.iframeSrc}`
+          initialModalState.tabLabels.length === expectedVideos.length,
+          `${workLocation} rendered ${initialModalState.tabLabels.length}/${expectedVideos.length} video tabs`
         );
+        check(
+          JSON.stringify(initialModalState.tabLabels) === JSON.stringify(expectedVideos.map((video, tabIndex) => String(video.label_zh || video.label_en || tabIndex + 1))),
+          `${workLocation} tab labels do not match data: ${JSON.stringify(initialModalState.tabLabels)}`
+        );
+        check(
+          initialModalState.selectedTabs.filter(value => value === 'true').length === 1 && initialModalState.selectedTabs[0] === 'true',
+          `${workLocation} initial active state is incorrect: ${JSON.stringify(initialModalState.selectedTabs)}`
+        );
+
+        for (let tabIndex = 0; tabIndex < expectedVideos.length; tabIndex += 1) {
+          const expectedVideo = expectedVideos[tabIndex];
+          const tabLocation = `${workLocation} tab ${tabIndex + 1}`;
+          await page.locator('#video-tabs .video-tab').nth(tabIndex).click();
+          const tabState = await page.evaluate(() => ({
+            iframeCount: document.querySelectorAll('#video-frame iframe').length,
+            iframeSrc: document.querySelector('#video-frame iframe')?.getAttribute('src') || '',
+            selectedTabs: [...document.querySelectorAll('#video-tabs .video-tab')].map(tab => tab.getAttribute('aria-selected'))
+          }));
+          check(tabState.iframeCount === 1, `${tabLocation} rendered ${tabState.iframeCount} video iframes`);
+          check(
+            tabState.iframeSrc.startsWith('https://www.youtube-nocookie.com/embed/'),
+            `${tabLocation} did not use the approved YouTube embed: ${tabState.iframeSrc}`
+          );
+          check(
+            tabState.iframeSrc.includes(`/embed/${expectedVideo.id}?`),
+            `${tabLocation} opened the wrong video for ${expectedVideo.id}: ${tabState.iframeSrc}`
+          );
+          check(
+            tabState.selectedTabs.filter(value => value === 'true').length === 1 && tabState.selectedTabs[tabIndex] === 'true',
+            `${tabLocation} active state is incorrect: ${JSON.stringify(tabState.selectedTabs)}`
+          );
+          videoTabChecks += 1;
+        }
+
         await page.locator('#video-close').click();
         const closedIframeCount = await page.locator('#video-frame iframe').count();
-        check(closedIframeCount === 0, `${viewport.label} work ${index + 1} left an iframe after closing`);
+        check(closedIframeCount === 0, `${workLocation} left an iframe after closing`);
+      }
+      if (viewport.label === 'desktop') {
+        check(videoTabChecks === videoIds.length, `desktop checked ${videoTabChecks}/${videoIds.length} work video tabs`);
       }
 
       await page.locator('#quick-open').click();
@@ -746,7 +1101,7 @@ async function validateRenderedSite() {
       }
 
       check(pageErrors.length === 0, `${viewport.label} page errors: ${pageErrors.join(' | ')}`);
-      renderedViews.push({ ...viewport, ...metrics, modalChecks, quickModalChecks, pageErrors: pageErrors.length });
+      renderedViews.push({ ...viewport, ...metrics, modalChecks, videoTabChecks, quickModalChecks, pageErrors: pageErrors.length });
       await page.close();
     }
   } catch (error) {
@@ -760,19 +1115,40 @@ async function validateRenderedSite() {
 if (process.argv.includes('--rendered')) await validateRenderedSite();
 
 if (process.argv.includes('--online')) {
-  const onlineVideoIds = [...new Set([...videoIds, ...expectedQuickVideoIds])];
-  for (let offset = 0; offset < onlineVideoIds.length; offset += 6) {
-    const batch = onlineVideoIds.slice(offset, offset + 6);
-    const results = await Promise.all(batch.map(async id => {
-      const url = `https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=${id}`;
+  const quickVideoEntries = quickSlides.flatMap((slide, slideIndex) =>
+    (slide.links || []).map((link, linkIndex) => ({
+      source: 'quick',
+      slideIndex,
+      linkIndex,
+      id: link.id
+    }))
+  );
+  const onlineVideoEntries = [
+    ...workVideoEntries.map(entry => ({ ...entry, source: 'work' })),
+    ...quickVideoEntries
+  ];
+  onlineWorkVideoChecks = workVideoEntries.length;
+  onlineQuickVideoChecks = quickVideoEntries.length;
+  for (let offset = 0; offset < onlineVideoEntries.length; offset += 6) {
+    const batch = onlineVideoEntries.slice(offset, offset + 6);
+    const results = await Promise.all(batch.map(async entry => {
+      const url = `https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=${entry.id}`;
       try {
         const response = await fetch(url, { signal: AbortSignal.timeout(15000) });
-        return { id, ok: response.ok, status: response.status };
+        return { entry, ok: response.ok, status: response.status };
       } catch (error) {
-        return { id, ok: false, status: error.name || 'network-error' };
+        return { entry, ok: false, status: error.name || 'network-error' };
       }
     }));
-    for (const result of results) check(result.ok, `YouTube oEmbed failed: ${result.id} (${result.status})`);
+    for (const result of results) {
+      const location = result.entry.source === 'work'
+        ? `work ${result.entry.workId} tab ${result.entry.tabIndex + 1}`
+        : `quick slide ${result.entry.slideIndex + 1} link ${result.entry.linkIndex + 1}`;
+      check(
+        result.ok,
+        `YouTube oEmbed failed for ${location}: ${result.entry.id} (${result.status})`
+      );
+    }
   }
 }
 
@@ -804,6 +1180,8 @@ console.log(JSON.stringify({
   videoIds: videoIds.length,
   quickVideoIds: expectedQuickVideoIds.length,
   onlineUniqueVideoIds: new Set([...videoIds, ...expectedQuickVideoIds]).size,
+  onlineWorkVideoChecks,
+  onlineQuickVideoChecks,
   ordinarySelectedImages: assetManifest.items.filter(item => item.slug !== 'gambling-commercials').length,
   gamblingSelectedImages: assetManifest.gamblingWall.length,
   onlineVideoCheck: process.argv.includes('--online'),
